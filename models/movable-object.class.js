@@ -8,6 +8,21 @@ class MovableObject {
     currentImage = 0; // Index des aktuellen Bildes in der Animation
     speed = 0.15;
     otherDirection = false;
+    speedY = 0;
+    acceleration = 2.5;
+
+    applyGravity() {
+        setInterval(() => {
+            if(this.isAboveGround()) { // Ausführung nur solange y-Achse kleiner 155px
+                this.y -= this.speedY; // y-Achse wird um Wert von speedY reduziert
+                this.speedY -= this.acceleration; // speedY wird um Beschleunigung reduziert
+            }
+        }, 1000 / 25) // 25 mal pro Sekunde
+    }
+
+    isAboveGround() { // returned Wert y-Achse
+        return this.y < 155;
+    }
 
     loadImage(path) { // Methode zum Laden eines Bildes. Der Pfad des Bildes muss als Argument übergeben werden.
         this.img = new Image(); // Erzeugt ein neues Image-Objekt.
@@ -15,7 +30,7 @@ class MovableObject {
     }
 
     loadImages(arr) { // Methode zum Laden mehrerer Bilder.
-        arr.forEach((path) => { // Iteriert über jedes Element des übergebenen Arrays.
+        arr.forEach((path) => { // Iteriert über jede£s Element des übergebenen Arrays.
             let img = new Image(); // Erzeugt ein neues Image-Objekt.
             img.src = path; // Weist dem Bildpfad den aktuellen Pfad aus dem Array zu.
             this.imageCache[path] = img; // Speichert das Image-Objekt im imageCache-Array unter dem entsprechenden Pfad.
