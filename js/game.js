@@ -27,7 +27,6 @@ window.addEventListener("keydown", (e) => {  // Event-Listener für das keydown-
     if(e.keyCode == 32) {  // Leertaste
         keyboard.SPACE = true;  // Die SPACE-Eigenschaft des Keyboard-Objekts auf true setzen
     }
-    console.log(e);  // Das Event-Objekt in der Konsole ausgeben
 });
 
 window.addEventListener("keyup", (e) => {  // Event-Listener für das keyup-Ereignis
@@ -50,5 +49,4 @@ window.addEventListener("keyup", (e) => {  // Event-Listener für das keyup-Erei
     if(e.keyCode == 32) {  // Leertaste
         keyboard.SPACE = false;  // Die SPACE-Eigenschaft des Keyboard-Objekts auf false setzen
     }
-    console.log(e);  // Das Event-Objekt in der Konsole ausgeben
 });
