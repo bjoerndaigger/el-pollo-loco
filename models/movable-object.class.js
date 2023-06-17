@@ -20,7 +20,7 @@ class MovableObject {
         }, 1000 / 25) // 25 mal pro Sekunde
     }
 
-    isAboveGround() { // returned Wert y-Achse
+    isAboveGround() { // returned Wert y-Achse kleiner 155 (Wert, wo Character den Boden berührt)
         return this.y < 155;
     }
 
@@ -52,6 +52,10 @@ class MovableObject {
         setInterval(() => {
             this.x -= this.speed; // Aktualisieren der horizontalen Position basierend auf der Geschwindigkeit
         }, 1000 / 60); // Aktualisierung alle 1/60 Sekunde (60 mal pro Sekunde)
+    }
+
+    jump() {
+        this.speedY = 30;
     }
 }
 

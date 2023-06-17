@@ -39,7 +39,8 @@ class Character extends MovableObject {
     animate() {
         setInterval(() => {
             this.walking_sound.pause(); // Stoppen des Audios für das Gehen
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) { // Animation wird nur ausgeführt, wenn ich Arrow Right auf Tastatur drücke
+            // Animation wird nur ausgeführt, wenn ich Arrow Right auf Tastatur drücke und x-Achsenwert kleiner als Endwert der x-Achse ist
+            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.x += this.speed; // Bewege den Charakter nach rechts, wenn die Rechtspfeiltaste gedrückt wird
                 this.otherDirection = false; // Character wird nicht gespiegelt
                 this.walking_sound.play(); // Abspielen des Laufaudios
@@ -51,8 +52,9 @@ class Character extends MovableObject {
                 this.walking_sound.play(); // Abspielen des Laufaudios
             }
 
-            if (this.world.keyboard.UP) { // Animation wird nur ausgeführt, wenn ich Arrow Left auf Tastatur drücke
-                this.speedY = 20; // Character bekommt positive Geschwindigkeit und bewegt sich nach oben
+            // Animation wird nur ausgeführt, wenn ich Arrow Left auf Tastatur drücke und wenn isAboveGround() false zurückgibt
+            if (this.world.keyboard.UP && !this.isAboveGround()) {
+                this.jump();
             }
 
             this.world.camera_x = -this.x + 100; // Aktualisiere die Position der Kamera basierend auf der X-Position des Charakters
@@ -61,19 +63,18 @@ class Character extends MovableObject {
 
         setInterval(() => { // Walk/Jump Animation
             if (this.isAboveGround()) { // Animation wird ausgeführt bei return von einem bestimmten Wert der x-Achse
-                this.playAnimation(this.IMAGES_JUMPING); 
+                this.playAnimation(this.IMAGES_JUMPING);
             } else { // Animation wird ausgeführt, wenn ich Arrow Right oder Arrow Left auf Tastatur drücke
-                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) { 
+                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                     this.playAnimation(this.IMAGES_WALKING);
                 }
             }
         }, 50); // Wiederholen der Animation alle 50 Millisekunden
     }
-
-    jump() {
-
-    }
 }
+
+
+
 
 
 
