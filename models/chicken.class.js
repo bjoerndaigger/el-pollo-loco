@@ -19,7 +19,10 @@ class Chicken extends MovableObject {
     }
 
     animate() {
-        this.moveLeft();
+        setInterval(() => {
+            this.moveLeft();
+        }, 1000 / 60); // Aktualisierung alle 1/60 Sekunde (60 mal pro Sekunde)
+       
 
         setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);

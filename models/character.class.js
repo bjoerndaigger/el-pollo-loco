@@ -41,23 +41,22 @@ class Character extends MovableObject {
             this.walking_sound.pause(); // Stoppen des Audios für das Gehen
             // Animation wird nur ausgeführt, wenn ich Arrow Right auf Tastatur drücke und x-Achsenwert kleiner als Endwert der x-Achse ist
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.x += this.speed; // Bewege den Charakter nach rechts, wenn die Rechtspfeiltaste gedrückt wird
+                this.moveRight();
                 this.otherDirection = false; // Character wird nicht gespiegelt
                 this.walking_sound.play(); // Abspielen des Laufaudios
             }
-
-            if (this.world.keyboard.LEFT && this.x > 0) { // Animation wird nur ausgeführt, wenn ich Arrow Left auf Tastatur drücke
-                this.x -= this.speed; // Bewege den Charakter nach links, wenn die Linkspfeiltaste gedrückt wird
+            // Animation wird nur ausgeführt, wenn ich Arrow Left auf Tastatur drücke
+            if (this.world.keyboard.LEFT && this.x > 0) {
+                this.moveLeft();
                 this.otherDirection = true; // Character wird gespiegelt
                 this.walking_sound.play(); // Abspielen des Laufaudios
             }
-
-            // Animation wird nur ausgeführt, wenn ich Arrow Left auf Tastatur drücke und wenn isAboveGround() false zurückgibt
-            if (this.world.keyboard.UP && !this.isAboveGround()) {
+            // Animation wird nur ausgeführt, wenn ich Space-Taste drücke und wenn isAboveGround() false zurückgibt
+            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
             }
-
-            this.world.camera_x = -this.x + 100; // Aktualisiere die Position der Kamera basierend auf der X-Position des Charakters
+            // Aktualisiere die Position der Kamera basierend auf der X-Position des Charakters
+            this.world.camera_x = -this.x + 100; 
 
         }, 1000 / 60); // Führe die Animation 60 Mal pro Sekunde aus (etwa 16,67 Millisekunden)
 
@@ -72,6 +71,8 @@ class Character extends MovableObject {
         }, 50); // Wiederholen der Animation alle 50 Millisekunden
     }
 }
+
+
 
 
 

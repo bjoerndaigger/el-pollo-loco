@@ -13,7 +13,7 @@ class MovableObject {
 
     applyGravity() {
         setInterval(() => {
-            if(this.isAboveGround() || this.speedY > 0) { // Ausführung nur solange y-Achse kleiner 155px oder speedY größer 0
+            if (this.isAboveGround() || this.speedY > 0) { // Ausführung nur solange y-Achse kleiner 155px oder speedY größer 0
                 this.y -= this.speedY; // y-Achse wird um Wert von speedY reduziert
                 this.speedY -= this.acceleration; // speedY wird um Beschleunigung reduziert
             }
@@ -45,13 +45,12 @@ class MovableObject {
     }
 
     moveRight() {
+        this.x += this.speed; // Bewege den Charakter nach rechts
         
     }
 
     moveLeft() {
-        setInterval(() => {
-            this.x -= this.speed; // Aktualisieren der horizontalen Position basierend auf der Geschwindigkeit
-        }, 1000 / 60); // Aktualisierung alle 1/60 Sekunde (60 mal pro Sekunde)
+        this.x -= this.speed; // Bewege den Charakter nach links, wenn die Linkspfeiltaste gedrückt wird
     }
 
     jump() {
