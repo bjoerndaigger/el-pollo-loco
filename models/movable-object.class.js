@@ -29,6 +29,29 @@ class MovableObject {
         this.img.src = path; // Weist dem Bildpfad den übergebenen Pfad zu.
     }
 
+    draw(ctx) {
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);  // Den Character auf dem Canvas zeichnen
+    }
+
+    drawFrame(ctx) { // Rahmen um Movable Objects anzeigen lassen
+        if (this instanceof Character || this instanceof Chicken) { // nur für Character und Chicken
+            ctx.beginPath(); // Beginne einen neuen Pfad für die Zeichnung.
+            ctx.lineWidth = '5'; // Setze die Linienbreite auf 5 Pixel.
+            ctx.strokeStyle = 'blue'; // Setze die Linienfarbe auf Blau.
+            ctx.rect(this.x, this.y, this.width, this.height); // Zeichne ein Rechteck mit den angegebenen Koordinaten und Abmessungen (x, y, Breite, Höhe)
+            ctx.stroke(); // Führe den Strich aus, um das Rechteck zu zeichnen.
+        }
+    }
+
+    isColliding(mo) { // Überprüft, wann die Kollision stattfindet
+        return (
+            this.x + this.width > mo.x &&  // Überprüft, ob die rechte Seite des Charakters rechts von der linken Seite des übergebenen Objekts liegt
+            this.y + this.height > mo.y &&  // Überprüft, ob die untere Seite des Charakters unterhalb der oberen Seite des übergebenen Objekts liegt
+            this.x < mo.x &&  // Überprüft, ob die linke Seite des Charakters links von der rechten Seite des übergebenen Objekts liegt
+            this.y < mo.y + mo.height  // Überprüft, ob die obere Seite des Charakters oberhalb der unteren Seite des übergebenen Objekts liegt
+        );
+    }
+
     loadImages(arr) { // Methode zum Laden mehrerer Bilder.
         arr.forEach((path) => { // Iteriert über jedes Element des übergebenen Arrays.
             let img = new Image(); // Erzeugt ein neues Image-Objekt.
@@ -46,7 +69,7 @@ class MovableObject {
 
     moveRight() {
         this.x += this.speed; // Bewege den Charakter nach rechts
-        
+
     }
 
     moveLeft() {

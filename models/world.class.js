@@ -12,12 +12,22 @@ class World {
         this.keyboard = keyboard;  // Das Keyboard-Objekt speichern
         this.draw();  // Die draw-Funktion aufrufen
         this.setWorld();  // Die setWorld-Funktion aufrufen, um die world-Eigenschaft des Character-Objekts festzulegen
+        this.checkCollisions(); // Überprüft ob zwei Objekte kollidieren
     }
 
     setWorld() {
         this.character.world = this;  // Die world-Eigenschaft des Character-Objekts auf diese World-Instanz setzen
     }
 
+    checkCollisions() {
+        setInterval(() => { // Die Funktion wird in regelmäßigen Intervallen aufgerufen
+            this.level.enemies.forEach((enemy) => { // Durchlaufe die Liste der Gegner im Level
+                if (this.character.isColliding(enemy)) { // Überprüfe, ob der Charakter mit dem aktuellen Gegner kollidiert
+                    console.log('Collision with Character ', enemy);  // Falls eine Kollision stattfindet, gebe eine Meldung aus
+                }
+            });
+        }, 200); // Das Intervall beträgt 200 Millisekunden (0,2 Sekunden)
+    }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);  // Das Canvas löschen
@@ -44,17 +54,28 @@ class World {
     }
 
     addToMap(mo) { // mo steht für Movable Object und hier kommt der Character als Argument (Parameter) an
-        if (mo.otherDirection) { // Wenn der Character in die andere Richtung zeigt
-            this.ctx.save(); // Den aktuellen Zustand des Kontexts (der gezeichneten Bilder) speichern
-            this.ctx.translate(mo.width, 0); // Den Kontext um die Breite des Characters in x-Richtung verschieben
-            this.ctx.scale(-1, 1); // Die x-Achse spiegeln, um den Character umzukehren
-            mo.x = mo.x * -1; // Die x-Position des Characters umkehren
+        if (mo.otherDirection) { // Character spiegeln beim rückwärtsgehen
+            this.flipImage(mo);
         }
-        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);  // Den Character auf dem Canvas zeichnen
-        if (mo.otherDirection) {
-            mo.x = mo.x * -1; // Die x-Position des Characters wieder umkehren, um den ursprünglichen Wert wiederherzustellen
-            this.ctx.restore(); // Den vorherigen Zustand des Kontexts wiederherstellen
+
+        mo.draw(this.ctx);
+        mo.drawFrame(this.ctx);
+
+        if (mo.otherDirection) {  // Drehung rückgängig machen
+            this.flipImageBack(mo);
         }
+    }
+
+    flipImage(mo) {
+        this.ctx.save(); // Den aktuellen Zustand des Kontexts (der gezeichneten Bilder) speichern
+        this.ctx.translate(mo.width, 0); // Den Kontext um die Breite des Characters in x-Richtung verschieben
+        this.ctx.scale(-1, 1); // Die x-Achse spiegeln, um den Character umzukehren
+        mo.x = mo.x * -1; // Die x-Position des Characters umkehren
+    }
+
+    flipImageBack(mo) {
+        mo.x = mo.x * -1; // Die x-Position des Characters wieder umkehren, um den ursprünglichen Wert wiederherzustellen
+        this.ctx.restore(); // Den vorherigen Zustand des Kontexts wiederherstellen
     }
 }
 

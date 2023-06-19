@@ -1,5 +1,5 @@
 class Chicken extends MovableObject {
-    y = 330; // Anfangsposition des Huhns auf der y-Achse
+    y = 340; // Anfangsposition des Huhns auf der y-Achse
     width = 102; // Breite des Huhn-Bildes
     height = 100; // Höhe des Huhn-Bildes
     IMAGES_WALKING = [
