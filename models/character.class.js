@@ -35,6 +35,12 @@ class Character extends MovableObject {
         '../img/2_character_pepe/5_dead/D-57.png'
     ];
 
+    IMAGES_HURT = [ // Array mit den Bildpfaden für die Animation des verletzt werdens
+        '../img/2_character_pepe/4_hurt/H-41.png',
+        '../img/2_character_pepe/4_hurt/H-42.png',
+        '../img/2_character_pepe/4_hurt/H-43.png',
+    ];
+
     world;
     walking_sound = new Audio('../audio/running.mp3'); // Laufgeräusch
 
@@ -43,8 +49,9 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_WALKING); // Laden der restlichen Bilder der Animation
         this.loadImages(this.IMAGES_JUMPING); // Laden der Bilder des Springens
         this.loadImages(this.IMAGES_DEAD); // Laden der Bilder des Sterbens
+        this.loadImages(this.IMAGES_HURT); // Laden der Bilder des verletzt werdens
         this.applyGravity(); // Starten der Fallanimation
-        this.animate(); // Starten der Gehanimation
+        this.animate(); // Starten der Animationen
     }
 
     animate() {
@@ -71,9 +78,11 @@ class Character extends MovableObject {
 
         }, 1000 / 60); // Führe die Animation 60 Mal pro Sekunde aus (etwa 16,67 Millisekunden)
 
-        setInterval(() => { // Walk/Jump/Dead Animation
+        setInterval(() => { // Walk/Jump/Dead/Hurt Animation
             if (this.isDead()) { // Animation wird ausgeführt, wenn Character "dead" ist
                 this.playAnimation(this.IMAGES_DEAD);
+            } else if (this.isHurt()) { // Animation wird ausgeführt, wenn Character "hurt" ist
+                this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) { // Animation wird ausgeführt bei return von einem bestimmten Wert der x-Achse
                 this.playAnimation(this.IMAGES_JUMPING);
             } else { // Animation wird ausgeführt, wenn ich Arrow Right oder Arrow Left auf Tastatur drücke
