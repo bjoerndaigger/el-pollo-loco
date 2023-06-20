@@ -25,6 +25,16 @@ class Character extends MovableObject {
         '../img/2_character_pepe/3_jump/J-39.png'
     ];
 
+    IMAGES_DEAD = [ // Array mit den Bildpfaden für die Animation des Sterbens
+        '../img/2_character_pepe/5_dead/D-51.png',
+        '../img/2_character_pepe/5_dead/D-52.png',
+        '../img/2_character_pepe/5_dead/D-53.png',
+        '../img/2_character_pepe/5_dead/D-54.png',
+        '../img/2_character_pepe/5_dead/D-55.png',
+        '../img/2_character_pepe/5_dead/D-56.png',
+        '../img/2_character_pepe/5_dead/D-57.png'
+    ];
+
     world;
     walking_sound = new Audio('../audio/running.mp3'); // Laufgeräusch
 
@@ -32,6 +42,7 @@ class Character extends MovableObject {
         super().loadImage('../img/2_character_pepe/2_walk/W-21.png'); // Laden des ersten Bildes der Animation
         this.loadImages(this.IMAGES_WALKING); // Laden der restlichen Bilder der Animation
         this.loadImages(this.IMAGES_JUMPING); // Laden der Bilder des Springens
+        this.loadImages(this.IMAGES_DEAD); // Laden der Bilder des Sterbens
         this.applyGravity(); // Starten der Fallanimation
         this.animate(); // Starten der Gehanimation
     }
@@ -56,12 +67,14 @@ class Character extends MovableObject {
                 this.jump();
             }
             // Aktualisiere die Position der Kamera basierend auf der X-Position des Charakters
-            this.world.camera_x = -this.x + 100; 
+            this.world.camera_x = -this.x + 100;
 
         }, 1000 / 60); // Führe die Animation 60 Mal pro Sekunde aus (etwa 16,67 Millisekunden)
 
-        setInterval(() => { // Walk/Jump Animation
-            if (this.isAboveGround()) { // Animation wird ausgeführt bei return von einem bestimmten Wert der x-Achse
+        setInterval(() => { // Walk/Jump/Dead Animation
+            if (this.isDead()) { // Animation wird ausgeführt, wenn Character "dead" ist
+                this.playAnimation(this.IMAGES_DEAD);
+            } else if (this.isAboveGround()) { // Animation wird ausgeführt bei return von einem bestimmten Wert der x-Achse
                 this.playAnimation(this.IMAGES_JUMPING);
             } else { // Animation wird ausgeführt, wenn ich Arrow Right oder Arrow Left auf Tastatur drücke
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {

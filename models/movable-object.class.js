@@ -10,6 +10,7 @@ class MovableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 2.5;
+    energy = 100;
 
     applyGravity() {
         setInterval(() => {
@@ -52,6 +53,17 @@ class MovableObject {
         );
     }
 
+    hit() { 
+        this.energy -= 5; // Wenn Kollision stattfindet, sinkt Wert von Variable energy um 5
+        if (this.energy < 0) { // Verhindert, dass energy in den Minusbereich geht.
+            this.energy = 0;
+        }  
+    }
+
+    isDead() {
+        return this.energy == 0;
+    }
+
     loadImages(arr) { // Methode zum Laden mehrerer Bilder.
         arr.forEach((path) => { // Iteriert über jedes Element des übergebenen Arrays.
             let img = new Image(); // Erzeugt ein neues Image-Objekt.
@@ -60,9 +72,9 @@ class MovableObject {
         });
     }
 
-    playAnimation(IMAGES_WALKING) {
+    playAnimation(images) { 
         let i = this.currentImage % this.IMAGES_WALKING.length; // Modulo-Operator: i = 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, etc. 
-        let path = this.IMAGES_WALKING[i]; // Pfad des aktuellen Bildes in der Animation
+        let path = images[i]; // Pfad des aktuellen Bildes in der Animation
         this.img = this.imageCache[path]; // Zuweisen des Bildes an die Variable "img" in MovableObjects
         this.currentImage++; // Ansteigen des Indexes für das nächste Bild
     }

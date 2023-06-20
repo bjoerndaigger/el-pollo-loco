@@ -23,7 +23,8 @@ class World {
         setInterval(() => { // Die Funktion wird in regelmäßigen Intervallen aufgerufen
             this.level.enemies.forEach((enemy) => { // Durchlaufe die Liste der Gegner im Level
                 if (this.character.isColliding(enemy)) { // Überprüfe, ob der Charakter mit dem aktuellen Gegner kollidiert
-                    console.log('Collision with Character ', enemy);  // Falls eine Kollision stattfindet, gebe eine Meldung aus
+                   this.character.hit(); // 
+                   console.log('Collision with Character ', this.character.energy);  
                 }
             });
         }, 200); // Das Intervall beträgt 200 Millisekunden (0,2 Sekunden)
