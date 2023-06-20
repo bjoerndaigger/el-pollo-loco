@@ -11,6 +11,7 @@ class MovableObject {
     speedY = 0;
     acceleration = 2.5;
     energy = 100;
+    lastHit = 0;
 
     applyGravity() {
         setInterval(() => {
@@ -53,11 +54,19 @@ class MovableObject {
         );
     }
 
-    hit() { 
+    hit() {
         this.energy -= 5; // Wenn Kollision stattfindet, sinkt Wert von Variable energy um 5
         if (this.energy < 0) { // Verhindert, dass energy in den Minusbereich geht.
             this.energy = 0;
-        }  
+        } else {
+            this.lastHit = new Date().getTime(); // Anzahl der Millisekunden, die seit dem 1. Januar 1970, 00:00:00 UTC vergangen sind
+        }
+    }
+
+    isHurt() {
+        let timepassed = new Date().getTime(); - this.lastHit; // Millisekunden,seit 1. Januar 1970, 00:00:00 UTC minus Millisekunden der letzten Kollision
+        timepassed = timepassed / 1000; // Differenz in Sekunden
+        return timepassed < 5; // return true, wenn Kollision länger als 5 Sekunden  her ist
     }
 
     isDead() {
@@ -72,7 +81,7 @@ class MovableObject {
         });
     }
 
-    playAnimation(images) { 
+    playAnimation(images) {
         let i = this.currentImage % this.IMAGES_WALKING.length; // Modulo-Operator: i = 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, etc. 
         let path = images[i]; // Pfad des aktuellen Bildes in der Animation
         this.img = this.imageCache[path]; // Zuweisen des Bildes an die Variable "img" in MovableObjects
