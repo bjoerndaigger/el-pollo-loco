@@ -64,9 +64,9 @@ class MovableObject {
     }
 
     isHurt() {
-        let timepassed = new Date().getTime(); - this.lastHit; // Millisekunden,seit 1. Januar 1970, 00:00:00 UTC minus Millisekunden der letzten Kollision
+        let timepassed = new Date().getTime() - this.lastHit; // Millisekunden,seit 1. Januar 1970, 00:00:00 UTC minus Millisekunden der letzten Kollision
         timepassed = timepassed / 1000; // Differenz in Sekunden
-        return timepassed < 5; // return true, wenn Kollision länger als 5 Sekunden  her ist
+        return timepassed < 1; // return true, solange Kollision kleiner als eine Sekunde ist
     }
 
     isDead() {
@@ -82,7 +82,7 @@ class MovableObject {
     }
 
     playAnimation(images) {
-        let i = this.currentImage % this.IMAGES_WALKING.length; // Modulo-Operator: i = 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, etc. 
+        let i = this.currentImage % images.length; // Modulo-Operator: i = 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, etc. 
         let path = images[i]; // Pfad des aktuellen Bildes in der Animation
         this.img = this.imageCache[path]; // Zuweisen des Bildes an die Variable "img" in MovableObjects
         this.currentImage++; // Ansteigen des Indexes für das nächste Bild

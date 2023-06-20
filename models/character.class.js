@@ -81,7 +81,7 @@ class Character extends MovableObject {
         setInterval(() => { // Walk/Jump/Dead/Hurt Animation
             if (this.isDead()) { // Animation wird ausgeführt, wenn Character "dead" ist
                 this.playAnimation(this.IMAGES_DEAD);
-            } else if (this.isHurt()) { // Animation wird ausgeführt, wenn Character "hurt" ist
+            } else if (this.isHurt()) { // Animation wird ausgeführt, wenn isHurt() true zurückgibt
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) { // Animation wird ausgeführt bei return von einem bestimmten Wert der x-Achse
                 this.playAnimation(this.IMAGES_JUMPING);
