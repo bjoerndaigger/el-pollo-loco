@@ -1,11 +1,4 @@
-class MovableObject {
-    x = 120;
-    y = 290;
-    img; // Das Bild des Objekts. Diese Variable wird später verwendet, um das Bild zu speichern.
-    width = 100;
-    height = 150;
-    imageCache = []; // Ein Array, das zum Zwischenspeichern von Bildpfaden verwendet wird.
-    currentImage = 0; // Index des aktuellen Bildes in der Animation
+class MovableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
@@ -25,16 +18,7 @@ class MovableObject {
     isAboveGround() { // returned Wert y-Achse kleiner 155 (Wert, wo Character den Boden berührt)
         return this.y < 155;
     }
-
-    loadImage(path) { // Methode zum Laden eines Bildes. Der Pfad des Bildes muss als Argument übergeben werden.
-        this.img = new Image(); // Erzeugt ein neues Image-Objekt.
-        this.img.src = path; // Weist dem Bildpfad den übergebenen Pfad zu.
-    }
-
-    draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);  // Den Character auf dem Canvas zeichnen
-    }
-
+    
     drawFrame(ctx) { // Rahmen um Movable Objects anzeigen lassen
         if (this instanceof Character || this instanceof Chicken) { // nur für Character und Chicken
             ctx.beginPath(); // Beginne einen neuen Pfad für die Zeichnung.
@@ -71,14 +55,6 @@ class MovableObject {
 
     isDead() {
         return this.energy == 0;
-    }
-
-    loadImages(arr) { // Methode zum Laden mehrerer Bilder.
-        arr.forEach((path) => { // Iteriert über jedes Element des übergebenen Arrays.
-            let img = new Image(); // Erzeugt ein neues Image-Objekt.
-            img.src = path; // Weist dem Bildpfad den aktuellen Pfad aus dem Array zu.
-            this.imageCache[path] = img; // Speichert das Image-Objekt im imageCache-Array unter dem entsprechenden Pfad.
-        });
     }
 
     playAnimation(images) {
