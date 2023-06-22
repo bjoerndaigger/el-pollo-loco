@@ -18,16 +18,6 @@ class MovableObject extends DrawableObject {
     isAboveGround() { // returned Wert y-Achse kleiner 155 (Wert, wo Character den Boden berührt)
         return this.y < 155;
     }
-    
-    drawFrame(ctx) { // Rahmen um Movable Objects anzeigen lassen
-        if (this instanceof Character || this instanceof Chicken) { // nur für Character und Chicken
-            ctx.beginPath(); // Beginne einen neuen Pfad für die Zeichnung.
-            ctx.lineWidth = '5'; // Setze die Linienbreite auf 5 Pixel.
-            ctx.strokeStyle = 'blue'; // Setze die Linienfarbe auf Blau.
-            ctx.rect(this.x, this.y, this.width, this.height); // Zeichne ein Rechteck mit den angegebenen Koordinaten und Abmessungen (x, y, Breite, Höhe)
-            ctx.stroke(); // Führe den Strich aus, um das Rechteck zu zeichnen.
-        }
-    }
 
     isColliding(mo) { // Überprüft, wann die Kollision stattfindet
         return (

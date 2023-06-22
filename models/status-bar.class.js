@@ -4,21 +4,24 @@ class StatusBar extends DrawableObject {
         '../img/7_statusbars/1_statusbar/2_statusbar_health/blue/20.png',
         '../img/7_statusbars/1_statusbar/2_statusbar_health/blue/40.png',
         '../img/7_statusbars/1_statusbar/2_statusbar_health/blue/60.png',
-        '../img/7_statusbars/1_statusbar/2_statusbar_health/blue/80.png', 
-        '../img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png' 
+        '../img/7_statusbars/1_statusbar/2_statusbar_health/blue/80.png',
+        '../img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png'
     ];
 
     percentage = 100;
 
     constructor() {
+        super();
         this.loadImages(this.IMAGES);
-
+        this.x = 100;
+        this.y = 100;
+        this.setPercentage(100);
     }
 
     setPercentage(percentage) {
         this.percentage = percentage;
-        let path = this.IMAGES[this.resolveImageIndex()]; // Zuweisung der URL des gewünschten Bildes (Zahl zwischen 0 und 5)
-        this.img = this.imageCache[path]; 
+        let path = this.IMAGES[this.resolveImageIndex()]; // Zuweisung der URL des gewünschten Bildes (Zahl zwischen 0 und 5) an path
+        this.img = this.imageCache[path]; // laden des Pfades aus Array imageCache und zuweisen des Bildes an die Variable "img" in DrawableObjects
     }
 
     resolveImageIndex() {
@@ -37,5 +40,6 @@ class StatusBar extends DrawableObject {
         }
     }
 }
+
 
 

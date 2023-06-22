@@ -5,6 +5,7 @@ class World {
     ctx;  // 2D-Kontext-Variable
     keyboard;  // Keyboard-Objekt
     camera_x = 0;  // Kameraposition (Hintergrundbild) auf x-Achse
+    statusBar = new StatusBar(); // Ein StatusBar-Objekt erstellen
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');  // Den 2D-Kontext des Canvas-Elements abrufen
@@ -35,6 +36,7 @@ class World {
         this.ctx.translate(this.camera_x, 0);  // Den Kontext (Hintergrund) um den Wert von camera_x verschieben
 
         this.addObjectsToMap(this.level.backgroundObjects);  // Die BackgroundObject-Objekte zur Karte hinzufügen
+        this.addToMap(this.statusBar); // Das StatusBar-Objekt zur Karte hinzufügen
         this.addToMap(this.character);  // Das Character-Objekt zur Karte hinzufügen
         this.addObjectsToMap(this.level.enemies);  // Die Chicken-Objekte zur Karte hinzufügen
         this.addObjectsToMap(this.level.clouds);  // Die Cloud-Objekte zur Karte hinzufügen

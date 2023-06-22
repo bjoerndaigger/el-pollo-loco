@@ -16,6 +16,16 @@ class DrawableObject {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);  // Den Character auf dem Canvas zeichnen
     }
 
+    drawFrame(ctx) { // Rahmen um Objekte anzeigen lassen
+        if (this instanceof Character || this instanceof Chicken) { // nur für Character und Chicken
+            ctx.beginPath(); // Beginne einen neuen Pfad für die Zeichnung.
+            ctx.lineWidth = '5'; // Setze die Linienbreite auf 5 Pixel.
+            ctx.strokeStyle = 'blue'; // Setze die Linienfarbe auf Blau.
+            ctx.rect(this.x, this.y, this.width, this.height); // Zeichne ein Rechteck mit den angegebenen Koordinaten und Abmessungen (x, y, Breite, Höhe)
+            ctx.stroke(); // Führe den Strich aus, um das Rechteck zu zeichnen.
+        }
+    }
+
     loadImages(arr) { // Methode zum Laden mehrerer Bilder.
         arr.forEach((path) => { // Iteriert über jedes Element des übergebenen Arrays.
             let img = new Image(); // Erzeugt ein neues Image-Objekt.
