@@ -25,6 +25,7 @@ class World {
             this.level.enemies.forEach((enemy) => { // Durchlaufe die Liste der Gegner im Level
                 if (this.character.isColliding(enemy)) { // Überprüfe, ob der Charakter mit dem aktuellen Gegner kollidiert
                    this.character.hit();
+                   this.statusBar.setPercentage(this.character.energy); // Aufruf der StatusBar Images bei jeder Kollision
                 }
             });
         }, 200); // Das Intervall beträgt 200 Millisekunden (0,2 Sekunden)
@@ -32,15 +33,17 @@ class World {
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);  // Das Canvas löschen
-
         this.ctx.translate(this.camera_x, 0);  // Den Kontext (Hintergrund) um den Wert von camera_x verschieben
-
         this.addObjectsToMap(this.level.backgroundObjects);  // Die BackgroundObject-Objekte zur Karte hinzufügen
+
+        this.ctx.translate(-this.camera_x, 0);  // Die Translation für fixierten StatusBar zurücksetzen
+        // --- Space for fixed objects --- //
         this.addToMap(this.statusBar); // Das StatusBar-Objekt zur Karte hinzufügen
+        this.ctx.translate(this.camera_x, 0);  // Den Kontext (Hintergrund) um den Wert von camera_x erneut verschieben
+
         this.addToMap(this.character);  // Das Character-Objekt zur Karte hinzufügen
         this.addObjectsToMap(this.level.enemies);  // Die Chicken-Objekte zur Karte hinzufügen
         this.addObjectsToMap(this.level.clouds);  // Die Cloud-Objekte zur Karte hinzufügen
-
         this.ctx.translate(-this.camera_x, 0);  // Die Translation zurücksetzen
 
         let self = this;  // Hilfsvariable 'self', da 'this' innerhalb von requestAnimationFrame() nicht funktioniert

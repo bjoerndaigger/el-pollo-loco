@@ -13,13 +13,15 @@ class StatusBar extends DrawableObject {
     constructor() {
         super();
         this.loadImages(this.IMAGES);
-        this.x = 100;
-        this.y = 100;
+        this.x = 40;
+        this.y = 0;
+        this.width = 200;
+        this.height = 53;
         this.setPercentage(100);
     }
 
     setPercentage(percentage) {
-        this.percentage = percentage;
+        this.percentage = percentage; // Bekommt Wert von Variable energy, die bei jeder Kollision sinkt
         let path = this.IMAGES[this.resolveImageIndex()]; // Zuweisung der URL des gewünschten Bildes (Zahl zwischen 0 und 5) an path
         this.img = this.imageCache[path]; // laden des Pfades aus Array imageCache und zuweisen des Bildes an die Variable "img" in DrawableObjects
     }
