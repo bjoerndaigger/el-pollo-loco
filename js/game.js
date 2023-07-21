@@ -8,6 +8,7 @@ function init() {
 }
 
 window.addEventListener("keydown", (e) => {  // Event-Listener für das keydown-Ereignis
+    console.log(e.keyCode);
     if(e.keyCode == 39) {  // Rechte Pfeiltaste
         keyboard.RIGHT = true;  // Die RIGHT-Eigenschaft des Keyboard-Objekts auf true setzen
     }
@@ -26,6 +27,10 @@ window.addEventListener("keydown", (e) => {  // Event-Listener für das keydown-
 
     if(e.keyCode == 32) {  // Leertaste
         keyboard.SPACE = true;  // Die SPACE-Eigenschaft des Keyboard-Objekts auf true setzen
+    }
+
+    if(e.keyCode == 68) {  // D-Taste
+        keyboard.D = true;  // Die D-Eigenschaft des Keyboard-Objekts auf true setzen
     }
 });
 
@@ -48,5 +53,9 @@ window.addEventListener("keyup", (e) => {  // Event-Listener für das keyup-Erei
 
     if(e.keyCode == 32) {  // Leertaste
         keyboard.SPACE = false;  // Die SPACE-Eigenschaft des Keyboard-Objekts auf false setzen
+    }
+
+    if(e.keyCode == 68) {  // D-Taste
+        keyboard.D = false;  // Die D-Eigenschaft des Keyboard-Objekts auf false setzen
     }
 });
