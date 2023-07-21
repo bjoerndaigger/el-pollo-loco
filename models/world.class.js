@@ -14,26 +14,38 @@ class World {
         this.keyboard = keyboard;  // Das Keyboard-Objekt speichern
         this.draw();  // Die draw-Funktion aufrufen
         this.setWorld();  // Die setWorld-Funktion aufrufen, um die world-Eigenschaft des Character-Objekts festzulegen
-        this.checkCollisions(); // Überprüft ob zwei Objekte kollidieren
+        this.run(); // ruft verschiedene Funktionen mit Intervallen auf
     }
 
     setWorld() {
         this.character.world = this;  // Die world-Eigenschaft des Character-Objekts auf diese World-Instanz setzen
     }
 
-    checkCollisions() {
+    run() {
         setInterval(() => { // Die Funktion wird in regelmäßigen Intervallen aufgerufen
-            this.level.enemies.forEach((enemy) => { // Durchlaufe die Liste der Gegner im Level
-                if (this.character.isColliding(enemy)) { // Überprüfe, ob der Charakter mit dem aktuellen Gegner kollidiert
-                   this.character.hit();
-                   this.statusBar.setPercentage(this.character.energy); // Aufruf der StatusBar Images bei jeder Kollision
-                }
-            });
+            this.checkCollision();
+            this.checkThrowObjects();
         }, 200); // Das Intervall beträgt 200 Millisekunden (0,2 Sekunden)
     }
 
+    checkThrowObjects() {
+        if(this.keyboard.D) { // wenn Key D gedrückt wird, wird neue Flasche in den Array throwableObjects gepusht und geworfen
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100); // neue Flasche mit Abwurfkoordinaten des Characters
+            this.throwableObjects.push(bottle);
+        }
+    }
+
+    checkCollision() { // Überprüft ob zwei Objekte kollidieren
+        this.level.enemies.forEach((enemy) => { // Durchlaufe die Liste der Gegner im Level
+            if (this.character.isColliding(enemy)) { // Überprüfe, ob der Charakter mit dem aktuellen Gegner kollidiert
+               this.character.hit();
+               this.statusBar.setPercentage(this.character.energy); // Aufruf der StatusBar Images bei jeder Kollision
+            }
+        })
+    }
+
     draw() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);  // Das Canvas löschen
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);  // Da£s Canvas löschen
         this.ctx.translate(this.camera_x, 0);  // Den Kontext (Hintergrund) um den Wert von camera_x verschieben
         this.addObjectsToMap(this.level.backgroundObjects);  // Die BackgroundObject-Objekte zur Karte hinzufügen
 
@@ -45,7 +57,7 @@ class World {
         this.addToMap(this.character);  // Das Character-Objekt zur Karte hinzufügen
         this.addObjectsToMap(this.level.clouds);  // Die Cloud-Objekte zur Karte hinzufügen
         this.addObjectsToMap(this.level.enemies);  // Die Chicken-Objekte zur Karte hinzufügen
-        this.addObjectsToMap(this.throwableObjects);
+        this.addObjectsToMap(this.throwableObjects); // Die Throwable-Objekte zur Karte hinzufügen
 
 
         this.ctx.translate(-this.camera_x, 0);  // Die Translation zurücksetzen
@@ -57,7 +69,7 @@ class World {
     }
 
     addObjectsToMap(objects) {
-        objects.forEach(o => {
+        objects.forEach(o => { // forEach funktioniert nur mit Arrays, weswegen ich Objekte als Array hineingeben muss
             this.addToMap(o);  // Jedes Objekt zur Karte hinzufügen
         });
     }

@@ -15,8 +15,12 @@ class MovableObject extends DrawableObject {
         }, 1000 / 25) // 25 mal pro Sekunde
     }
 
-    isAboveGround() { // returned Wert y-Achse kleiner 155 (Wert, wo Character den Boden berührt)
-        return this.y < 155;
+    isAboveGround() { 
+        if (this instanceof ThrowableObject) { // if isAboveGround() eine Instanz von ThrowableObject
+            return true; // gibt zurück, dass Funktion dauerhaft über dem Boden ist (true) und das Fallen wird deshalb nicht ausgebremst
+        } else { // returned Wert y-Achse kleiner 155 (Wert, wo Character den Boden berührt), so dass das Fallen an der Stelle stoppt
+            return this.y < 155;
+        }
     }
 
     isColliding(mo) { // Überprüft, wann die Kollision stattfindet
