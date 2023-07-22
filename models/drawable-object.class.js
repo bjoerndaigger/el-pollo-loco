@@ -17,7 +17,7 @@ class DrawableObject {
     }
 
     drawFrame(ctx) { // Rahmen um Objekte anzeigen lassen
-        if (this instanceof Character || this instanceof Chicken) { // nur für Character und Chicken
+        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss) { // nur für Character und Chicken
             ctx.beginPath(); // Beginne einen neuen Pfad für die Zeichnung.
             ctx.lineWidth = '5'; // Setze die Linienbreite auf 5 Pixel.
             ctx.strokeStyle = 'blue'; // Setze die Linienfarbe auf Blau.
