@@ -7,7 +7,6 @@ class World {
     camera_x = 0;  // Kameraposition (Hintergrundbild) auf x-Achse
     statusBar = new StatusBar(); // Ein StatusBar-Objekt erstellen
     throwableObjects = [new ThrowableObject()];
-    bottles = [new Bottle()];
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');  // Den 2D-Kontext des Canvas-Elements abrufen
@@ -59,7 +58,7 @@ class World {
         this.addObjectsToMap(this.level.clouds);  // Die Cloud-Objekte zur Karte hinzufügen
         this.addObjectsToMap(this.level.enemies);  // Die Chicken-Objekte zur Karte hinzufügen
         this.addObjectsToMap(this.throwableObjects); // Die Throwable-Objekte zur Karte hinzufügen
-        this.addObjectsToMap(this.bottles);
+        this.addObjectsToMap(this.level.bottles);
 
 
         this.ctx.translate(-this.camera_x, 0);  // Die Translation zurücksetzen
