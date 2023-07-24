@@ -8,6 +8,7 @@ class World {
     statusBarCharacter = new StatusBarCharacter(); // Ein StatusBar-Objekt erstellen
     statusBarBottles = new StatusBarBottles();
     throwableObjects = [new ThrowableObject()];
+    collectedBottles = []; // Array for collected Bottles
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');  // Den 2D-Kontext des Canvas-Elements abrufen
@@ -30,7 +31,7 @@ class World {
     }
 
     checkThrowObjects() {
-        if(this.keyboard.D) { // wenn Key D gedrückt wird, wird neue Flasche in den Array throwableObjects gepusht und geworfen
+        if(this.keyboard.D && this.collectedBottles.length > 0) { // wenn Key D gedrückt wird und Wert in Array enthalten ist, wird neue Flasche in den Array throwableObjects gepusht und geworfen
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100); // neue Flasche mit Abwurfkoordinaten des Characters
             this.throwableObjects.push(bottle);
         }
@@ -52,15 +53,17 @@ class World {
     }
 
    // checks if character collides with bottles
-    checkCollisionBottlesToCollect() {
-        this.level.bottles.forEach((bottle) => {
-            if (this.character.isColliding(bottle)) {
-                console.log('Hit');
-                this.character.hit();
-                this.statusBarBottles.setPercentage(this.character.energy); // Aufruf der StatusBar Images bei jeder Kollision
+   checkCollisionBottlesToCollect() {
+    this.level.bottles.forEach((bottle) => {
+        if (this.character.isColliding(bottle)) {
+            if (!this.collectedBottles.includes(bottle)) { // only not in array inluced bottles will be pushed
+                this.collectedBottles.push(bottle);
+                console.log(this.collectedBottles);
             }
-        })
-    }
+        }
+    })
+}
+
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);  // Da£s Canvas löschen
