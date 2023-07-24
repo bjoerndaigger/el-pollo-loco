@@ -23,7 +23,7 @@ class World {
 
     run() {
         setInterval(() => { // Die Funktion wird in regelmäßigen Intervallen aufgerufen
-            this.checkCollision();
+            this.checkCollisions();
             this.checkThrowObjects();
         }, 200); // Das Intervall beträgt 200 Millisekunden (0,2 Sekunden)
     }
@@ -35,11 +35,26 @@ class World {
         }
     }
 
-    checkCollision() { // Überprüft ob zwei Objekte kollidieren
+    checkCollisions() {
+        this.checkCollisionCharacterEnemies();
+        this.checkCollisionBottlesToCollect();
+    }
+
+    // checks if character collides with enemies
+    checkCollisionCharacterEnemies() { // Überprüft ob zwei Objekte kollidieren
         this.level.enemies.forEach((enemy) => { // Durchlaufe die Liste der Gegner im Level
             if (this.character.isColliding(enemy)) { // Überprüfe, ob der Charakter mit dem aktuellen Gegner kollidiert
                this.character.hit();
                this.statusBar.setPercentage(this.character.energy); // Aufruf der StatusBar Images bei jeder Kollision
+            }
+        })
+    }
+
+   // checks if character collides with bottles
+    checkCollisionBottlesToCollect() {
+        this.level.bottles.forEach((bottle) => {
+            if (this.character.isColliding(bottle)) {
+                console.log('Hit');
             }
         })
     }

@@ -1,6 +1,6 @@
 class Bottle extends MovableObject {
     y = 350;
-    x = Math.floor(Math.random() * 2500); // Zufällige x-Koordinate
+    x = Math.floor(Math.random() * 2300); // Zufällige x-Koordinate
     width = 100;
     height = 100;
     IMAGES_BOTTLES = [
