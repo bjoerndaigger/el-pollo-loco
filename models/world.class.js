@@ -5,7 +5,8 @@ class World {
     ctx;  // 2D-Kontext-Variable
     keyboard;  // Keyboard-Objekt
     camera_x = 0;  // Kameraposition (Hintergrundbild) auf x-Achse
-    statusBar = new StatusBar(); // Ein StatusBar-Objekt erstellen
+    statusBarCharacter = new StatusBarCharacter(); // Ein StatusBar-Objekt erstellen
+    statusBarBottles = new StatusBarBottles();
     throwableObjects = [new ThrowableObject()];
 
     constructor(canvas, keyboard) {
@@ -45,7 +46,7 @@ class World {
         this.level.enemies.forEach((enemy) => { // Durchlaufe die Liste der Gegner im Level
             if (this.character.isColliding(enemy)) { // Überprüfe, ob der Charakter mit dem aktuellen Gegner kollidiert
                this.character.hit();
-               this.statusBar.setPercentage(this.character.energy); // Aufruf der StatusBar Images bei jeder Kollision
+               this.statusBarCharacter.setPercentage(this.character.energy); // Aufruf der StatusBar Images bei jeder Kollision
             }
         })
     }
@@ -55,6 +56,8 @@ class World {
         this.level.bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
                 console.log('Hit');
+                this.character.hit();
+                this.statusBarBottles.setPercentage(this.character.energy); // Aufruf der StatusBar Images bei jeder Kollision
             }
         })
     }
@@ -66,7 +69,8 @@ class World {
 
         this.ctx.translate(-this.camera_x, 0);  // Die Translation für fixierten StatusBar zurücksetzen
         // --- Space for fixed objects --- //
-        this.addToMap(this.statusBar); // Das StatusBar-Objekt zur Karte hinzufügen
+        this.addToMap(this.statusBarCharacter); // Das StatusBar-Objekt zur Karte hinzufügen
+        this.addToMap(this.statusBarBottles);
         this.ctx.translate(this.camera_x, 0);  // Den Kontext (Hintergrund) um den Wert von camera_x erneut verschieben
 
         this.addToMap(this.character);  // Das Character-Objekt zur Karte hinzufügen
