@@ -3,7 +3,13 @@ body {
     flex-direction: column;
     align-items: center;
     background-image: url(./img/background.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
+
+body, html {
+    height: 100%;
+  }
 
 canvas {
     background-color: black;
