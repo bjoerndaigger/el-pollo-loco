@@ -8,7 +8,6 @@ function init() {
 }
 
 window.addEventListener("keydown", (e) => {  // Event-Listener für das keydown-Ereignis
-    console.log(e.keyCode);
     if(e.keyCode == 39) {  // Rechte Pfeiltaste
         keyboard.RIGHT = true;  // Die RIGHT-Eigenschaft des Keyboard-Objekts auf true setzen
     }

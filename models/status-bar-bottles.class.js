@@ -8,8 +8,6 @@ class StatusBarBottles extends DrawableObject {
         'img/7_statusbars/1_statusbar/3_statusbar_bottle/orange/100.png'
     ];
 
-    percentage = 100;
-
     constructor() {
         super();
         this.loadImages(this.IMAGES_STATUSBAR_BOTTLES);
@@ -17,25 +15,27 @@ class StatusBarBottles extends DrawableObject {
         this.y = 50;
         this.width = 200;
         this.height = 53;
-        this.setPercentage(100);
+        this.setBottles(0);
+        
     }
 
-    setPercentage(percentage) {
-        this.percentage = percentage; // Bekommt Wert von Variable energy, die bei jeder Kollision sinkt
+    setBottles(bottleAmount) {
+        console.log('Collected Bottles: ' + bottleAmount);
+        this.bottleAmount = bottleAmount; // Bekommt Wert von Variable bottleAmount, die bei jeder Kollision steigt
         let path = this.IMAGES_STATUSBAR_BOTTLES[this.resolveImageIndex()]; // Zuweisung der URL des gewünschten Bildes (Zahl zwischen 0 und 5) an path
         this.img = this.imageCache[path]; // laden des Pfades aus Array imageCache und zuweisen des Bildes an die Variable "img" in DrawableObjects
     }
 
     resolveImageIndex() {
-        if (this.percentage == 100) {
+        if (this.bottleAmount > 8) {
             return 5;
-        } else if (this.percentage > 80) {
+        } else if (this.bottleAmount > 6) {
             return 4;
-        } else if (this.percentage > 60) {
+        } else if (this.bottleAmount > 4) {
             return 3;
-        } else if (this.percentage > 40) {
+        } else if (this.bottleAmount > 2) {
             return 2;
-        } else if (this.percentage > 20) {
+        } else if (this.bottleAmount > 0) {
             return 1;
         } else {
             return 0;

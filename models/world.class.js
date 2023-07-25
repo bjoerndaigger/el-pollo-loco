@@ -31,9 +31,11 @@ class World {
     }
 
     checkThrowObjects() {
-        if(this.keyboard.D && this.collectedBottles.length > 0) { // wenn Key D gedrückt wird und Wert in Array enthalten ist, wird neue Flasche in den Array throwableObjects gepusht und geworfen
+        if (this.keyboard.D && this.collectedBottles.length > 0) { // wenn Key D gedrückt wird und Wert in Array enthalten ist, wird neue Flasche in den Array throwableObjects gepusht und geworfen
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100); // neue Flasche mit Abwurfkoordinaten des Characters
             this.throwableObjects.push(bottle);
+            this.collectedBottles.pop(); // Nach Abwurf einen Wert aus Array entfernen
+            this.statusBarBottles.setBottles(this.collectedBottles.length); // Wert an StatusBarBottles übergeben
         }
     }
 
@@ -46,23 +48,26 @@ class World {
     checkCollisionCharacterEnemies() { // Überprüft ob zwei Objekte kollidieren
         this.level.enemies.forEach((enemy) => { // Durchlaufe die Liste der Gegner im Level
             if (this.character.isColliding(enemy)) { // Überprüfe, ob der Charakter mit dem aktuellen Gegner kollidiert
-               this.character.hit();
-               this.statusBarCharacter.setPercentage(this.character.energy); // Aufruf der StatusBar Images bei jeder Kollision
+                this.character.hit();
+                this.statusBarCharacter.setPercentage(this.character.energy); // Aufruf der StatusBar Images bei jeder Kollision
             }
         })
     }
 
-   // checks if character collides with bottles
-   checkCollisionBottlesToCollect() {
-    this.level.bottles.forEach((bottle) => {
-        if (this.character.isColliding(bottle)) {
-            if (!this.collectedBottles.includes(bottle)) { // only not in array inluced bottles will be pushed
-                this.collectedBottles.push(bottle);
-                console.log(this.collectedBottles);
+    // checks if character collides with bottles
+    checkCollisionBottlesToCollect() {
+        this.level.bottles.forEach((bottle, index) => { // Wir verwenden auch den Index des Elements im Array
+            if (this.character.isColliding(bottle)) {
+                if (!this.collectedBottles.includes(bottle)) {
+                    this.collectedBottles.push(bottle);
+                    console.log(this.collectedBottles);
+                    this.statusBarBottles.setBottles(this.collectedBottles.length); // Wert an StatusBarBottles übergeben
+                    this.level.bottles.splice(index, 1); // Entferne die kollidierte Flasche aus dem Array und entferne Bild
+                }
             }
-        }
-    })
-}
+        })
+    }
+    
 
 
     draw() {
