@@ -1,5 +1,5 @@
 class Coin extends MovableObject {
-    y = 100 + Math.random() * 250;
+    y = 80 + Math.random() * 120; // setzen der y-Position
     x = 300 + Math.random() * 2000; // Setzen der x-Position zufällig zwischen 300 und 2200
     width = 150;
     height = 150;
@@ -9,7 +9,14 @@ class Coin extends MovableObject {
     ];
 
     constructor() {
-        super().loadImage('img/8_coin/coin_1.png');
+        super().loadImage(this.IMAGES_COIN[0]);
         this.loadImages(this.IMAGES_COIN);
+        this.animate();
+    }
+
+    animate() {
+        setInterval(() => { 
+            this.playAnimation(this.IMAGES_COIN);
+        }, 250); // Wiederholen der Animation alle 200 Millisekunden
     }
 }

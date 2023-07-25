@@ -7,8 +7,10 @@ class World {
     camera_x = 0;  // Kameraposition (Hintergrundbild) auf x-Achse
     statusBarCharacter = new StatusBarCharacter(); // Ein StatusBar-Objekt erstellen
     statusBarBottles = new StatusBarBottles();
+    statusBarCoins = new StatusBarCoins();
     throwableObjects = [new ThrowableObject()];
     collectedBottles = []; // Array for collected Bottles
+    collectedCoins = []; // Array for collected coins
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');  // Den 2D-Kontext des Canvas-Elements abrufen
@@ -42,6 +44,7 @@ class World {
     checkCollisions() {
         this.checkCollisionCharacterEnemies();
         this.checkCollisionBottlesToCollect();
+        this.checkCollisionCoinsToCollect();
     }
 
     // checks if character collides with enemies
@@ -57,10 +60,9 @@ class World {
     // checks if character collides with bottles
     checkCollisionBottlesToCollect() {
         this.level.bottles.forEach((bottle, index) => { // Mit Index des Elements im Array
-            if (this.character.isColliding(bottle)) {
+            if (this.character.isColliding(bottle)) { // wird nur ausgeführt, wenn Wert noch nicht vorhanden
                 if (!this.collectedBottles.includes(bottle)) {
                     this.collectedBottles.push(bottle);
-                    console.log(this.collectedBottles);
                     this.statusBarBottles.setBottles(this.collectedBottles.length); // Wert an StatusBarBottles übergeben
                     this.level.bottles.splice(index, 1); // Entferne die kollidierte Flasche aus dem Array und entferne Bild
                 }
@@ -69,6 +71,18 @@ class World {
     }
     
 
+    checkCollisionCoinsToCollect() {
+        this.level.coins.forEach((coin, index) => { // Durchlaufe die Liste der Gegner im Level
+            if (this.character.isColliding(coin)) { // Überprüfe, ob der Charakter mit dem aktuellen Gegner kollidiert
+                if (!this.collectedCoins.includes(coin)) { // wird nur ausgeführt, wenn Wert noch nicht vorhanden
+                    this.collectedCoins.push(coin);
+                    this.statusBarCoins.setCoins(this.collectedCoins.length);
+                    this.level.coins.splice(index, 1); // Entferne die kollidierte Flasche aus dem Array und entferne Bild
+                }
+              
+            }
+        })
+    }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);  // Da£s Canvas löschen
@@ -79,6 +93,7 @@ class World {
         // --- Space for fixed objects --- //
         this.addToMap(this.statusBarCharacter); // Das StatusBar-Objekt zur Karte hinzufügen
         this.addToMap(this.statusBarBottles);
+        this.addToMap(this.statusBarCoins);
         this.ctx.translate(this.camera_x, 0);  // Den Kontext (Hintergrund) um den Wert von camera_x erneut verschieben
 
         this.addToMap(this.character);  // Das Character-Objekt zur Karte hinzufügen

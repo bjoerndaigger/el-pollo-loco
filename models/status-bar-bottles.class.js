@@ -20,7 +20,6 @@ class StatusBarBottles extends DrawableObject {
     }
 
     setBottles(bottleAmount) {
-        console.log('Collected Bottles: ' + bottleAmount);
         this.bottleAmount = bottleAmount; // Bekommt Wert von Variable bottleAmount, die bei jeder Kollision steigt
         let path = this.IMAGES_STATUSBAR_BOTTLES[this.resolveImageIndex()]; // Zuweisung der URL des gewünschten Bildes (Zahl zwischen 0 und 5) an path
         this.img = this.imageCache[path]; // laden des Pfades aus Array imageCache und zuweisen des Bildes an die Variable "img" in DrawableObjects

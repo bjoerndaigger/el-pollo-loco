@@ -49,11 +49,6 @@ const level1 = new Level( // Erstellen einer Konstanten "level1" und Initialisie
         new Coin(),
         new Coin(),
         new Coin(),
-        new Coin(),
-        new Coin(),
-        new Coin(),
-        new Coin(),
-        new Coin(),
         new Coin()
     ]
 );
