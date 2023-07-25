@@ -56,7 +56,7 @@ class World {
 
     // checks if character collides with bottles
     checkCollisionBottlesToCollect() {
-        this.level.bottles.forEach((bottle, index) => { // Wir verwenden auch den Index des Elements im Array
+        this.level.bottles.forEach((bottle, index) => { // Mit Index des Elements im Array
             if (this.character.isColliding(bottle)) {
                 if (!this.collectedBottles.includes(bottle)) {
                     this.collectedBottles.push(bottle);
@@ -86,6 +86,7 @@ class World {
         this.addObjectsToMap(this.level.enemies);  // Die Chicken-Objekte zur Karte hinzufügen
         this.addObjectsToMap(this.throwableObjects); // Die Throwable-Objekte zur Karte hinzufügen
         this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.level.coins);
 
 
         this.ctx.translate(-this.camera_x, 0);  // Die Translation zurücksetzen
