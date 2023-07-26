@@ -32,21 +32,19 @@ class ThrowableObject extends MovableObject {
     throw() {
         this.speedY = 30; // Fallgeschwindigkeit
         this.applyGravity(); // Objekt fällt nach unten
-        this.animate();
+
+
         setInterval(() => {
             if (this.y < 320) {
                 this.x += 8;
             }
         }, 25);
-    }
 
-    animate() {
-        const animationInterval = setInterval(() => {
+       setInterval(() => {
             if (this.y < 240) {
                 this.playAnimation(this.IMAGES_THROWING);
             } else {
-                this.playAnimation(this.IMAGES_SPLASHING_BOTTLE);
-                clearInterval(animationInterval); // Stop the animation interval
+                this.playAnimation(this.IMAGES_SPLASHING_BOTTLE); 
             }
         }, 75);
     }
