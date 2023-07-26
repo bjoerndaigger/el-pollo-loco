@@ -17,7 +17,8 @@ class MovableObject extends DrawableObject {
 
     isAboveGround() { 
         if (this instanceof ThrowableObject) { // if isAboveGround() eine Instanz von ThrowableObject
-            return true; // gibt zurück, dass Funktion dauerhaft über dem Boden ist (true) und das Fallen wird deshalb nicht ausgebremst
+            return this.y < 325;
+            // return true; // gibt zurück, dass Funktion dauerhaft über dem Boden ist (true) und das Fallen wird deshalb nicht ausgebremst
         } else { // returned Wert y-Achse kleiner 155 (Wert, wo Character den Boden berührt), so dass das Fallen an der Stelle stoppt
             return this.y < 155;
         }
