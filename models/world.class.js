@@ -8,7 +8,7 @@ class World {
     statusBarCharacter = new StatusBarCharacter(); // Ein StatusBar-Objekt erstellen
     statusBarBottles = new StatusBarBottles();
     statusBarCoins = new StatusBarCoins();
-    throwableObjects = [new ThrowableObject()];
+    throwableObjects = [];
     collectedBottles = []; // Array for collected Bottles
     collectedCoins = []; // Array for collected coins
 
@@ -61,7 +61,7 @@ class World {
     // checks if endboss collides with bottles
     checkCollisionEndbossThrownBottle() {
             this.throwableObjects.forEach((bottles) => {
-                if (bottles.isColliding(this.level.endboss)) {
+                if (bottles.isColliding(this.level.endboss[0])) {
                     console.log('Treffer');
                 }
             });
