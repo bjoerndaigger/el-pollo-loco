@@ -45,6 +45,7 @@ class World {
         this.checkCollisionCharacterEnemies();
         this.checkCollisionBottlesToCollect();
         this.checkCollisionCoinsToCollect();
+        this.checkCollisionEndbossThrownBottle();
     }
 
     // checks if character collides with enemies
@@ -55,6 +56,15 @@ class World {
                 this.statusBarCharacter.setPercentage(this.character.energy); // Aufruf der StatusBar Images bei jeder Kollision
             }
         })
+    }
+
+    // checks if endboss collides with bottles
+    checkCollisionEndbossThrownBottle() {
+            this.throwableObjects.forEach((bottles) => {
+                if (bottles.isColliding(this.level.endboss)) {
+                    console.log('Treffer');
+                }
+            });
     }
 
     // checks if character collides with bottles
@@ -69,20 +79,22 @@ class World {
             }
         })
     }
-    
+
 
     checkCollisionCoinsToCollect() {
-        this.level.coins.forEach((coin, index) => { // Durchlaufe die Liste der Gegner im Level
-            if (this.character.isColliding(coin)) { // Überprüfe, ob der Charakter mit dem aktuellen Gegner kollidiert
+        this.level.coins.forEach((coin, index) => {
+            if (this.character.isColliding(coin)) {
                 if (!this.collectedCoins.includes(coin)) { // wird nur ausgeführt, wenn Wert noch nicht vorhanden
                     this.collectedCoins.push(coin);
                     this.statusBarCoins.setCoins(this.collectedCoins.length);
                     this.level.coins.splice(index, 1); // Entferne die kollidierte Flasche aus dem Array und entferne Bild
                 }
-              
+
             }
         })
     }
+
+
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);  // Da£s Canvas löschen
@@ -99,6 +111,7 @@ class World {
         this.addToMap(this.character);  // Das Character-Objekt zur Karte hinzufügen
         this.addObjectsToMap(this.level.clouds);  // Die Cloud-Objekte zur Karte hinzufügen
         this.addObjectsToMap(this.level.enemies);  // Die Chicken-Objekte zur Karte hinzufügen
+        this.addObjectsToMap(this.level.endboss); // Den Endboss zur Karte hinzufügen
         this.addObjectsToMap(this.throwableObjects); // Die Throwable-Objekte zur Karte hinzufügen
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.coins);
