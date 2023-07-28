@@ -60,11 +60,14 @@ class World {
 
     // checks if endboss collides with bottles
     checkCollisionEndbossThrownBottle() {
-            this.throwableObjects.forEach((bottles) => {
-                if (bottles.isColliding(this.level.endboss)) {
-                    console.log('Treffer');
-                }
-            });
+        let collisionDetected = false;
+        this.throwableObjects.forEach((bottle) => {
+            if (bottle.isColliding(this.level.endboss)) {
+                collisionDetected = true;
+                return;
+            }
+        });
+        return collisionDetected;
     }
 
     // checks if character collides with bottles
@@ -101,7 +104,7 @@ class World {
         this.ctx.translate(this.camera_x, 0);  // Den Kontext (Hintergrund) um den Wert von camera_x verschieben
         this.addObjectsToMap(this.level.backgroundObjects);  // Die BackgroundObject-Objekte zur Karte hinzufügen
         this.addObjectsToMap(this.level.clouds);  // Die Cloud-Objekte zur Karte hinzufügen
-        
+
         this.ctx.translate(-this.camera_x, 0);  // Die Translation für fixierten StatusBar zurücksetzen
         // --- Space for fixed objects --- //
         this.addToMap(this.statusBarCharacter); // Das StatusBar-Objekt zur Karte hinzufügen
@@ -110,7 +113,7 @@ class World {
         this.ctx.translate(this.camera_x, 0);  // Den Kontext (Hintergrund) um den Wert von camera_x erneut verschieben
 
         this.addToMap(this.character);  // Das Character-Objekt zur Karte hinzufügen
-        
+
         this.addObjectsToMap(this.level.enemies);  // Die Chicken-Objekte zur Karte hinzufügen
         this.addToMap(this.level.endboss); // Den Endboss zur Karte hinzufügen
         this.addObjectsToMap(this.throwableObjects); // Die Throwable-Objekte zur Karte hinzufügen

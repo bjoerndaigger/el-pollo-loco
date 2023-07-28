@@ -32,7 +32,9 @@ class ThrowableObject extends MovableObject {
     throw() {
         this.speedY = 30; // Fallgeschwindigkeit
         this.applyGravity(); // Objekt fällt nach unten
-        this.animate(); // 
+        this.animate(); 
+        const test = world.checkCollisionEndbossThrownBottle();
+        console.log(test);
 
         setInterval(() => {
             if (this.y < 325) {
@@ -45,14 +47,19 @@ class ThrowableObject extends MovableObject {
         const bottleAnimation = setInterval(() => {
             if (this.y < 240) {
                 this.playAnimation(this.IMAGES_THROWING);
-            } else {
+            } 
+            else {
                 this.playAnimation(this.IMAGES_SPLASHING_BOTTLE);
-                clearInterval(bottleAnimation);
-                setTimeout(() => {
-                    this.loadImage('');
-                }, 150);
+                this.stopAnimation(bottleAnimation);
             }
         }, 75);
+    }
+
+    stopAnimation(bottleAnimation) {
+        clearInterval(bottleAnimation);
+        setTimeout(() => {
+            this.loadImage('');
+        }, 150);
     }
 }
 
