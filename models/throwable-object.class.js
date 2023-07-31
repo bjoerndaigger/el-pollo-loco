@@ -33,8 +33,6 @@ class ThrowableObject extends MovableObject {
         this.speedY = 30; // Fallgeschwindigkeit
         this.applyGravity(); // Objekt fällt nach unten
         this.animate(); 
-        const test = world.checkCollisionEndbossThrownBottle();
-        console.log(test);
 
         setInterval(() => {
             if (this.y < 325) {

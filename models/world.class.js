@@ -60,15 +60,12 @@ class World {
 
     // checks if endboss collides with bottles
     checkCollisionEndbossThrownBottle() {
-        let collisionDetected = false;
-        this.throwableObjects.forEach((bottle) => {
-            if (bottle.isColliding(this.level.endboss)) {
-                collisionDetected = true;
-                return;
+        this.throwableObjects.forEach((bottles) => {
+            if (bottles.isColliding(this.level.endboss)) {
+                console.log('Treffer');
             }
         });
-        return collisionDetected;
-    }
+}
 
     // checks if character collides with bottles
     checkCollisionBottlesToCollect() {
