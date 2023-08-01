@@ -4,6 +4,7 @@ class World {
     canvas;  // Canvas-Variable
     ctx;  // 2D-Kontext-Variable
     keyboard;  // Keyboard-Objekt
+    bottle; // Bottle Variable
     camera_x = 0;  // Kameraposition (Hintergrundbild) auf x-Achse
     statusBarCharacter = new StatusBarCharacter(); // Ein StatusBar-Objekt erstellen
     statusBarBottles = new StatusBarBottles();
@@ -32,10 +33,18 @@ class World {
         }, 200); // Das Intervall beträgt 200 Millisekunden (0,2 Sekunden)
     }
 
+
+
     checkThrowObjects() {
         if (this.keyboard.D && this.collectedBottles.length > 0) { // wenn Key D gedrückt wird und Wert in Array enthalten ist, wird neue Flasche in den Array throwableObjects gepusht und geworfen
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100); // neue Flasche mit Abwurfkoordinaten des Characters
-            this.throwableObjects.push(bottle);
+            const characterOtherDirection = this.character.otherDirection;
+            if (!characterOtherDirection) { // neue Flasche mit Abwurfkoordinaten des Characters
+                this.bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100); 
+            }
+            if (characterOtherDirection) { // neue Flasche mit Abwurfkoordinaten des Characters wenn Richtung gedreht
+                this.bottle = new ThrowableObject(this.character.x - 50, this.character.y + 100); 
+            }
+            this.throwableObjects.push(this.bottle);
             this.collectedBottles.pop(); // Nach Abwurf einen Wert aus Array entfernen
             this.statusBarBottles.setBottles(this.collectedBottles.length); // Wert an StatusBarBottles übergeben
         }
@@ -60,23 +69,15 @@ class World {
 
     // checks if endboss collides with bottles
     checkCollisionEndbossThrownBottle() {
-        let collisionDetected = false;
+        let collisionEndboss = false;
         this.throwableObjects.forEach((bottle) => {
             if (bottle.isColliding(this.level.endboss)) {
-                collisionDetected = true;
+                collisionEndboss = true;
                 return;
             }
         });
-        return collisionDetected;
-    } 
-
-    /* checkCollisionEndbossThrownBottle() {
-        this.throwableObjects.forEach((bottle) => {
-            if (bottle.isColliding(this.level.endboss)) {
-                console.log('Treffer');
-            }
-        });
-}*/
+        return collisionEndboss;
+    }
 
     // checks if character collides with bottles
     checkCollisionBottlesToCollect() {

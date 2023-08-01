@@ -35,15 +35,20 @@ class ThrowableObject extends MovableObject {
         this.animate();
 
         setInterval(() => {
-            if (this.y < 325) {
+            const characterOtherDirection = world.character.otherDirection;
+            if (this.y < 325 && !characterOtherDirection) {
                 this.x += 8;
+            }
+            if (this.y < 325 && characterOtherDirection) { // Flasche in andere Richtung werdeb
+                this.x -= 8;
             }
         }, 25);
     }
 
     animate() {
         const bottleAnimation = setInterval(() => {
-            const collisionDetected = world.checkCollisionEndbossThrownBottle();
+            const collisionEndboss = world.checkCollisionEndbossThrownBottle();
+            // console.log(collisionEndboss);
 
             if (this.y < 240) {
                 this.playAnimation(this.IMAGES_THROWING);
@@ -54,11 +59,13 @@ class ThrowableObject extends MovableObject {
                 this.stopAnimation(bottleAnimation);
             }
 
-            if (collisionDetected) {
-                this.playAnimation(this.IMAGES_SPLASHING_BOTTLE);
-                this.stopAnimation(bottleAnimation);
+            if (collisionEndboss) {
+                setTimeout(() => {
+                    this.playAnimation(this.IMAGES_SPLASHING_BOTTLE);
+                    this.stopAnimation(bottleAnimation);
+                }, 250)
             }
-        }, 75);
+        }, 100);
     }
 
     stopAnimation(bottleAnimation) {
