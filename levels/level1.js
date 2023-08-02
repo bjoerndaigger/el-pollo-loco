@@ -3,6 +3,9 @@ const level1 = new Level( // Erstellen einer Konstanten "level1" und Initialisie
         new Chicken(),  // Hinzufügen von drei neuen Instanzen der Klasse "Chicken"
         new Chicken(),
         new Chicken(),
+        new ChickenSmall(),
+        new ChickenSmall(),
+        new ChickenSmall()
     ],
     new Endboss() // Hinzufügen von Instanz Endboss
     ,
