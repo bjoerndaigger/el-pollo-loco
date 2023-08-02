@@ -16,6 +16,7 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ];
 
+    bottle_breaks = new Audio('audio/breaking_bottle.mp3');
 
     constructor(x, y) {
         super().loadImage('./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
@@ -50,20 +51,22 @@ class ThrowableObject extends MovableObject {
             const collisionEndboss = world.checkCollisionEndbossThrownBottle();
             // console.log(collisionEndboss);
 
-            if (this.y < 240) {
+            if (this.y < 260) {
                 this.playAnimation(this.IMAGES_THROWING);
             }
     
-            if (this.y > 240) {
+            if (this.y > 260) {
+                this.bottle_breaks.play();
                 this.playAnimation(this.IMAGES_SPLASHING_BOTTLE);
                 this.stopAnimation(bottleAnimation);
             }
 
             if (collisionEndboss) {
                 setTimeout(() => {
+                    this.bottle_breaks.play();
                     this.playAnimation(this.IMAGES_SPLASHING_BOTTLE);
                     this.stopAnimation(bottleAnimation);
-                }, 250)
+                }, 500)
             }
         }, 100);
     }
