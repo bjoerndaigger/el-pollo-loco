@@ -7,6 +7,10 @@ class ChickenSmall extends MovableObject {
         'img/3_enemies_chicken/chicken_small/1_walk/2_w.png', // Pfad zum zweiten Bild der Gehanimation
         'img/3_enemies_chicken/chicken_small/1_walk/3_w.png' // Pfad zum dritten Bild der Gehanimation
     ];
+
+    IMAGES_SMALL_CHICKEN_DEAD = [
+        'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
+    ];
     
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png'); // Laden des ersten Geh-Bildes
@@ -18,14 +22,24 @@ class ChickenSmall extends MovableObject {
         this.animate(); // Starten der Animation
     }
 
+    killEnemy() {
+        this.enemyIsDead = true;
+    }
+    
     animate() {
         setInterval(() => {
-            this.moveLeft();
-        }, 1000 / 60); // Aktualisierung alle 1/60 Sekunde (60 mal pro Sekunde)
-       
+            if (!this.enemyIsDead) {
+                this.moveLeft();
+            }
+        }, 1000 / 60);
 
         setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING);
-        }, 200); // Wiederholen der Animation alle 200 Millisekunden
+            if (this.enemyIsDead) {
+                this.loadImage(this.IMAGES_SMALL_CHICKEN_DEAD);
+
+            } else {
+                this.playAnimation(this.IMAGES_WALKING);
+            }
+        }, 200);
     }
 }

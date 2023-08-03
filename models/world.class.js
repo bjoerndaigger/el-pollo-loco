@@ -39,10 +39,10 @@ class World {
         if (this.keyboard.D && this.collectedBottles.length > 0) { // wenn Key D gedrückt wird und Wert in Array enthalten ist, wird neue Flasche in den Array throwableObjects gepusht und geworfen
             const characterOtherDirection = this.character.otherDirection;
             if (!characterOtherDirection) { // neue Flasche mit Abwurfkoordinaten des Characters
-                this.bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100); 
+                this.bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             }
             if (characterOtherDirection) { // neue Flasche mit Abwurfkoordinaten des Characters wenn Richtung gedreht
-                this.bottle = new ThrowableObject(this.character.x - 50, this.character.y + 100); 
+                this.bottle = new ThrowableObject(this.character.x - 50, this.character.y + 100);
             }
             this.throwableObjects.push(this.bottle);
             this.collectedBottles.pop(); // Nach Abwurf einen Wert aus Array entfernen
@@ -55,6 +55,7 @@ class World {
         this.checkCollisionBottlesToCollect();
         this.checkCollisionCoinsToCollect();
         this.checkCollisionEndbossThrownBottle();
+        this.checkCollisionJumpOnEnemy();
     }
 
     // checks if character collides with enemies
@@ -65,6 +66,15 @@ class World {
                 this.statusBarCharacter.setPercentage(this.character.energy); // Aufruf der StatusBar Images bei jeder Kollision
             }
         })
+    }
+
+
+    checkCollisionJumpOnEnemy() { // Überprüft ob zwei Objekte kollidieren
+        this.level.enemies.forEach((enemy) => { // Durchlaufe die Liste der Gegner im Level
+            if (this.character.isColliding(enemy) && this.character.isAboveGround()) { // Überprüfe, ob der Charakter mit dem aktuellen Gegner kollidiert
+                enemy.killEnemy();
+            }
+        });
     }
 
     // checks if endboss collides with bottles
