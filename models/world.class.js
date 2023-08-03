@@ -71,8 +71,9 @@ class World {
 
     checkCollisionJumpOnEnemy() { // Überprüft ob zwei Objekte kollidieren
         this.level.enemies.forEach((enemy) => { // Durchlaufe die Liste der Gegner im Level
-            if (this.character.isColliding(enemy) && this.character.isAboveGround()) { // Überprüfe, ob der Charakter mit dem aktuellen Gegner kollidiert
-                enemy.killEnemy();
+            if (this.character.isColliding(enemy) && this.character.isAboveGround() && this.character.speedY < 0) { // Überprüfe, ob der Charakter mit dem aktuellen Gegner kollidiert
+                enemy.enemyIsDead = true;
+                console.log('Collision');
             }
         });
     }

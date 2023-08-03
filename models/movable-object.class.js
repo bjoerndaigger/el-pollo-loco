@@ -11,6 +11,7 @@ class MovableObject extends DrawableObject {
             if (this.isAboveGround() || this.speedY > 0) { // Ausführung nur solange y-Achse kleiner 155px oder speedY größer 0
                 this.y -= this.speedY; // y-Achse wird um Wert von speedY reduziert
                 this.speedY -= this.acceleration; // speedY wird um Beschleunigung reduziert
+                console.log(this.speedY);
             }
         }, 1000 / 25) // 25 mal pro Sekunde
     }

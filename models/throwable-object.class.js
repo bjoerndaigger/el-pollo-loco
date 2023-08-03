@@ -49,13 +49,12 @@ class ThrowableObject extends MovableObject {
     animate() {
         const bottleAnimation = setInterval(() => {
             const collisionEndboss = world.checkCollisionEndbossThrownBottle();
-            // console.log(collisionEndboss);
 
-            if (this.y < 260) {
+            if (this.y < 300) {
                 this.playAnimation(this.IMAGES_THROWING);
             }
     
-            if (this.y > 260) {
+            if (this.y > 300) {
                 this.bottle_breaks.play();
                 this.playAnimation(this.IMAGES_SPLASHING_BOTTLE);
                 this.stopAnimation(bottleAnimation);
