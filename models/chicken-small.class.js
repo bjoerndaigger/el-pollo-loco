@@ -3,6 +3,7 @@ class ChickenSmall extends MovableObject {
     width = 60; // Breite des Huhn-Bildes
     height = 53; // Höhe des Huhn-Bildes
     enemyIsDead = false;
+    chickenScreams = false;
     
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_small/1_walk/1_w.png', // Pfad zum ersten Bild der Gehanimation
@@ -14,7 +15,7 @@ class ChickenSmall extends MovableObject {
         'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ];
     
-    chicken_small_screams = new Audio('audio/chicken_scream.mp3');
+    chicken_screams = new Audio('audio/chicken_scream.mp3');
 
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png'); // Laden des ersten Geh-Bildes
@@ -33,22 +34,14 @@ class ChickenSmall extends MovableObject {
             }
         }, 1000 / 60);
 
-        const chickenSmallAnimation = setInterval(() => {
-            if (this.enemyIsDead) {
-                this.chicken_small_screams.play();
+       setInterval(() => {
+            if (this.enemyIsDead && !this.chickenScreams) {
+                this.chicken_screams.play();
                 this.loadImage(this.IMAGES_SMALL_CHICKEN_DEAD);
-                this.stopAnimation(chickenSmallAnimation);
 
             } else {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 200);
-    }
-
-    stopAnimation(chickenSmallAnimation) {
-        clearInterval(chickenSmallAnimation);
-        setTimeout(() => {
-            this.loadImage('');
-        }, 1500);
     }
 }

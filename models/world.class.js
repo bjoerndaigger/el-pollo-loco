@@ -70,10 +70,14 @@ class World {
 
 
     checkCollisionJumpOnEnemy() { // Überprüft ob zwei Objekte kollidieren
-        this.level.enemies.forEach((enemy) => { // Durchlaufe die Liste der Gegner im Level
+        this.level.enemies.forEach((enemy, index) => { // Durchlaufe die Liste der Gegner im Level
             if (this.character.isColliding(enemy) && this.character.isAboveGround() && this.character.speedY < 0) { // Überprüfe, ob der Charakter mit dem aktuellen Gegner kollidiert
                 enemy.enemyIsDead = true;
                 console.log('Collision');
+                setTimeout(() => {
+                    this.level.enemies.splice(index, 1); // löscht Enemy aus Hit aus Array
+                    enemy.chickenScreams = true; // beendet Intervall für das Audiofile
+                }, 1000);
             }
         });
     }
