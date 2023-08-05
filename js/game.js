@@ -7,14 +7,22 @@ function init() {
     world = new World(canvas, keyboard);  // Ein neues World-Objekt erstellen
 }
 
+function toggleFullscreen() {
+    if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+        closeFullscreen();
+    } else {
+        openFullscreen();
+    }
+}
+
 function openFullscreen() {
-    let canvas = document.getElementById('canvas');
-    if (canvas.requestFullscreen) {
-        canvas.requestFullscreen();
-    } else if (canvas.webkitRequestFullscreen) { /* Safari */
-        canvas.webkitRequestFullscreen();
+    let content = document.getElementById('content');
+    if (content.requestFullscreen) {
+        content.requestFullscreen();
+    } else if (content.webkitRequestFullscreen) { /* Safari */
+        content.webkitRequestFullscreen();
     } else if (elem.msRequestFullscreen) { /* IE11 */
-        canvas.msRequestFullscreen();
+        content.msRequestFullscreen();
     }
 }
 
@@ -25,14 +33,6 @@ function closeFullscreen() {
         document.webkitExitFullscreen();
     } else if (document.msExitFullscreen) { /* IE11 */
         document.msExitFullscreen();
-    }
-}
-
-function toggleFullscreen() {
-    if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
-        closeFullscreen();
-    } else {
-        openFullscreen();
     }
 }
 
