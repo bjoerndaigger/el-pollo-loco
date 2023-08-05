@@ -8,7 +8,7 @@ function init() {
 }
 
 function openFullscreen() {
-    let canvas = document.getElementById('canvas');
+    let canvas = document.getElementById('canvas-container');
     if (canvas.requestFullscreen) {
         canvas.requestFullscreen();
     } else if (canvas.webkitRequestFullscreen) { /* Safari */
