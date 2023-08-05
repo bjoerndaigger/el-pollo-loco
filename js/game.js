@@ -7,6 +7,35 @@ function init() {
     world = new World(canvas, keyboard);  // Ein neues World-Objekt erstellen
 }
 
+function openFullscreen() {
+    let canvas = document.getElementById('canvas');
+    if (canvas.requestFullscreen) {
+        canvas.requestFullscreen();
+    } else if (canvas.webkitRequestFullscreen) { /* Safari */
+        canvas.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE11 */
+        canvas.msRequestFullscreen();
+    }
+}
+
+function closeFullscreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) { /* Safari */
+        document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) { /* IE11 */
+        document.msExitFullscreen();
+    }
+}
+
+function toggleFullscreen() {
+    if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+        closeFullscreen();
+    } else {
+        openFullscreen();
+    }
+}
+
 window.addEventListener("keydown", (e) => {  // Event-Listener für das keydown-Ereignis
     if(e.keyCode == 39) {  // Rechte Pfeiltaste
         keyboard.RIGHT = true;  // Die RIGHT-Eigenschaft des Keyboard-Objekts auf true setzen
