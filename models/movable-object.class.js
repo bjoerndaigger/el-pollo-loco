@@ -11,7 +11,6 @@ class MovableObject extends DrawableObject {
             if (this.isAboveGround() || this.speedY > 0) { // Ausführung nur solange y-Achse kleiner 155px oder speedY größer 0
                 this.y -= this.speedY; // y-Achse wird um Wert von speedY reduziert
                 this.speedY -= this.acceleration; // speedY wird um Beschleunigung reduziert
-                console.log(this.isAboveGround());
             }
         }, 1000 / 25) // 25 mal pro Sekunde
     }
@@ -22,7 +21,7 @@ class MovableObject extends DrawableObject {
             // return true; // gibt zurück, dass Funktion dauerhaft über dem Boden ist (true) und das Fallen wird deshalb nicht ausgebremst
         } else { // returned Wert y-Achse kleiner 155 (Wert, wo Character den Boden berührt), so dass das Fallen an der Stelle stoppt
             return this.y < 155;
-        }
+        } 
     }
 
     isColliding(mo) { // Überprüft, wann die Kollision stattfindet

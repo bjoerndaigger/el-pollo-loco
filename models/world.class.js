@@ -30,10 +30,8 @@ class World {
         setInterval(() => { // Die Funktion wird in regelmäßigen Intervallen aufgerufen
             this.checkCollisions();
             this.checkThrowObjects();
-        }, 200); // Das Intervall beträgt 200 Millisekunden (0,2 Sekunden)
+        }, 100); 
     }
-
-
 
     checkThrowObjects() {
         if (this.keyboard.D && this.collectedBottles.length > 0) { // wenn Key D gedrückt wird und Wert in Array enthalten ist, wird neue Flasche in den Array throwableObjects gepusht und geworfen
@@ -51,36 +49,39 @@ class World {
     }
 
     checkCollisions() {
-        this.checkCollisionCharacterEnemies();
+        this.checkCollisionJumpOnEnemy();
         this.checkCollisionBottlesToCollect();
         this.checkCollisionCoinsToCollect();
         this.checkCollisionEndbossThrownBottle();
-        this.checkCollisionJumpOnEnemy();
+        this.checkCollisionCharacterEnemies();
     }
+    
 
-    // checks if character collides with enemies
-    checkCollisionCharacterEnemies() { // Überprüft ob zwei Objekte kollidieren
-        this.level.enemies.forEach((enemy) => { // Durchlaufe die Liste der Gegner im Level
-            if (this.character.isColliding(enemy)) { // Überprüfe, ob der Charakter mit dem aktuellen Gegner kollidiert
-                this.character.hit();
-                this.statusBarCharacter.setPercentage(this.character.energy); // Aufruf der StatusBar Images bei jeder Kollision
-            }
-        })
-    }
-
-
-    checkCollisionJumpOnEnemy() { // Überprüft ob zwei Objekte kollidieren
-        this.level.enemies.forEach((enemy, index) => { // Durchlaufe die Liste der Gegner im Level
-            if (this.character.isColliding(enemy) && this.character.isAboveGround() && this.character.speedY < 0) { // Überprüfe, ob der Charakter mit dem aktuellen Gegner kollidiert
-                enemy.enemyIsDead = true;
-                console.log('Collision');
+    checkCollisionJumpOnEnemy() {
+        this.level.enemies.forEach((enemy, index) => {
+            if (this.character.isColliding(enemy) && this.character.isAboveGround() && this.character.speedY < 0) {
+                if (enemy instanceof Chicken) {
+                    enemy.chickenIsDead = true; 
+                } else if (enemy instanceof ChickenSmall) {
+                    enemy.chickenSmallIsDead = true; 
+                }
                 setTimeout(() => {
-                    this.level.enemies.splice(index, 1); // löscht Enemy aus Hit aus Array
-                    enemy.chickenScreams = true; // beendet Intervall für das Audiofile
+                    this.level.enemies.splice(index, 1);
+                    enemy.chickenScreams = true;
                 }, 1000);
             }
         });
     }
+
+     // checks if character collides with enemies
+     checkCollisionCharacterEnemies() {
+        this.level.enemies.forEach((enemy) => {
+            if (!this.checkCollisionJumpOnEnemy() && this.character.isColliding(enemy)) {
+                this.character.hit();
+                this.statusBarCharacter.setPercentage(this.character.energy);
+            }
+        });
+    }   
 
     // checks if endboss collides with bottles
     checkCollisionEndbossThrownBottle() {
