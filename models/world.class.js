@@ -30,7 +30,7 @@ class World {
         setInterval(() => { // Die Funktion wird in regelmäßigen Intervallen aufgerufen
             this.checkCollisions();
             this.checkThrowObjects();
-        }, 100); 
+        }, 100);
     }
 
     checkThrowObjects() {
@@ -49,52 +49,35 @@ class World {
     }
 
     checkCollisions() {
-        this.checkCollisionJumpOnEnemy();
         this.checkCollisionBottlesToCollect();
         this.checkCollisionCoinsToCollect();
         this.checkCollisionEndbossThrownBottle();
         this.checkCollisionCharacterEnemies();
     }
-    
 
-    checkCollisionJumpOnEnemy() {
+
+    checkCollisionCharacterEnemies() {
         this.level.enemies.forEach((enemy, index) => {
-            if (this.character.isColliding(enemy) && this.character.isAboveGround() && this.character.speedY < 0) {
-                this.character.jumpOnEnemy = true;
-                if (enemy instanceof Chicken) {
-                    enemy.chickenIsDead = true; 
-                } else if (enemy instanceof ChickenSmall) {
-                    enemy.chickenSmallIsDead = true; 
+            if (this.character.isColliding(enemy)) {
+                if (this.character.isAboveGround() && this.character.speedY < 0) {
+                    this.character.jumpOnEnemy = true;
+                    if (enemy instanceof Chicken) {
+                        enemy.chickenIsDead = true;
+                    } else if (enemy instanceof ChickenSmall) {
+                        enemy.chickenSmallIsDead = true;
+                    }
+                    setTimeout(() => {
+                        this.level.enemies.splice(index, 1);
+                        enemy.chickenScreams = true;
+                        this.character.jumpOnEnemy = false;
+                    }, 1000);
                 }
-                setTimeout(() => {
-                    this.level.enemies.splice(index, 1);
-                    enemy.chickenScreams = true;
-                    this.character.jumpOnEnemy = false;
-                }, 1000);
+                else if (!this.character.jumpOnEnemy) {
+                    this.character.hit();
+                    this.statusBarCharacter.setPercentage(this.character.energy);
+                }
             }
         });
-    }
-
-     // checks if character collides with enemies
-     checkCollisionCharacterEnemies() {
-        this.level.enemies.forEach((enemy) => {
-            if (!this.character.jumpOnEnemy && this.character.isColliding(enemy)) {
-                this.character.hit();
-                this.statusBarCharacter.setPercentage(this.character.energy);
-            }
-        });
-    }   
-
-    // checks if endboss collides with bottles
-    checkCollisionEndbossThrownBottle() {
-        let collisionEndboss = false;
-        this.throwableObjects.forEach((bottle) => {
-            if (bottle.isColliding(this.level.endboss)) {
-                collisionEndboss = true;
-                return;
-            }
-        });
-        return collisionEndboss;
     }
 
     // checks if character collides with bottles
@@ -124,7 +107,17 @@ class World {
         })
     }
 
-
+    // checks if endboss collides with bottles
+    checkCollisionEndbossThrownBottle() {
+        let collisionEndboss = false;
+        this.throwableObjects.forEach((bottle) => {
+            if (bottle.isColliding(this.level.endboss)) {
+                collisionEndboss = true;
+                return;
+            }
+        });
+        return collisionEndboss;
+    }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);  // Da£s Canvas löschen
