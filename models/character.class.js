@@ -3,6 +3,7 @@ class Character extends MovableObject {
     width = 142;
     height = 280;
     speed = 10;
+    jumpOnEnemy = false;
 
     IMAGES_WALKING = [ // Array mit den Bildpfaden für die Animation des Gehens
         'img/2_character_pepe/2_walk/W-21.png',

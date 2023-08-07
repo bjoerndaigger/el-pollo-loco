@@ -60,6 +60,7 @@ class World {
     checkCollisionJumpOnEnemy() {
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy) && this.character.isAboveGround() && this.character.speedY < 0) {
+                this.character.jumpOnEnemy = true;
                 if (enemy instanceof Chicken) {
                     enemy.chickenIsDead = true; 
                 } else if (enemy instanceof ChickenSmall) {
@@ -68,6 +69,7 @@ class World {
                 setTimeout(() => {
                     this.level.enemies.splice(index, 1);
                     enemy.chickenScreams = true;
+                    this.character.jumpOnEnemy = false;
                 }, 1000);
             }
         });
@@ -76,7 +78,7 @@ class World {
      // checks if character collides with enemies
      checkCollisionCharacterEnemies() {
         this.level.enemies.forEach((enemy) => {
-            if (!this.checkCollisionJumpOnEnemy() && this.character.isColliding(enemy)) {
+            if (!this.character.jumpOnEnemy && this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.statusBarCharacter.setPercentage(this.character.energy);
             }
