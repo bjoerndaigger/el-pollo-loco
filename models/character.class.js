@@ -107,7 +107,7 @@ class Character extends MovableObject {
                     this.playAnimation(this.IMAGES_IDLE);
                 }
             }
-        }, 100); // Wiederholen der Animation alle 50 Millisekunden
+        }, 50); // Wiederholen der Animation alle 50 Millisekunden
     }
 }
 

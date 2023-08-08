@@ -31,14 +31,21 @@
 </head>
 
 <body onload="init()">
+    <div class="flip-device">Please rotate your device by 90°</div>
     <div id="content" class="content">
         <h1>El Pollo Loco</h1>
         <div class="canvas-container">
             <div class="control-btns-top">
-                <img class="fullscreen-btn" src="icons/fullscreen.png" onclick="toggleFullscreen()">
-                <img class="info-btn" src="icons/question_mark.png">
+                <img class="btn fullscreen-btn" src="icons/fullscreen.png" onclick="toggleFullscreen()">
+                <img class="btn info-btn" src="icons/question_mark.png">
             </div>
-            <canvas id="canvas" width="720" height="480"></canvas>
+            <div id="start-screen">
+                <div class="btn start-btn" onclick="startGame()">
+                    <h2>Start</h2>
+                </div>
+                <img class="start-screen-img" src="img/9_intro_outro_screens/start/startscreen_2.png">
+            </div>
+            <canvas class="d-none" id="canvas" width="720" height="480"></canvas>
         </div>
     </div>
 </body>

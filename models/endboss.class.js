@@ -25,14 +25,14 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/3_attack/G20.png'
     ];
 
-    chicken_alarm = new Audio ('audio/chicken_alarm.mp3')
+    chicken_alarm = new Audio('audio/chicken_alarm.mp3')
 
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]); // Laden des ersten Geh-Bildes
         this.loadImages(this.IMAGES_WALKING); // Laden der restlichen Bilder der Animation
         this.loadImages(this.IMAGES_ATTACK);
         this.animate();
-        
+
     }
 
     animate() {
@@ -43,13 +43,18 @@ class Endboss extends MovableObject {
 
             if (distance > 400) {
                 this.playAnimation(this.IMAGES_WALKING);
-                this.moveLeft();
+
             } else if (distance < 400) {
                 this.chicken_alarm.play();
                 this.playAnimation(this.IMAGES_ATTACK);
             }
-            
+
+            if (distance > 500)
+                this.moveLeft();
+                console.log('Walks');
         }, 200);
+
+
     }
 }
 
