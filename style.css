@@ -3,18 +3,40 @@
     src: url('fonts/zabars.ttf') format('truetype');
 }
 
-body {
-    margin: 0;
-    overflow: hidden;
+@font-face {
+    font-family: 'PTSans';
+    src: url('fonts/PTSans-Regular.ttf') format('truetype');
 }
 
-body,
-html {
-    height: 100%;
+@font-face {
+    font-family: 'PTSansBold';
+    src: url('fonts/PTSans-Bold.ttf') format('truetype');
 }
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0
+}
+
+body {
+    font-family: 'PTSans', sans-serif;
+    font-size: 16px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 
 .d-none {
     display: none;
+}
+
+.margin-left {
+    margin-left: 8px;
 }
 
 .content {
@@ -30,29 +52,44 @@ html {
 }
 
 h1,
-h2 {
-    font-family: 'Zabars', Arial, Helvetica, sans-serif;
+h2,
+h3 {
+    font-family: 'Zabars', serif;
     letter-spacing: 5px;
     margin: 0;
 }
 
 h1 {
-    font-size: 64px;
+    font-size: 60px;
     text-shadow: 4px 2px 8px rgba(0, 0, 0, 0.6);
 }
 
 h2 {
-    font-size: 40px;
+    font-size: 42px;
+}
+
+h3 {
+    font-size: 30px;
 }
 
 .canvas-container {
     position: relative;
-    margin: 8px;
+    width: 720px;
+    height: 480px;
 }
 
 canvas {
     display: block;
     background-color: black;
+    border-radius: 16px;
+    box-shadow: 0 0 16px 8px rgba(0, 0, 0, 0.6);
+    margin: 0;
+    padding: 0;
+}
+
+.start-screen-img {
+    width: 720px;
+    height: 480px;
     border-radius: 16px;
     box-shadow: 0 0 16px 8px rgba(0, 0, 0, 0.6);
 }
@@ -61,24 +98,21 @@ canvas {
     background-color: #FFC376;
     border: 2px solid #98450A;
     cursor: pointer;
-    transition: box-shadow 100ms ease-in-out;
 }
 
-.btn:hover {
-    box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.3);
-}
-
-.control-btns-top {
+.btns-top {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: 16px;
+    right: 16px;
 }
 
-.fullscreen-btn,
-.info-btn {
-    border-radius: 50%;
-    margin-left: 8px;
-    
+.btns-bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 2px 16px;
 }
 
 .start-btn {
@@ -92,13 +126,82 @@ canvas {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: box-shadow 100ms ease-in-out;
 }
 
-.start-screen-img {
+.control-btn {
+    width: 104px;
+    height: 52px;
+    object-fit: contain;
+}
+
+.fullscreen-btn,
+.info-btn {
+    border-radius: 50%;
+    transition: box-shadow 100ms ease-in-out;
+}
+
+.fullscreen-btn:hover,
+.info-btn:hover,
+.start-btn:hover {
+    box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.3);
+}
+
+.info-content {
+    position: relative;
     width: 720px;
     height: 480px;
     border-radius: 16px;
     box-shadow: 0 0 16px 8px rgba(0, 0, 0, 0.6);
+    background-color: #FFC376;
+    padding: 16px;
+    z-index: 2;
+}
+
+.info-content-headline {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.arrow-back {
+    right: 16px;
+    position: absolute;
+    cursor: pointer;
+
+}
+
+.info-container {
+    display: flex;
+}
+
+.game-rules,
+.game-controls {
+    width: 50%;
+    padding: 8px;
+}
+
+.game-controls-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.game-controls-row :first-child {
+    width: 50%;
+}
+
+.game-controls-row img, .control-d {
+    border: 2px solid black;
+}
+
+.control-d {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'PTSansBold', sans-serif;
+    font-size: 24px;
 }
 
 .flip-device {
@@ -114,43 +217,43 @@ canvas {
     font-size: 64px;
     padding: 16px;
     display: flex;
-    justify-content: center; 
-    align-items: center; 
+    justify-content: center;
+    align-items: center;
     text-align: center;
     display: none;
-    z-index: 999;
+    z-index: 3;
 }
 
 /* Smartphones */
 
 @media only screen and (max-width:720px) {
-    canvas, .start-screen-img{
+
+    .canvas-container,
+    canvas,
+    .start-screen-img, .info-content {
         width: 100vw;
         height: 100vh;
         border-radius: 0;
     }
 
-    .canvas-container {
-        margin: 0;
-    }
-
-    h1, .fullscreen-btn {
+    h1,
+    .fullscreen-btn {
         display: none;
     }
 }
 
 @media only screen and (max-height:480px) {
-    canvas, .start-screen-img {
+
+    .canvas-container,
+    canvas,
+    .start-screen-img, .info-content {
         width: 100vw;
         height: 100vh;
         border-radius: 0;
     }
 
-    .canvas-container {
-        margin: 0;
-    }
-
-    h1, .fullscreen-btn {
+    h1,
+    .fullscreen-btn {
         display: none;
     }
 }

@@ -41,6 +41,18 @@ function closeFullscreen() {
     }
 }
 
+function openInfo() {
+    document.getElementById('start-screen').classList.add('d-none');
+    document.getElementById('canvas').classList.add('d-none');
+    document.getElementById('info-content').classList.remove('d-none');
+}
+
+function closeInfo() {
+    document.getElementById('info-content').classList.add('d-none');
+    document.getElementById('start-screen').classList.remove('d-none');
+    document.getElementById('canvas').classList.remove('d-none');
+}
+
 window.addEventListener("keydown", (e) => {  // Event-Listener für das keydown-Ereignis
     if (e.keyCode == 39) {  // Rechte Pfeiltaste
         keyboard.RIGHT = true;  // Die RIGHT-Eigenschaft des Keyboard-Objekts auf true setzen

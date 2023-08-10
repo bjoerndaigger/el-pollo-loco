@@ -31,13 +31,23 @@
 </head>
 
 <body onload="init()">
-    <div class="flip-device">Please rotate your device by 90°</div>
     <div id="content" class="content">
         <h1>El Pollo Loco</h1>
         <div class="canvas-container">
-            <div class="control-btns-top">
-                <img class="btn fullscreen-btn" src="icons/fullscreen.png" onclick="toggleFullscreen()">
-                <img class="btn info-btn" src="icons/question_mark.png">
+
+            <div class="btns-top">
+                <img class="fullscreen-btn btn" src="img/11_icons/fullscreen.png" onclick="toggleFullscreen()">
+                <img class="info-btn btn margin-left" src="img/11_icons/question_mark.png" onclick="openInfo()">
+            </div>
+            <div class="btns-bottom">
+                <div>
+                    <img class="control-btn btn" src="img/11_icons/arrow_left.png">
+                    <img class="control-btn btn margin-left" src="img/11_icons/arrow_right.png">
+                </div>
+                <div>
+                    <img class="control-btn btn" src="img/11_icons/arrow_up.png">
+                    <img class="control-btn btn margin-left" src="img/11_icons/throw.png">
+                </div>
             </div>
             <div id="start-screen">
                 <div class="btn start-btn" onclick="startGame()">
@@ -45,9 +55,44 @@
                 </div>
                 <img class="start-screen-img" src="img/9_intro_outro_screens/start/startscreen_2.png">
             </div>
+            <div id="info-content" class="info-content d-none">
+                <div class="arrow-back" onclick="closeInfo()"><img src="img/11_icons/arrow_back.png"></div>
+                <h2 class="info-content-headline">Game Info</h2>
+                <div class="info-container">
+                    <div class="game-rules">
+                        <h3>Rules</h3>
+                        <p>Ruckus in the Chicken Coop.</p>
+                        <p>To win the game, you need to defeat the final boss with at least 5 bottle throws.</p>
+                        <p>Additionally, you should have collected at least 5 coins. </p>
+                        <p>But beware, the final boss sends out his chickens.</p>
+                        <p>You can eliminate them by jumping on them. </p>
+                        <p>Good luck!</p>
+                    </div>
+                    <div class="game-controls">
+                        <h3>Controls</h3>
+                        <div class="game-controls-row">
+                            <div>Move Left</div>
+                            <img src="img/11_icons/arrow_left.png" alt="Arrow Left">
+                        </div>
+                        <div class="game-controls-row">
+                            <div>Move Right</div>
+                            <img src="img/11_icons/arrow_right.png" alt="Arrow Right">
+                        </div>
+                        <div class="game-controls-row">
+                            <div>Jump (Spacebar)</div>
+                            <img src="img/11_icons/space_bar.png" alt="Space Bar">
+                        </div>
+                        <div class="game-controls-row">
+                            <div>Throw Bottle</div>
+                            <div class="control-d">D</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <canvas class="d-none" id="canvas" width="720" height="480"></canvas>
         </div>
     </div>
+    <div class="flip-device">Please rotate your device by 90°</div>
 </body>
 
 </html>
