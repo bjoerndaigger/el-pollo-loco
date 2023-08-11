@@ -11,6 +11,7 @@ function init() {
     initLevel();
     canvas = document.getElementById('canvas');  // Das Canvas-Element abrufen
     world = new World(canvas, keyboard);  // Ein neues World-Objekt erstellen
+    touchEvents();
 }
 
 function toggleFullscreen() {
@@ -101,3 +102,38 @@ window.addEventListener("keyup", (e) => {  // Event-Listener für das keyup-Erei
         keyboard.D = false;  // Die D-Eigenschaft des Keyboard-Objekts auf false setzen
     }
 });
+
+function touchEvents() {
+    document.getElementById('btn-left').addEventListener('touchstart' , (event) => {
+        event.preventDefault();
+        keyboard.LEFT = true;
+    }); 
+    document.getElementById('btn-left').addEventListener('touchend' , (event) => {
+        event.preventDefault();
+        keyboard.LEFT = false;
+    }); 
+    document.getElementById('btn-right').addEventListener('touchstart' , (event) => {
+        event.preventDefault();
+        keyboard.RIGHT = true;
+    }); 
+    document.getElementById('btn-right').addEventListener('touchend' , (event) => {
+        event.preventDefault();
+        keyboard.RIGHT = false; 
+    }); 
+    document.getElementById('btn-jump').addEventListener('touchstart' , (event) => {
+        event.preventDefault();
+        keyboard.SPACE = true;
+    }); 
+    document.getElementById('btn-jump').addEventListener('touchend' , (event) => {
+        event.preventDefault();
+        keyboard.SPACE = false;
+    }); 
+    document.getElementById('btn-throw').addEventListener('touchstart' , (event) => {
+        event.preventDefault();
+        keyboard.D = true;
+    }); 
+    document.getElementById('btn-throw').addEventListener('touchend' , (event) => {
+        event.preventDefault();
+        keyboard.D = false;
+    });
+}
