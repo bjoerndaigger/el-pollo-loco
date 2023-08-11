@@ -24,6 +24,7 @@ body {
 body {
     font-family: 'PTSans', sans-serif;
     font-size: 16px;
+    overflow: hidden;
 }
 
 * {
@@ -51,6 +52,10 @@ body {
     background-size: cover;
 }
 
+.content-headline {
+    margin: 16px;
+}
+
 h1,
 h2,
 h3 {
@@ -60,8 +65,8 @@ h3 {
 }
 
 h1 {
-    font-size: 60px;
-    text-shadow: 4px 2px 8px rgba(0, 0, 0, 0.6);
+    font-size: 72px;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
 }
 
 h2 {
@@ -69,7 +74,7 @@ h2 {
 }
 
 h3 {
-    font-size: 30px;
+    font-size: 24px;
 }
 
 .canvas-container {
@@ -85,6 +90,11 @@ canvas {
     box-shadow: 0 0 16px 8px rgba(0, 0, 0, 0.6);
     margin: 0;
     padding: 0;
+}
+
+.start-screen-container {
+    position: absolute;
+    top: 0;
 }
 
 .start-screen-img {
@@ -104,6 +114,7 @@ canvas {
     position: absolute;
     top: 16px;
     right: 16px;
+    z-index: 1;
 }
 
 .btns-bottom {
@@ -147,8 +158,9 @@ canvas {
     box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.3);
 }
 
-.info-content {
-    position: relative;
+.info-container {
+    position: absolute;
+    top: 0;
     width: 720px;
     height: 480px;
     border-radius: 16px;
@@ -160,7 +172,7 @@ canvas {
 
 .info-content-headline {
     text-align: center;
-    margin-bottom: 16px;
+    margin: 16px;
 }
 
 .arrow-back {
@@ -170,7 +182,7 @@ canvas {
 
 }
 
-.info-container {
+.info-content {
     display: flex;
 }
 
@@ -190,18 +202,21 @@ canvas {
     width: 50%;
 }
 
-.game-controls-row img, .control-d {
+.game-controls-row img,
+.control-d {
     border: 2px solid black;
+    width: 36px;
+    height: 36px;
 }
 
 .control-d {
-    width: 52px;
-    height: 52px;
+    width: 36px;
+    height: 36px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'PTSansBold', sans-serif;
-    font-size: 24px;
+    font-size: 20px;
 }
 
 .flip-device {
@@ -230,7 +245,8 @@ canvas {
 
     .canvas-container,
     canvas,
-    .start-screen-img, .info-content {
+    .start-screen-img,
+    .info-container {
         width: 100vw;
         height: 100vh;
         border-radius: 0;
@@ -239,6 +255,15 @@ canvas {
     h1,
     .fullscreen-btn {
         display: none;
+    }
+
+    .info-content-headline {
+        font-size: 36px;
+    }
+
+    .game-rules,
+    .game-controls {
+        font-size: 14px;
     }
 }
 
@@ -246,7 +271,8 @@ canvas {
 
     .canvas-container,
     canvas,
-    .start-screen-img, .info-content {
+    .start-screen-img,
+    .info-container {
         width: 100vw;
         height: 100vh;
         border-radius: 0;
@@ -255,6 +281,15 @@ canvas {
     h1,
     .fullscreen-btn {
         display: none;
+    }
+
+    .info-content-headline {
+        font-size: 36px;
+    }
+
+    .game-rules,
+    .game-controls {
+        font-size: 14px;
     }
 }
 

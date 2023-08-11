@@ -29,6 +29,7 @@ class Chicken extends MovableObject {
         setInterval(() => {
             if (!this.chickenIsDead) {
                 this.moveLeft();
+                console.log('Chicken Walks');
             }
         }, 1000 / 60);
 

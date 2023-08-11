@@ -51,7 +51,7 @@ class Endboss extends MovableObject {
 
             if (distance > 500)
                 this.moveLeft();
-                console.log('Walks');
+                // console.log('Walks');
         }, 200);
 
 

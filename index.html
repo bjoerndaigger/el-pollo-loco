@@ -30,11 +30,10 @@
 
 </head>
 
-<body onload="init()">
+<body>
     <div id="content" class="content">
-        <h1>El Pollo Loco</h1>
+        <h1 class="content-headline">El Pollo Loco</h1>
         <div class="canvas-container">
-
             <div class="btns-top">
                 <img class="fullscreen-btn btn" src="img/11_icons/fullscreen.png" onclick="toggleFullscreen()">
                 <img class="info-btn btn margin-left" src="img/11_icons/question_mark.png" onclick="openInfo()">
@@ -49,16 +48,16 @@
                     <img class="control-btn btn margin-left" src="img/11_icons/throw.png">
                 </div>
             </div>
-            <div id="start-screen">
+            <div id="start-screen" class="start-screen-container">
                 <div class="btn start-btn" onclick="startGame()">
                     <h2>Start</h2>
                 </div>
                 <img class="start-screen-img" src="img/9_intro_outro_screens/start/startscreen_2.png">
             </div>
-            <div id="info-content" class="info-content d-none">
+            <div id="info-content" class="info-container d-none">
                 <div class="arrow-back" onclick="closeInfo()"><img src="img/11_icons/arrow_back.png"></div>
                 <h2 class="info-content-headline">Game Info</h2>
-                <div class="info-container">
+                <div class="info-content">
                     <div class="game-rules">
                         <h3>Rules</h3>
                         <p>Ruckus in the Chicken Coop.</p>
@@ -89,7 +88,7 @@
                     </div>
                 </div>
             </div>
-            <canvas class="d-none" id="canvas" width="720" height="480"></canvas>
+            <canvas id="canvas" width="720" height="480"></canvas>
         </div>
     </div>
     <div class="flip-device">Please rotate your device by 90°</div>
