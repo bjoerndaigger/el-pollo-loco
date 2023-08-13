@@ -11,7 +11,8 @@ function init() {
     initLevel();
     canvas = document.getElementById('canvas');  // Das Canvas-Element abrufen
     world = new World(canvas, keyboard);  // Ein neues World-Objekt erstellen
-    touchEvents();
+    touchEventsStart();
+    touchEventsEnd();
 }
 
 function toggleFullscreen() {
@@ -51,88 +52,98 @@ function closeInfo() {
     document.getElementById('info-content').classList.add('d-none');
 }
 
-window.addEventListener("keydown", (e) => {  // Event-Listener für das keydown-Ereignis
-    if (e.keyCode == 39) {  // Rechte Pfeiltaste
-        keyboard.RIGHT = true;  // Die RIGHT-Eigenschaft des Keyboard-Objekts auf true setzen
+window.addEventListener("keydown", (e) => {  
+    if (e.keyCode == 39) { 
+        keyboard.RIGHT = true;  
     }
 
-    if (e.keyCode == 37) {  // Linke Pfeiltaste
-        keyboard.LEFT = true;  // Die LEFT-Eigenschaft des Keyboard-Objekts auf true setzen
+    if (e.keyCode == 37) {  
+        keyboard.LEFT = true;  
     }
 
-    if (e.keyCode == 38) {  // Obere Pfeiltaste
-        keyboard.UP = true;  // Die UP-Eigenschaft des Keyboard-Objekts auf true setzen
+    if (e.keyCode == 38) {  
+        keyboard.UP = true;  
     }
 
-    if (e.keyCode == 40) {  // Untere Pfeiltaste
-        keyboard.DOWN = true;  // Die DOWN-Eigenschaft des Keyboard-Objekts auf true setzen
+    if (e.keyCode == 40) {  
+        keyboard.DOWN = true;  
     }
 
-    if (e.keyCode == 32) {  // Leertaste
-        keyboard.SPACE = true;  // Die SPACE-Eigenschaft des Keyboard-Objekts auf true setzen
+    if (e.keyCode == 32) {  
+        keyboard.SPACE = true;  
     }
 
-    if (e.keyCode == 68) {  // D-Taste
-        keyboard.D = true;  // Die D-Eigenschaft des Keyboard-Objekts auf true setzen
-    }
-});
-
-window.addEventListener("keyup", (e) => {  // Event-Listener für das keyup-Ereignis
-    if (e.keyCode == 39) {  // Rechte Pfeiltaste
-        keyboard.RIGHT = false;  // Die RIGHT-Eigenschaft des Keyboard-Objekts auf false setzen
-    }
-
-    if (e.keyCode == 37) {  // Linke Pfeiltaste
-        keyboard.LEFT = false;  // Die LEFT-Eigenschaft des Keyboard-Objekts auf false setzen
-    }
-
-    if (e.keyCode == 38) {  // Obere Pfeiltaste
-        keyboard.UP = false;  // Die UP-Eigenschaft des Keyboard-Objekts auf false setzen
-    }
-
-    if (e.keyCode == 40) {  // Untere Pfeiltaste
-        keyboard.DOWN = false;  // Die DOWN-Eigenschaft des Keyboard-Objekts auf false setzen
-    }
-
-    if (e.keyCode == 32) {  // Leertaste
-        keyboard.SPACE = false;  // Die SPACE-Eigenschaft des Keyboard-Objekts auf false setzen
-    }
-
-    if (e.keyCode == 68) {  // D-Taste
-        keyboard.D = false;  // Die D-Eigenschaft des Keyboard-Objekts auf false setzen
+    if (e.keyCode == 68) {  
+        keyboard.D = true;  
     }
 });
 
-function touchEvents() {
-    document.getElementById('btn-left').addEventListener('touchstart' , (event) => {
+window.addEventListener("keyup", (e) => {  
+    if (e.keyCode == 39) {  
+        keyboard.RIGHT = false;  
+    }
+
+    if (e.keyCode == 37) {  
+        keyboard.LEFT = false;  
+    }
+
+    if (e.keyCode == 38) {  
+        keyboard.UP = false;  
+    }
+
+    if (e.keyCode == 40) {  
+        keyboard.DOWN = false;  
+    }
+
+    if (e.keyCode == 32) {  
+        keyboard.SPACE = false;  
+    }
+
+    if (e.keyCode == 68) {  
+        keyboard.D = false;  
+    }
+});
+
+function touchEventsStart() {
+    document.getElementById('btn-left').addEventListener('touchstart', (event) => {
         event.preventDefault();
         keyboard.LEFT = true;
-    }); 
-    document.getElementById('btn-left').addEventListener('touchend' , (event) => {
-        event.preventDefault();
-        keyboard.LEFT = false;
-    }); 
-    document.getElementById('btn-right').addEventListener('touchstart' , (event) => {
+    });
+
+    document.getElementById('btn-right').addEventListener('touchstart', (event) => {
         event.preventDefault();
         keyboard.RIGHT = true;
-    }); 
-    document.getElementById('btn-right').addEventListener('touchend' , (event) => {
-        event.preventDefault();
-        keyboard.RIGHT = false; 
-    }); 
-    document.getElementById('btn-jump').addEventListener('touchstart' , (event) => {
+    });
+
+    document.getElementById('btn-jump').addEventListener('touchstart', (event) => {
         event.preventDefault();
         keyboard.SPACE = true;
-    }); 
-    document.getElementById('btn-jump').addEventListener('touchend' , (event) => {
-        event.preventDefault();
-        keyboard.SPACE = false;
-    }); 
-    document.getElementById('btn-throw').addEventListener('touchstart' , (event) => {
+    });
+
+    document.getElementById('btn-throw').addEventListener('touchstart', (event) => {
         event.preventDefault();
         keyboard.D = true;
-    }); 
-    document.getElementById('btn-throw').addEventListener('touchend' , (event) => {
+    });
+
+}
+
+function touchEventsEnd() {
+    document.getElementById('btn-left').addEventListener('touchend', (event) => {
+        event.preventDefault();
+        keyboard.LEFT = false;
+    });
+
+    document.getElementById('btn-right').addEventListener('touchend', (event) => {
+        event.preventDefault();
+        keyboard.RIGHT = false;
+    });
+
+    document.getElementById('btn-jump').addEventListener('touchend', (event) => {
+        event.preventDefault();
+        keyboard.SPACE = false;
+    });
+
+    document.getElementById('btn-throw').addEventListener('touchend', (event) => {
         event.preventDefault();
         keyboard.D = false;
     });
