@@ -13,6 +13,17 @@ class Endboss extends MovableObject {
 
     ];
 
+    IMAGES_ALERT = [
+        'img/4_enemie_boss_chicken/2_alert/G5.png',
+        'img/4_enemie_boss_chicken/2_alert/G6.png',
+        'img/4_enemie_boss_chicken/2_alert/G7.png',
+        'img/4_enemie_boss_chicken/2_alert/G8.png',
+        'img/4_enemie_boss_chicken/2_alert/G9.png',
+        'img/4_enemie_boss_chicken/2_alert/G10.png',
+        'img/4_enemie_boss_chicken/2_alert/G11.png',
+        'img/4_enemie_boss_chicken/2_alert/G12.png',
+    ];
+
 
     IMAGES_ATTACK = [
         'img/4_enemie_boss_chicken/3_attack/G13.png',
@@ -30,30 +41,34 @@ class Endboss extends MovableObject {
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]); // Laden des ersten Geh-Bildes
         this.loadImages(this.IMAGES_WALKING); // Laden der restlichen Bilder der Animation
+        this.loadImages(this.IMAGES_ALERT);
         this.loadImages(this.IMAGES_ATTACK);
         this.animate();
 
     }
 
     animate() {
+        let i = 0;
         setInterval(() => {
             const positionCharacter = world.character.x;
             const positionEndboss = this.x;
             const distance = positionEndboss - positionCharacter;
 
+
             if (distance > 400) {
                 this.playAnimation(this.IMAGES_WALKING);
 
             } else if (distance < 400) {
-                this.chicken_alarm.play();
-                this.playAnimation(this.IMAGES_ATTACK);
+
+                if (i < 8) {
+                    this.playAnimation(this.IMAGES_ALERT)
+                } else {
+                    this.chicken_alarm.play();
+                    this.playAnimation(this.IMAGES_ATTACK);
+                }
+                i++;
             }
-
-            if (distance > 500)
-                this.moveLeft();
-                // console.log('Walks');
         }, 200);
-
 
     }
 }
