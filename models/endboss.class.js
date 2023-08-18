@@ -5,6 +5,13 @@ class Endboss extends MovableObject {
     height = 291;
     speed = 2.5;
 
+    offset = {
+        top: 100,
+        left: 70,
+        right: 70,
+        bottom: 40
+    };
+
     IMAGES_WALKING = [ // Bilder für die Gehanimation
         'img/4_enemie_boss_chicken/1_walk/G1.png',
         'img/4_enemie_boss_chicken/1_walk/G2.png',

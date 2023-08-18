@@ -5,6 +5,13 @@ class Character extends MovableObject {
     speed = 10;
     jumpOnEnemy = false;
 
+    offset = {
+        top: 140,
+        left: 40,
+        right: 50,
+        bottom: 10
+    };
+
     IMAGES_IDLE = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
         'img/2_character_pepe/1_idle/idle/I-2.png',

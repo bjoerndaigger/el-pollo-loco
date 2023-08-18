@@ -3,6 +3,14 @@ class Bottle extends MovableObject {
     x = 300 + Math.random() * 2000; // Setzen der x-Position zufällig zwischen 300 und 2200
     width = 100;
     height = 100;
+
+    offset = {
+        top: 10,
+        left: 40,
+        right: 30,
+        bottom: 10
+    };
+
     IMAGES_BOTTLES = [
         'img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
         'img/6_salsa_bottle/2_salsa_bottle_on_ground.png'

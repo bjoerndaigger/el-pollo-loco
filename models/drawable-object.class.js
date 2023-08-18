@@ -17,11 +17,12 @@ class DrawableObject {
     }
 
     drawFrame(ctx) { // Rahmen um Objekte anzeigen lassen
-        if (this instanceof Character || this instanceof Chicken || this instanceof ChickenSmall || this instanceof Endboss || this instanceof Bottle) { // nur für Character und Chicken
+        if (this instanceof Character || this instanceof Chicken || this instanceof ChickenSmall || this instanceof Endboss || this instanceof Bottle || this instanceof Coin) { 
             ctx.beginPath(); // Beginne einen neuen Pfad für die Zeichnung.
             ctx.lineWidth = '5'; // Setze die Linienbreite auf 5 Pixel.
-            ctx.strokeStyle = 'blue'; // Setze die Linienfarbe auf Blau.
-            ctx.rect(this.x, this.y, this.width, this.height); // Zeichne ein Rechteck mit den angegebenen Koordinaten und Abmessungen (x, y, Breite, Höhe)
+            ctx.strokeStyle = 'red'; // Setze die Linienfarbe auf Blau.
+            // ctx.rect(this.x, this.y, this.width, this.height); // Zeichne ein Rechteck mit den angegebenen Koordinaten und Abmessungen (x, y, Breite, Höhe)
+            ctx.rect( this.x + this.offset.left, this.y + this.offset.top, this.width - this.offset.right - this.offset.left, this.height - this.offset.top - this.offset.bottom);
             ctx.stroke(); // Führe den Strich aus, um das Rechteck zu zeichnen.
         }
     }

@@ -4,6 +4,13 @@ class ChickenSmall extends MovableObject {
     height = 53; // Höhe des Huhn-Bildes
     chickenSmallIsDead = false;
     chickenScreams = false;
+
+    offset = {
+        top: 5,
+        left: 5,
+        right: 5,
+        bottom: 5
+    };
     
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_small/1_walk/1_w.png', // Pfad zum ersten Bild der Gehanimation
