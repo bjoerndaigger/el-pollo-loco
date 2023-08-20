@@ -61,12 +61,7 @@ class Endboss extends MovableObject {
             const positionEndboss = this.x;
             const distance = positionEndboss - positionCharacter;
 
-
-            if (distance > 400) {
-                this.playAnimation(this.IMAGES_WALKING);
-
-            } else if (distance < 400) {
-
+            if (distance < 400) {
                 if (i < 8) {
                     this.playAnimation(this.IMAGES_ALERT)
                 } else {
@@ -74,9 +69,11 @@ class Endboss extends MovableObject {
                     this.playAnimation(this.IMAGES_ATTACK);
                 }
                 i++;
+            } else {
+                this.playAnimation(this.IMAGES_WALKING);
+                this.moveLeft();
             }
         }, 200);
-
     }
 }
 

@@ -1,4 +1,5 @@
 class ThrowableObject extends MovableObject {
+    bottleAnimation;
 
     IMAGES_THROWING = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
@@ -47,34 +48,30 @@ class ThrowableObject extends MovableObject {
     }
 
     animate() {
-        const bottleAnimation = setInterval(() => {
-            const collisionEndboss = world.checkCollisionEndbossThrownBottle();
-
-            if (this.y < 300) {
+        this.bottleAnimation = setInterval(() => {
+            if (this.y < 320) {
                 this.playAnimation(this.IMAGES_THROWING);
+            } else if (world.checkCollisionEndbossThrownBottle()) {
+                this.bottleSplash();
+                console.log('Collision Endboss');
             }
-    
-            if (this.y > 300) {
-                this.bottle_breaks.play();
-                this.playAnimation(this.IMAGES_SPLASHING_BOTTLE);
-                this.stopAnimation(bottleAnimation);
-            }
-
-            if (collisionEndboss) {
-                setTimeout(() => {
-                    this.bottle_breaks.play();
-                    this.playAnimation(this.IMAGES_SPLASHING_BOTTLE);
-                    this.stopAnimation(bottleAnimation);
-                }, 500)
+            else {
+                this.bottleSplash();
             }
         }, 100);
+    }
+
+    bottleSplash() {
+        this.bottle_breaks.play();
+        this.playAnimation(this.IMAGES_SPLASHING_BOTTLE);
+        this.stopAnimation(this.bottleAnimation);
     }
 
     stopAnimation(bottleAnimation) {
         clearInterval(bottleAnimation);
         setTimeout(() => {
             this.loadImage('');
-        }, 150);
+        }, 60);
     }
 }
 
