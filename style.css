@@ -217,6 +217,32 @@ canvas {
     font-size: 20px;
 }
 
+.game-over-screen-container {
+    position: absolute;
+    top: 0;
+    z-index: 3;
+}
+
+.game-over-screen-img {
+    width: 720px;
+    height: 480px;
+    border-radius: 16px;
+}
+
+.game-over-btn {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 32px;
+    width: 270px;
+    height: 63px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: box-shadow 100ms ease-in-out;
+}
+
 .flip-device {
     position: absolute;
     top: 0;

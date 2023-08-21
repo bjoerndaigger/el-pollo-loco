@@ -6,7 +6,7 @@ class Endboss extends MovableObject {
     speed = 2.5;
 
     offset = {
-        top: 100,
+        top: 80,
         left: 70,
         right: 70,
         bottom: 40
@@ -43,6 +43,12 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/3_attack/G20.png'
     ];
 
+    IMAGES_HURT = [
+        'img/4_enemie_boss_chicken/4_hurt/G21.png',
+        'img/4_enemie_boss_chicken/4_hurt/G22.png',
+        'img/4_enemie_boss_chicken/4_hurt/G23.png'
+    ];
+
     chicken_alarm = new Audio('audio/chicken_alarm.mp3')
 
     constructor() {
@@ -65,10 +71,11 @@ class Endboss extends MovableObject {
                 if (i < 8) {
                     this.playAnimation(this.IMAGES_ALERT)
                 } else {
-                    this.chicken_alarm.play();
+                    // this.chicken_alarm.play();
                     this.playAnimation(this.IMAGES_ATTACK);
                 }
                 i++;
+                
             } else {
                 this.playAnimation(this.IMAGES_WALKING);
                 this.moveLeft();
@@ -78,7 +85,10 @@ class Endboss extends MovableObject {
 }
 
 
-
+/* else if (world.checkCollisionEndbossThrownBottle()) {
+    this.bottleSplash();
+    console.log('Collision Endboss');
+} */
 
 
 

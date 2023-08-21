@@ -1,6 +1,7 @@
 let canvas;  // Canvas-Variable
 let world;  // World-Variable
 let keyboard = new Keyboard();  // Keyboard-Objekt
+game_over = new Audio ('audio/game-over.mp3');
 
 function startGame() {
     document.getElementById('start-screen').classList.add('d-none');
@@ -51,6 +52,27 @@ function openInfo() {
 function closeInfo() {
     document.getElementById('info-content').classList.add('d-none');
 }
+
+function backToMenu() {
+    document.getElementById('game-over-screen').classList.add('d-none');
+    document.getElementById('you-lost-screen').classList.add('d-none');
+}
+
+function gameLost() {
+    document.getElementById('you-lost-screen').classList.remove('d-none');
+    clearAllIntervals();
+    this.game_over.play();
+}
+
+function gameOver() {
+    document.getElementById('game-over-screen').classList.remove('d-none');
+    clearAllIntervals();
+    this.game_over.play();
+}
+
+function clearAllIntervals() {
+    for (let i = 1; i < 9999; i++) window.clearInterval(i);
+  }
 
 window.addEventListener("keydown", (e) => {
     if (e.key === "ArrowRight") {

@@ -12,6 +12,8 @@ class World {
     throwableObjects = [];
     collectedBottles = []; // Array for collected Bottles
     collectedCoins = []; // Array for collected coins
+    collect_bottle = new Audio('audio/collect_bottle.mp3');
+    collect_coin = new Audio('audio/collect_coin.mp3');
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');  // Den 2D-Kontext des Canvas-Elements abrufen
@@ -85,6 +87,7 @@ class World {
         this.level.bottles.forEach((bottle, index) => { // Mit Index des Elements im Array
             if (this.character.isColliding(bottle)) { // wird nur ausgeführt, wenn Wert noch nicht vorhanden
                 if (!this.collectedBottles.includes(bottle)) {
+                    this.collect_bottle.play();
                     this.collectedBottles.push(bottle);
                     this.statusBarBottles.setBottles(this.collectedBottles.length); // Wert an StatusBarBottles übergeben
                     this.level.bottles.splice(index, 1); // Entferne die kollidierte Flasche aus dem Array und entferne Bild
@@ -98,6 +101,7 @@ class World {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
                 if (!this.collectedCoins.includes(coin)) { // wird nur ausgeführt, wenn Wert noch nicht vorhanden
+                    this.collect_coin.play();
                     this.collectedCoins.push(coin);
                     this.statusBarCoins.setCoins(this.collectedCoins.length);
                     this.level.coins.splice(index, 1); // Entferne die kollidierte Flasche aus dem Array und entferne Bild
