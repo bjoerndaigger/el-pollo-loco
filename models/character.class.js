@@ -63,7 +63,8 @@ class Character extends MovableObject {
     ];
 
     world;
-    walking_sound = new Audio('./audio/running.mp3'); // Laufgeräusch
+    walking_sound = new Audio('./audio/running.mp3'); 
+    character_hit = new Audio('audio/character_getting_hit.mp3');
 
     constructor() {
         super().loadImage(this.IMAGES_IDLE[0]); // Laden des ersten Bildes der Animation
@@ -108,6 +109,7 @@ class Character extends MovableObject {
                 }, 1500);
             } else if (this.isHurt()) { // Animation wird ausgeführt, wenn isHurt() true zurückgibt
                 this.playAnimation(this.IMAGES_HURT);
+                this.character_hit.play();
             } else if (this.isAboveGround()) { // Animation wird ausgeführt bei return von einem bestimmten Wert der x-Achse
                 this.playAnimation(this.IMAGES_JUMPING);
             } else { // Animation wird ausgeführt, wenn ich Arrow Right oder Arrow Left auf Tastatur drücke
