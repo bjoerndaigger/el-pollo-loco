@@ -4,6 +4,8 @@ class Character extends MovableObject {
     height = 280;
     speed = 10;
     jumpOnEnemy = false;
+    isHurtSoundPlayed = false;
+    world;
 
     offset = {
         top: 140,
@@ -62,11 +64,6 @@ class Character extends MovableObject {
         'img/2_character_pepe/4_hurt/H-43.png',
     ];
 
-    world;
-    walking_sound = new Audio('./audio/running.mp3');
-    character_hit = new Audio('audio/character_getting_hit.mp3');
-    character_dies = new Audio ('audio/character_dies.mp3');
-
     constructor() {
         super().loadImage(this.IMAGES_IDLE[0]); // Laden des ersten Bildes der Animation
         this.loadImages(this.IMAGES_IDLE);
@@ -76,49 +73,43 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_HURT); // Laden der Bilder des verletzt werdens
         this.applyGravity(); // Starten der Fallanimation
         this.characterDirections();
-        this.characterAnimations(); 
+        this.characterAnimations();
     }
 
     characterDirections() {
         setInterval(() => {
-            this.walking_sound.pause(); // Stoppen des Audios für das Gehen
+            walking_sound.pause(); // Stoppen des Audios für das Gehen
             this.characterMovesRight();
             this.characterMovesLeft();
             this.characterJumps();
             this.world.camera_x = -this.x + 100; // Aktualisiere die Position der Kamera basierend auf der X-Position des Charakters
-
         }, 1000 / 60); // Führe die Animation 60 Mal pro Sekunde aus (etwa 16,67 Millisekunden)
 
     }
 
     characterAnimations() {
-        setInterval(() => { // Walk/Jump/Dead/Hurt Animation
-            if (this.isDead()) { // Animation wird ausgeführt, wenn Character "dead" ist
-                this.playAnimation(this.IMAGES_DEAD);
-                this.character_dies.play();
-                setTimeout(() => {
-                    gameLost();
-                }, 1800);
-            } else if (this.isHurt()) { // Animation wird ausgeführt, wenn isHurt() true zurückgibt
-                this.playAnimation(this.IMAGES_HURT);
-                this.character_hit.play();
-            } else if (this.isAboveGround()) { // Animation wird ausgeführt bei return von einem bestimmten Wert der x-Achse
-                this.playAnimation(this.IMAGES_JUMPING);
-            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) { // Animation wird ausgeführt, wenn ich Arrow Right oder Arrow Left auf Tastatur drücke
-                this.playAnimation(this.IMAGES_WALKING);
+        setInterval(() => {
+            if (this.isDead()) {
+                this.playDeadAnimation();
+            } else if (this.isHurt()) {
+                this.playHurtAnimation();
+            } else if (this.isAboveGround()) {
+                this.playJumpAnimation();
+            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                this.playWalkingAnimation();
+            } else {
+                this.playIdleAnimation();
             }
-            else {
-                this.playAnimation(this.IMAGES_IDLE);
-            }
-        }, 100); // Wiederholen der Animation alle 100 Millisekunden
+        }, 150);
     }
+
 
     characterMovesRight() {
         // Animation wird nur ausgeführt, wenn ich Arrow Right auf Tastatur drücke und x-Achsenwert kleiner als Endwert der x-Achse ist
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
             this.moveRight();
             this.otherDirection = false; // Character wird nicht gespiegelt
-            this.walking_sound.play(); // Abspielen des Laufaudios
+            walking_sound.play(); // Abspielen des Laufaudios
         }
     }
 
@@ -127,7 +118,7 @@ class Character extends MovableObject {
         if (this.world.keyboard.LEFT && this.x > 0) {
             this.moveLeft();
             this.otherDirection = true; // Character wird gespiegelt
-            this.walking_sound.play(); // Abspielen des Laufaudios
+            walking_sound.play(); // Abspielen des Laufaudios
         }
     }
 
@@ -136,6 +127,37 @@ class Character extends MovableObject {
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.jump();
         }
+    }
+
+    playDeadAnimation() {
+        this.playAnimation(this.IMAGES_DEAD);
+        character_dies.play();
+        setTimeout(() => {
+            gameLost();
+        }, 1800);
+    }
+
+    playHurtAnimation() {
+        this.playAnimation(this.IMAGES_HURT);
+        if (!this.isHurtSoundPlayed) {
+            character_hit.play();
+            this.isHurtSoundPlayed = true;
+        }
+    }
+
+    playJumpAnimation() {
+        this.playAnimation(this.IMAGES_JUMPING);
+        this.isHurtSoundPlayed = false;
+    }
+
+    playWalkingAnimation() {
+        this.playAnimation(this.IMAGES_WALKING);
+        this.isHurtSoundPlayed = false;
+    }
+
+    playIdleAnimation() {
+        this.playAnimation(this.IMAGES_IDLE);
+        this.isHurtSoundPlayed = false;
     }
 }
 

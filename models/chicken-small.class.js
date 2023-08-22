@@ -22,7 +22,7 @@ class ChickenSmall extends MovableObject {
         'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ];
     
-    chicken_screams = new Audio('audio/chicken_scream.mp3');
+   
 
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png'); // Laden des ersten Geh-Bildes
@@ -43,7 +43,7 @@ class ChickenSmall extends MovableObject {
 
         setInterval(() => {
             if (this.chickenSmallIsDead && !this.chickenScreams) {
-                this.chicken_screams.play();
+                chicken_screams.play();
                 this.loadImage(this.IMAGES_SMALL_CHICKEN_DEAD);
             } else {
                 this.playAnimation(this.IMAGES_WALKING);

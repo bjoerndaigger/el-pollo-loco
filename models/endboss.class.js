@@ -49,8 +49,6 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/4_hurt/G23.png'
     ];
 
-    chicken_alarm = new Audio('audio/chicken_alarm.mp3')
-
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]); // Laden des ersten Geh-Bildes
         this.loadImages(this.IMAGES_WALKING); // Laden der restlichen Bilder der Animation
@@ -71,7 +69,7 @@ class Endboss extends MovableObject {
                 if (i < 8) {
                     this.playAnimation(this.IMAGES_ALERT)
                 } else {
-                    // this.chicken_alarm.play();
+                    chicken_alarm.play();
                     this.playAnimation(this.IMAGES_ATTACK);
                 }
                 i++;

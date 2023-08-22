@@ -1,7 +1,14 @@
 let canvas;  // Canvas-Variable
 let world;  // World-Variable
 let keyboard = new Keyboard();  // Keyboard-Objekt
-game_over = new Audio ('audio/game-over.mp3');
+let game_over = new Audio ('audio/game-over.mp3');
+let chicken_alarm = new Audio('audio/chicken_alarm.mp3')
+let collect_bottle = new Audio('audio/collect_bottle.mp3');
+let collect_coin = new Audio('audio/collect_coin.mp3');
+let chicken_screams = new Audio('audio/chicken_scream.mp3');
+let walking_sound = new Audio('./audio/running.mp3');
+let character_hit = new Audio('audio/character_getting_hit.mp3');
+let character_dies = new Audio ('audio/character_dies.mp3');
 
 function startGame() {
     document.getElementById('start-screen').classList.add('d-none');
@@ -61,13 +68,13 @@ function backToMenu() {
 function gameLost() {
     document.getElementById('you-lost-screen').classList.remove('d-none');
     clearAllIntervals();
-    this.game_over.play();
+    game_over.play();
 }
 
 function gameOver() {
     document.getElementById('game-over-screen').classList.remove('d-none');
     clearAllIntervals();
-    this.game_over.play();
+    game_over.play();
 }
 
 function clearAllIntervals() {
