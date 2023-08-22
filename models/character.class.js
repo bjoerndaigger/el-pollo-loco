@@ -63,8 +63,9 @@ class Character extends MovableObject {
     ];
 
     world;
-    walking_sound = new Audio('./audio/running.mp3'); 
+    walking_sound = new Audio('./audio/running.mp3');
     character_hit = new Audio('audio/character_getting_hit.mp3');
+    character_dies = new Audio ('audio/character_dies.mp3');
 
     constructor() {
         super().loadImage(this.IMAGES_IDLE[0]); // Laden des ersten Bildes der Animation
@@ -74,54 +75,71 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_DEAD); // Laden der Bilder des Sterbens
         this.loadImages(this.IMAGES_HURT); // Laden der Bilder des verletzt werdens
         this.applyGravity(); // Starten der Fallanimation
-        this.animate(); // Starten der Animationen
+        this.characterDirections();
+        this.characterAnimations(); 
     }
 
-    animate() {
+    characterDirections() {
         setInterval(() => {
             this.walking_sound.pause(); // Stoppen des Audios für das Gehen
-            // Animation wird nur ausgeführt, wenn ich Arrow Right auf Tastatur drücke und x-Achsenwert kleiner als Endwert der x-Achse ist
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.moveRight();
-                this.otherDirection = false; // Character wird nicht gespiegelt
-                this.walking_sound.play(); // Abspielen des Laufaudios
-            }
-            // Animation wird nur ausgeführt, wenn ich Arrow Left auf Tastatur drücke
-            if (this.world.keyboard.LEFT && this.x > 0) {
-                this.moveLeft();
-                this.otherDirection = true; // Character wird gespiegelt
-                this.walking_sound.play(); // Abspielen des Laufaudios
-            }
-            // Animation wird nur ausgeführt, wenn ich Space-Taste drücke und wenn isAboveGround() false zurückgibt
-            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-                this.jump();
-            }
-            // Aktualisiere die Position der Kamera basierend auf der X-Position des Charakters
-            this.world.camera_x = -this.x + 100;
+            this.characterMovesRight();
+            this.characterMovesLeft();
+            this.characterJumps();
+            this.world.camera_x = -this.x + 100; // Aktualisiere die Position der Kamera basierend auf der X-Position des Charakters
 
         }, 1000 / 60); // Führe die Animation 60 Mal pro Sekunde aus (etwa 16,67 Millisekunden)
 
+    }
+
+    characterAnimations() {
         setInterval(() => { // Walk/Jump/Dead/Hurt Animation
             if (this.isDead()) { // Animation wird ausgeführt, wenn Character "dead" ist
                 this.playAnimation(this.IMAGES_DEAD);
+                this.character_dies.play();
                 setTimeout(() => {
                     gameLost();
-                }, 1500);
+                }, 1800);
             } else if (this.isHurt()) { // Animation wird ausgeführt, wenn isHurt() true zurückgibt
                 this.playAnimation(this.IMAGES_HURT);
                 this.character_hit.play();
             } else if (this.isAboveGround()) { // Animation wird ausgeführt bei return von einem bestimmten Wert der x-Achse
                 this.playAnimation(this.IMAGES_JUMPING);
-            } else { // Animation wird ausgeführt, wenn ich Arrow Right oder Arrow Left auf Tastatur drücke
-                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                    this.playAnimation(this.IMAGES_WALKING);
-                } else {
-                    this.playAnimation(this.IMAGES_IDLE);
-                }
+            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) { // Animation wird ausgeführt, wenn ich Arrow Right oder Arrow Left auf Tastatur drücke
+                this.playAnimation(this.IMAGES_WALKING);
             }
-        }, 50); // Wiederholen der Animation alle 50 Millisekunden
+            else {
+                this.playAnimation(this.IMAGES_IDLE);
+            }
+        }, 100); // Wiederholen der Animation alle 100 Millisekunden
+    }
+
+    characterMovesRight() {
+        // Animation wird nur ausgeführt, wenn ich Arrow Right auf Tastatur drücke und x-Achsenwert kleiner als Endwert der x-Achse ist
+        if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            this.moveRight();
+            this.otherDirection = false; // Character wird nicht gespiegelt
+            this.walking_sound.play(); // Abspielen des Laufaudios
+        }
+    }
+
+    characterMovesLeft() {
+        // Animation wird nur ausgeführt, wenn ich Arrow Left auf Tastatur drücke
+        if (this.world.keyboard.LEFT && this.x > 0) {
+            this.moveLeft();
+            this.otherDirection = true; // Character wird gespiegelt
+            this.walking_sound.play(); // Abspielen des Laufaudios
+        }
+    }
+
+    characterJumps() {
+        // Animation wird nur ausgeführt, wenn ich Space-Taste drücke und wenn isAboveGround() false zurückgibt
+        if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+            this.jump();
+        }
     }
 }
+
+
 
 
 
