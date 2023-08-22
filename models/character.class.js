@@ -4,7 +4,6 @@ class Character extends MovableObject {
     height = 280;
     speed = 10;
     jumpOnEnemy = false;
-    isHurtSoundPlayed = false;
     world;
 
     offset = {
@@ -100,9 +99,8 @@ class Character extends MovableObject {
             } else {
                 this.playIdleAnimation();
             }
-        }, 150);
+        }, 125);
     }
-
 
     characterMovesRight() {
         // Animation wird nur ausgeführt, wenn ich Arrow Right auf Tastatur drücke und x-Achsenwert kleiner als Endwert der x-Achse ist
@@ -139,25 +137,20 @@ class Character extends MovableObject {
 
     playHurtAnimation() {
         this.playAnimation(this.IMAGES_HURT);
-        if (!this.isHurtSoundPlayed) {
-            character_hit.play();
-            this.isHurtSoundPlayed = true;
-        }
+        character_hit.play();
     }
 
     playJumpAnimation() {
         this.playAnimation(this.IMAGES_JUMPING);
-        this.isHurtSoundPlayed = false;
+
     }
 
     playWalkingAnimation() {
         this.playAnimation(this.IMAGES_WALKING);
-        this.isHurtSoundPlayed = false;
     }
 
     playIdleAnimation() {
         this.playAnimation(this.IMAGES_IDLE);
-        this.isHurtSoundPlayed = false;
     }
 }
 
