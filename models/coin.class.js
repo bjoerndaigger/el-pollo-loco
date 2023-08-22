@@ -1,6 +1,6 @@
 class Coin extends MovableObject {
     y = 80 + Math.random() * 120; // setzen der y-Position
-    x = 300 + Math.random() * 2000; // Setzen der x-Position zufällig zwischen 300 und 2200
+    x = 300 + Math.random() * 2600; // Setzen der x-Position zufällig zwischen 300 und 2200
     width = 150;
     height = 150;
 

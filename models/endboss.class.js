@@ -1,9 +1,9 @@
 class Endboss extends MovableObject {
     y = 160;
-    x = 2500; // Startkoordinate
+    x = 2900; // Startkoordinate
     width = 250;
     height = 291;
-    speed = 2.5;
+    speed = 5;
 
     offset = {
         top: 80,
@@ -73,7 +73,6 @@ class Endboss extends MovableObject {
                     this.playAnimation(this.IMAGES_ATTACK);
                 }
                 i++;
-                
             } else {
                 this.playAnimation(this.IMAGES_WALKING);
                 this.moveLeft();

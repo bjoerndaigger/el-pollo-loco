@@ -5,7 +5,7 @@ class Level {
     backgroundObjects;  // Deklaration der Eigenschaft "backgroundObjects" (Hintergrundobjekte)
     bottles;
     coins;
-    level_end_x = 2200; // Deklaration des Endpunktes auf der x-Achse für den Character
+    level_end_x = 2900; // Deklaration des Endpunktes auf der x-Achse für den Character
 
     // Konstruktor der Klasse "Level" mit den Parametern "enemies", "clouds" und "backgroundObjects"
     constructor(enemies, endboss, clouds, backgroundObjects, bottles, coins) {
