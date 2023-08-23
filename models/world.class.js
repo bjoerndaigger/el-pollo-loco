@@ -14,7 +14,7 @@ class World {
     collectedBottles = []; // Array for collected Bottles
     collectedCoins = []; // Array for collected coins
     endbossHasBeenHit = false;
-   
+
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');  // Den 2D-Kontext des Canvas-Elements abrufen
@@ -57,33 +57,64 @@ class World {
         this.checkCollisionEndbossThrownBottle();
         this.checkCollisionCharacterEnemies();
         this.checkCollisionCharacterEndboss();
+        console.log(this.character.speedY);
     }
 
-
-    checkCollisionCharacterEnemies() {
+    /* checkCollisionCharacterEnemies() {
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy)) {
                 console.log(this.character.isAboveGround());
-                if (this.character.isAboveGround()) {
+                if (this.character.isAboveGround() && !this.character.isHurt()) {
                     this.character.jumpOnEnemy = true;
                     if (enemy instanceof Chicken) {
                         enemy.chickenIsDead = true;
-                    } else if (enemy instanceof ChickenSmall) {
+                    }
+                    if (enemy instanceof ChickenSmall) {
                         enemy.chickenSmallIsDead = true;
                     }
                     setTimeout(() => {
                         this.level.enemies.splice(index, 1);
                         enemy.chickenScreams = true;
                         this.character.jumpOnEnemy = false;
-                    }, 1000);
+                    }, 750);
                 }
-                else if (!this.character.jumpOnEnemy) {
+                if (!this.character.jumpOnEnemy) {
                     this.character.hit();
                     this.statusBarCharacter.setPercentage(this.character.energy);
                 }
             }
         });
+    }*/
+
+    checkCollisionCharacterEnemies() {
+        const enemiesToRemove = [];
+    
+        this.level.enemies.forEach((enemy, index) => {
+            if (this.character.isColliding(enemy)) {
+                if (this.character.isAboveGround() && !this.character.isHurt() && this.character.speedY < 0) {
+                    this.character.jumpOnEnemy = true;
+                    if (enemy instanceof Chicken) {
+                        enemy.chickenIsDead = true;
+                    }
+                    if (enemy instanceof ChickenSmall) {
+                        enemy.chickenSmallIsDead = true;
+                    }
+                    enemiesToRemove.push(index);
+                    enemy.chickenScreams = true;
+                    this.character.jumpOnEnemy = false;
+                } else if (!this.character.jumpOnEnemy) {
+                    this.character.hit();
+                    this.statusBarCharacter.setPercentage(this.character.energy);
+                }
+            }
+        });
+    
+        // Remove enemies outside the loop
+        enemiesToRemove.forEach(index => {
+            this.level.enemies.splice(index, 1);
+        });
     }
+
 
     checkCollisionCharacterEndboss() {
         if (this.character.isColliding(this.level.endboss)) {
@@ -120,7 +151,7 @@ class World {
         })
     }
 
-    
+
     // checks if endboss collides with bottles
     checkCollisionEndbossThrownBottle() {
         let collisionEndboss = false;
@@ -137,7 +168,7 @@ class World {
         }
         return collisionEndboss;
     }
-    
+
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);  // Da£s Canvas löschen

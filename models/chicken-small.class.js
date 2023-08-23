@@ -6,10 +6,10 @@ class ChickenSmall extends MovableObject {
     chickenScreams = false;
 
     offset = {
-        top: 5,
-        left: -10,
-        right: -10,
-        bottom: 5
+        top: -35,
+        left: 0,
+        right: 0,
+        bottom: 0
     };
     
     IMAGES_WALKING = [

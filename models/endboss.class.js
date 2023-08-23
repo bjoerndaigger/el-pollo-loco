@@ -86,18 +86,22 @@ class Endboss extends MovableObject {
                     world.endbossHasBeenHit = false;
                 }
                 if (this.isDead() && world.collectedCoins.length >= 5) {
-                    this.playAnimation(this.IMAGES_DEAD);
-                    chicken_alarm.pause();
-                    endboss_screams.play();
-                    setTimeout(() => {
-                        gameWon();
-                    }, 1800);
+                   this.playDeadAnimation();
                 }
             } else {
                 this.playAnimation(this.IMAGES_WALKING);
                 this.moveLeft();
             }
         }, 200);
+    }
+
+    playDeadAnimation() {
+        this.playAnimation(this.IMAGES_DEAD);
+        chicken_alarm.pause();
+        endboss_screams.play();
+        setTimeout(() => {
+            gameWon();
+        }, 2500);
     }
 }
 

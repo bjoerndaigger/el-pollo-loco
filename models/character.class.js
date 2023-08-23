@@ -8,8 +8,8 @@ class Character extends MovableObject {
 
     offset = {
         top: 140,
-        left: 30,
-        right: 40,
+        left: 20,
+        right: 35,
         bottom: 10
     };
 
@@ -86,22 +86,6 @@ class Character extends MovableObject {
 
     }
 
-    characterAnimations() {
-        setInterval(() => {
-            if (this.isDead()) {
-                this.playDeadAnimation();
-            } else if (this.isHurt()) {
-                this.playHurtAnimation();
-            } else if (this.isAboveGround()) {
-                this.playJumpAnimation();
-            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                this.playWalkingAnimation();
-            } else {
-                this.playIdleAnimation();
-            }
-        }, 125);
-    }
-
     characterMovesRight() {
         // Animation wird nur ausgeführt, wenn ich Arrow Right auf Tastatur drücke und x-Achsenwert kleiner als Endwert der x-Achse ist
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -125,6 +109,22 @@ class Character extends MovableObject {
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.jump();
         }
+    }
+
+    characterAnimations() {
+        setInterval(() => {
+            if (this.isDead()) {
+                this.playDeadAnimation();
+            } else if (this.isHurt()) {
+                this.playHurtAnimation();
+            } else if (this.isAboveGround()) {
+                this.playJumpAnimation();
+            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                this.playWalkingAnimation();
+            } else {
+                this.playIdleAnimation();
+            }
+        }, 125);
     }
 
     playDeadAnimation() {
