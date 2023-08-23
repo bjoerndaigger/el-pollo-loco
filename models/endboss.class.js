@@ -1,6 +1,6 @@
 class Endboss extends MovableObject {
     y = 160;
-    x = 2900; // Startkoordinate
+    x = 3600; // Startkoordinate
     width = 250;
     height = 291;
     speed = 5;
@@ -72,7 +72,7 @@ class Endboss extends MovableObject {
             const positionCharacter = world.character.x;
             const positionEndboss = this.x;
             const distance = positionEndboss - positionCharacter;
-
+            
             if (distance < 400) {
                 if (this.distanceTimer < 8) {
                     this.playAnimation(this.IMAGES_ALERT)
@@ -85,8 +85,10 @@ class Endboss extends MovableObject {
                     this.playAnimation(this.IMAGES_HURT);
                     world.endbossHasBeenHit = false;
                 }
-                if (this.isDead()) {
+                if (this.isDead() && world.collectedCoins.length >= 5) {
                     this.playAnimation(this.IMAGES_DEAD);
+                    chicken_alarm.pause();
+                    endboss_screams.play();
                     setTimeout(() => {
                         gameOver();
                     }, 1800);

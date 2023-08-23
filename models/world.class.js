@@ -56,6 +56,7 @@ class World {
         this.checkCollisionCoinsToCollect();
         this.checkCollisionEndbossThrownBottle();
         this.checkCollisionCharacterEnemies();
+        this.checkCollisionCharacterEndboss();
     }
 
 
@@ -81,6 +82,12 @@ class World {
                 }
             }
         });
+    }
+
+    checkCollisionCharacterEndboss() {
+        if (this.character.isColliding(this.level.endboss)) {
+            this.character.playDeadAnimation();
+        }
     }
 
     // checks if character collides with bottles
@@ -121,14 +128,12 @@ class World {
                 collisionEndboss = true;
             }
         });
-    
         if (collisionEndboss && !this.endbossHasBeenHit) {
             this.level.endboss.hit();
             console.log(this.level.endboss.energy);
             this.statusBarEndboss.setPercentage(this.level.endboss.energy);
             this.endbossHasBeenHit = true;
         }
-    
         return collisionEndboss;
     }
     
