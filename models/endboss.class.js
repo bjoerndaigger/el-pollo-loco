@@ -90,7 +90,7 @@ class Endboss extends MovableObject {
                     chicken_alarm.pause();
                     endboss_screams.play();
                     setTimeout(() => {
-                        gameOver();
+                        gameWon();
                     }, 1800);
                 }
             } else {

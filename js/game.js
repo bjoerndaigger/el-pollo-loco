@@ -65,18 +65,24 @@ function closeInfo() {
 function backToMenu() {
     document.getElementById('game-over-screen').classList.add('d-none');
     document.getElementById('you-lost-screen').classList.add('d-none');
+    document.getElementById('start-screen').classList.remove('d-none');
 }
 
 function gameLost() {
     document.getElementById('you-lost-screen').classList.remove('d-none');
-    clearAllIntervals();
     game_lost.play();
+    stopGame();
+  
 }
 
-function gameOver() {
+function gameWon() {
     document.getElementById('game-over-screen').classList.remove('d-none');
-    clearAllIntervals();
     game_won.play();
+    stopGame();
+}
+
+function stopGame() {
+    clearAllIntervals();
 }
 
 function clearAllIntervals() {

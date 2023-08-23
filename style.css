@@ -101,7 +101,6 @@ canvas {
     width: 720px;
     height: 480px;
     border-radius: 16px;
-    box-shadow: 0 0 16px 8px rgba(0, 0, 0, 0.6);
 }
 
 .btn {
@@ -220,6 +219,12 @@ canvas {
     position: absolute;
     top: 0;
     z-index: 3;
+    background-image: url(./img/5_background/second_half_background.png);
+    border-radius: 32px;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .game-over-screen-img {
