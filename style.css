@@ -235,7 +235,7 @@ canvas {
 
 .game-over-btn {
     position: absolute;
-    top: 16px;
+    top: 40px;
     left: 50%;
     transform: translateX(-50%);
     border-radius: 32px;
@@ -295,6 +295,10 @@ canvas {
     .game-controls {
         font-size: 14px;
     }
+
+    .game-over-btn {
+        top: 16px;
+    }
 }
 
 @media only screen and (max-height:480px) {
@@ -322,6 +326,10 @@ canvas {
     .game-rules,
     .game-controls {
         font-size: 14px;
+    }
+
+    .game-over-btn {
+        top: 16px;
     }
 }
 

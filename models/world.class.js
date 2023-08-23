@@ -63,6 +63,7 @@ class World {
     checkCollisionCharacterEnemies() {
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy)) {
+                console.log(this.character.isAboveGround());
                 if (this.character.isAboveGround()) {
                     this.character.jumpOnEnemy = true;
                     if (enemy instanceof Chicken) {
