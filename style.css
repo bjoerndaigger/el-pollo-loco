@@ -235,7 +235,7 @@ canvas {
 
 .game-over-btn {
     position: absolute;
-    top: 40px;
+    top: 16px;
     left: 50%;
     transform: translateX(-50%);
     border-radius: 32px;
@@ -274,7 +274,9 @@ canvas {
     .canvas-container,
     canvas,
     .start-screen-img,
-    .info-container {
+    .info-container,
+    .game-over-screen-container,
+    .game-over-screen-img {
         width: 100vw;
         height: 100vh;
         border-radius: 0;
@@ -300,7 +302,9 @@ canvas {
     .canvas-container,
     canvas,
     .start-screen-img,
-    .info-container {
+    .info-container,
+    .game-over-screen-container,
+    .game-over-screen-img {
         width: 100vw;
         height: 100vh;
         border-radius: 0;
