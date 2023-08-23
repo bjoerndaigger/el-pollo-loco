@@ -30,7 +30,7 @@ class ThrowableObject extends MovableObject {
         this.throw();
     }
 
-
+bottleu
     throw() {
         this.speedY = 30; // Fallgeschwindigkeit
         this.applyGravity(); // Objekt fällt nach unten
@@ -53,7 +53,6 @@ class ThrowableObject extends MovableObject {
                 this.playAnimation(this.IMAGES_THROWING);
             } else if (world.checkCollisionEndbossThrownBottle()) {
                 this.bottleSplash();
-                console.log('Collision Endboss');
             }
             else {
                 this.bottleSplash();

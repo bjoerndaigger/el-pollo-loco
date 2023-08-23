@@ -9,9 +9,11 @@ class World {
     statusBarCharacter = new StatusBarCharacter(); // Ein StatusBar-Objekt erstellen
     statusBarBottles = new StatusBarBottles();
     statusBarCoins = new StatusBarCoins();
+    statusBarEndboss = new StatusBarEndboss();
     throwableObjects = [];
     collectedBottles = []; // Array for collected Bottles
     collectedCoins = []; // Array for collected coins
+    endbossHasBeenHit = false;
    
 
     constructor(canvas, keyboard) {
@@ -110,17 +112,26 @@ class World {
         })
     }
 
+    
     // checks if endboss collides with bottles
     checkCollisionEndbossThrownBottle() {
         let collisionEndboss = false;
         this.throwableObjects.forEach((bottle) => {
             if (bottle.isColliding(this.level.endboss)) {
                 collisionEndboss = true;
-                return;
             }
         });
+    
+        if (collisionEndboss && !this.endbossHasBeenHit) {
+            this.level.endboss.hit();
+            console.log(this.level.endboss.energy);
+            this.statusBarEndboss.setPercentage(this.level.endboss.energy);
+            this.endbossHasBeenHit = true;
+        }
+    
         return collisionEndboss;
     }
+    
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);  // Da£s Canvas löschen
@@ -133,6 +144,7 @@ class World {
         this.addToMap(this.statusBarCharacter); // Das StatusBar-Objekt zur Karte hinzufügen
         this.addToMap(this.statusBarBottles);
         this.addToMap(this.statusBarCoins);
+        this.addToMap(this.statusBarEndboss);
         this.ctx.translate(this.camera_x, 0);  // Den Kontext (Hintergrund) um den Wert von camera_x erneut verschieben
 
         this.addToMap(this.character);  // Das Character-Objekt zur Karte hinzufügen

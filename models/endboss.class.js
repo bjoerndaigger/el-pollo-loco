@@ -4,6 +4,8 @@ class Endboss extends MovableObject {
     width = 250;
     height = 291;
     speed = 5;
+    energy = 60;
+    distanceTimer = 0;
 
     offset = {
         top: 80,
@@ -49,30 +51,46 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/4_hurt/G23.png'
     ];
 
+    IMAGES_DEAD = [
+        'img/4_enemie_boss_chicken/5_dead/G24.png',
+        'img/4_enemie_boss_chicken/5_dead/G25.png',
+        'img/4_enemie_boss_chicken/5_dead/G26.png'
+    ];
+
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]); // Laden des ersten Geh-Bildes
         this.loadImages(this.IMAGES_WALKING); // Laden der restlichen Bilder der Animation
         this.loadImages(this.IMAGES_ALERT);
         this.loadImages(this.IMAGES_ATTACK);
-        this.animate();
-
+        this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_DEAD);
+        this.endbossAnimations();
     }
-
-    animate() {
-        let i = 0;
+    
+    endbossAnimations() {
         setInterval(() => {
             const positionCharacter = world.character.x;
             const positionEndboss = this.x;
             const distance = positionEndboss - positionCharacter;
 
             if (distance < 400) {
-                if (i < 8) {
+                if (this.distanceTimer < 8) {
                     this.playAnimation(this.IMAGES_ALERT)
                 } else {
                     chicken_alarm.play();
                     this.playAnimation(this.IMAGES_ATTACK);
                 }
-                i++;
+                this.distanceTimer++;
+                if (world.checkCollisionEndbossThrownBottle()) {
+                    this.playAnimation(this.IMAGES_HURT);
+                    world.endbossHasBeenHit = false;
+                }
+                if (this.isDead()) {
+                    this.playAnimation(this.IMAGES_DEAD);
+                    setTimeout(() => {
+                        gameOver();
+                    }, 1800);
+                }
             } else {
                 this.playAnimation(this.IMAGES_WALKING);
                 this.moveLeft();
@@ -80,13 +98,6 @@ class Endboss extends MovableObject {
         }, 200);
     }
 }
-
-
-/* else if (world.checkCollisionEndbossThrownBottle()) {
-    this.bottleSplash();
-    console.log('Collision Endboss');
-} */
-
 
 
 
