@@ -1,15 +1,14 @@
 class Level {
-    enemies;  // Deklaration der Eigenschaft "enemies" (Feinde)
+    enemies;  
     endboss;
-    clouds;  // Deklaration der Eigenschaft "clouds" (Wolken)
-    backgroundObjects;  // Deklaration der Eigenschaft "backgroundObjects" (Hintergrundobjekte)
+    clouds;  
+    backgroundObjects;  
     bottles;
     coins;
     level_end_x = 3600; // Deklaration des Endpunktes auf der x-Achse für den Character
 
-    // Konstruktor der Klasse "Level" mit den Parametern "enemies", "clouds" und "backgroundObjects"
     constructor(enemies, endboss, clouds, backgroundObjects, bottles, coins) {
-        this.enemies = enemies;  // Zuweisen der übergebenen Werte an die entsprechenden Eigenschaften
+        this.enemies = enemies;  
         this.endboss = endboss;
         this.clouds = clouds;
         this.backgroundObjects = backgroundObjects;

@@ -20,7 +20,7 @@ class ThrowableObject extends MovableObject {
     bottle_breaks = new Audio('audio/breaking_bottle.mp3');
 
     constructor(x, y) {
-        super().loadImage('./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
+        super().loadImage(this.IMAGES_THROWING[0]);
         this.loadImages(this.IMAGES_THROWING);
         this.loadImages(this.IMAGES_SPLASHING_BOTTLE);
         this.x = x;
@@ -36,14 +36,18 @@ class ThrowableObject extends MovableObject {
         this.animate();
 
         setInterval(() => {
-            const characterOtherDirection = world.character.otherDirection;
-            if (this.y < 325 && !characterOtherDirection) {
-                this.x += 8;
-            }
-            if (this.y < 325 && characterOtherDirection) { // Flasche in andere Richtung werdeb
-                this.x -= 8;
-            }
+           this.throwDirection();
         }, 25);
+    }
+
+    throwDirection() {
+        const characterOtherDirection = world.character.otherDirection;
+        if (this.y < 325 && !characterOtherDirection) {
+            this.x += 8;
+        }
+        if (this.y < 325 && characterOtherDirection) { // Flasche in andere Richtung werdeb
+            this.x -= 8;
+        }
     }
 
     animate() {

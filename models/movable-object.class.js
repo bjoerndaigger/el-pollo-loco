@@ -19,13 +19,12 @@ class MovableObject extends DrawableObject {
                 this.y -= this.speedY; // y-Achse wird um Wert von speedY reduziert
                 this.speedY -= this.acceleration; // speedY wird um Beschleunigung reduziert
             }
-        }, 1000 / 25) // 25 mal pro Sekunde
+        }, 1000 / 25) 
     }
 
     isAboveGround() { 
         if (this instanceof ThrowableObject) { // if isAboveGround() eine Instanz von ThrowableObject
-            return this.y < 305;
-            // return true; // gibt zurück, dass Funktion dauerhaft über dem Boden ist (true) und das Fallen wird deshalb nicht ausgebremst
+            return this.y < 305; // return true; // gibt zurück, dass Funktion dauerhaft über dem Boden ist (true) und das Fallen wird deshalb nicht ausgebremst
         } else { // returned Wert y-Achse kleiner 155 (Wert, wo Character den Boden berührt), so dass das Fallen an der Stelle stoppt
             return this.y < 155;
         } 
@@ -66,7 +65,6 @@ class MovableObject extends DrawableObject {
 
     moveRight() {
         this.x += this.speed; // Bewege den Charakter nach rechts
-
     }
 
     moveLeft() {

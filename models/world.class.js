@@ -1,12 +1,12 @@
 class World {
-    character = new Character();  // Ein Character-Objekt erstellen
+    character = new Character();  
     level = level1; // Level-Variable
     canvas;  // Canvas-Variable
     ctx;  // 2D-Kontext-Variable
     keyboard;  // Keyboard-Objekt
     bottle; // Bottle Variable
     camera_x = 0;  // Kameraposition (Hintergrundbild) auf x-Achse
-    statusBarCharacter = new StatusBarCharacter(); // Ein StatusBar-Objekt erstellen
+    statusBarCharacter = new StatusBarCharacter(); 
     statusBarBottles = new StatusBarBottles();
     statusBarCoins = new StatusBarCoins();
     statusBarEndboss = new StatusBarEndboss();
@@ -94,7 +94,6 @@ class World {
         })
     }
 
-
     checkCollisionCoinsToCollect() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
@@ -107,7 +106,6 @@ class World {
             }
         })
     }
-
 
     // checks if endboss collides with bottles
     checkCollisionEndbossThrownBottle() {
@@ -124,38 +122,68 @@ class World {
         }
         return collisionEndboss;
     }
-
-
+    
     draw() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);  // Da£s Canvas löschen
-        this.ctx.translate(this.camera_x, 0);  // Den Kontext (Hintergrund) um den Wert von camera_x verschieben
-        this.addObjectsToMap(this.level.backgroundObjects);  // Die BackgroundObject-Objekte zur Karte hinzufügen
-        this.addObjectsToMap(this.level.clouds);  // Die Cloud-Objekte zur Karte hinzufügen
+        this.clearCanvas();
+        this.translateContext(this.camera_x);
+        this.drawBackgroundObjects();
+        this.resetContextTranslation();
+        this.drawStatusBar();
+        this.translateContext(this.camera_x);  // Den Kontext (Hintergrund) um den Wert von camera_x erneut verschieben
+        this.drawCharacterAndObjects();
+        this.resetContextTranslationAgain();
+        this.requestNextAnimationFrame();
+    }
 
-        this.ctx.translate(-this.camera_x, 0);  // Die Translation für fixierten StatusBar zurücksetzen
-        // --- Space for fixed objects --- //
-        this.addToMap(this.statusBarCharacter); // Das StatusBar-Objekt zur Karte hinzufügen
+    // Das Canvas löschen
+    clearCanvas() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    // Den Kontext (Hintergrund) um den Wert von camera_x verschieben
+    translateContext(x) {
+        this.ctx.translate(x, 0);
+    }
+
+    drawBackgroundObjects() {
+        this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.clouds);
+    }
+
+    // Die Translation für fixierten StatusBar zurücksetzen
+    resetContextTranslationAgain() {
+        this.ctx.translate(-this.camera_x, 0);
+    }
+
+    drawStatusBar() {
+        this.addToMap(this.statusBarCharacter);
         this.addToMap(this.statusBarBottles);
         this.addToMap(this.statusBarCoins);
         this.addToMap(this.statusBarEndboss);
-        this.ctx.translate(this.camera_x, 0);  // Den Kontext (Hintergrund) um den Wert von camera_x erneut verschieben
+    }
 
-        this.addToMap(this.character);  // Das Character-Objekt zur Karte hinzufügen
-
-        this.addObjectsToMap(this.level.enemies);  // Die Chicken-Objekte zur Karte hinzufügen
-        this.addToMap(this.level.endboss); // Den Endboss zur Karte hinzufügen
-        this.addObjectsToMap(this.throwableObjects); // Die Throwable-Objekte zur Karte hinzufügen
+    drawCharacterAndObjects() {
+        this.addToMap(this.character);
+        this.addObjectsToMap(this.level.enemies);
+        this.addToMap(this.level.endboss);
+        this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.coins);
+    }
 
+    // Die Translation zurücksetzen
+    resetContextTranslation() {
+        this.ctx.translate(-this.camera_x, 0);
+    }
 
-        this.ctx.translate(-this.camera_x, 0);  // Die Translation zurücksetzen
-
-        let self = this;  // Hilfsvariable 'self', da 'this' innerhalb von requestAnimationFrame() nicht funktioniert
-        requestAnimationFrame(function () {  // Die draw-Funktion erneut ausführen
+    // Die draw-Funktion erneut ausführen
+    requestNextAnimationFrame() {
+        let self = this; // Hilfsvariable 'self', da 'this' innerhalb von requestAnimationFrame() nicht funktioniert
+        requestAnimationFrame(function () {
             self.draw();
         });
     }
+
 
     addObjectsToMap(objects) {
         objects.forEach(o => { // forEach funktioniert nur mit Arrays, weswegen ich Objekte als Array hineingeben muss

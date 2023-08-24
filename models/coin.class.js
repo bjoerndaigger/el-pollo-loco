@@ -25,6 +25,6 @@ class Coin extends MovableObject {
     animate() {
         setInterval(() => { 
             this.playAnimation(this.IMAGES_COIN);
-        }, 250); // Wiederholen der Animation alle 200 Millisekunden
+        }, 250); 
     }
 }
