@@ -57,10 +57,43 @@ class World {
         this.checkCollisionEndbossThrownBottle();
         this.checkCollisionCharacterEnemies();
         this.checkCollisionCharacterEndboss();
-        console.log(this.character.speedY);
     }
 
-    /* checkCollisionCharacterEnemies() {
+    checkCollisionCharacterEnemies() {
+        const enemiesToRemove = [];
+
+        this.level.enemies.forEach((enemy, index) => {
+            if (this.character.isColliding(enemy)) {
+                if (this.character.isAboveGround() && !this.character.isHurt() && this.character.speedY < 0) {
+                    this.character.jumpOnEnemy = true;
+                    if (enemy instanceof Chicken) {
+                        enemy.chickenIsDead = true;
+                    }
+                    if (enemy instanceof ChickenSmall) {
+                        enemy.chickenSmallIsDead = true;
+                    }
+                    enemy.chickenScreams = true;
+                    this.character.jumpOnEnemy = false;
+                    enemiesToRemove.push(index);
+                } else if (!this.character.jumpOnEnemy) {
+                    this.character.hit();
+                    this.statusBarCharacter.setPercentage(this.character.energy);
+                }
+            }
+        });
+
+        // Remove enemies after a delay of 700 milliseconds
+        setTimeout(() => {
+            for (let i = enemiesToRemove.length - 1; i >= 0; i--) {
+                this.level.enemies.splice(enemiesToRemove[i], 1);
+            }
+        }, 700);
+    }
+
+
+    checkCollisionCharacterEnemies() {
+        const enemiesToDelete = [];
+    
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy)) {
                 console.log(this.character.isAboveGround());
@@ -72,11 +105,7 @@ class World {
                     if (enemy instanceof ChickenSmall) {
                         enemy.chickenSmallIsDead = true;
                     }
-                    setTimeout(() => {
-                        this.level.enemies.splice(index, 1);
-                        enemy.chickenScreams = true;
-                        this.character.jumpOnEnemy = false;
-                    }, 750);
+                    enemiesToDelete.push({ index, enemy }); // Index-Wert und Feindobjekt hinzufügen
                 }
                 if (!this.character.jumpOnEnemy) {
                     this.character.hit();
@@ -84,36 +113,20 @@ class World {
                 }
             }
         });
-    }*/
-
-    checkCollisionCharacterEnemies() {
-        const enemiesToRemove = [];
     
-        this.level.enemies.forEach((enemy, index) => {
-            if (this.character.isColliding(enemy)) {
-                if (this.character.isAboveGround() && !this.character.isHurt() && this.character.speedY < 0) {
-                    this.character.jumpOnEnemy = true;
-                    if (enemy instanceof Chicken) {
-                        enemy.chickenIsDead = true;
-                    }
-                    if (enemy instanceof ChickenSmall) {
-                        enemy.chickenSmallIsDead = true;
-                    }
-                    enemiesToRemove.push(index);
-                    enemy.chickenScreams = true;
-                    this.character.jumpOnEnemy = false;
-                } else if (!this.character.jumpOnEnemy) {
-                    this.character.hit();
-                    this.statusBarCharacter.setPercentage(this.character.energy);
-                }
-            }
-        });
-    
-        // Remove enemies outside the loop
-        enemiesToRemove.forEach(index => {
-            this.level.enemies.splice(index, 1);
+        // Löschen der markierten Index-Werte nach dem Durchlauf der Schleife
+        enemiesToDelete.forEach(({ index, enemy }) => {
+            setTimeout(() => {
+                this.level.enemies.splice(index, 1);
+                enemy.chickenScreams = true;
+                this.character.jumpOnEnemy = false;
+                // Weitere Aktionen nach dem Löschen
+            }, 750);
         });
     }
+    
+    
+    
 
 
     checkCollisionCharacterEndboss() {
