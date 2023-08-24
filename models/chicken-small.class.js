@@ -2,8 +2,7 @@ class ChickenSmall extends MovableObject {
     y = 380; // Anfangsposition des Huhns auf der y-Achse
     width = 60; // Breite des Huhn-Bildes
     height = 53; // Höhe des Huhn-Bildes
-    chickenSmallIsDead = false;
-    chickenScreams = false;
+    enemyIsDead = false;
 
     offset = {
         top: -35,
@@ -34,18 +33,27 @@ class ChickenSmall extends MovableObject {
 
     animate() {
         setInterval(() => {
-            if (!this.chickenSmallIsDead) {
+            if (!this.enemyIsDead) {
                 this.moveLeft();
             }
         }, 1000 / 60);
 
-        setInterval(() => {
-            if (this.chickenSmallIsDead && !this.chickenScreams) {
-                chicken_screams.play();
+        const chickenSmallAnimation = setInterval(() => {
+            if (this.enemyIsDead) {
                 this.loadImage(this.IMAGES_SMALL_CHICKEN_DEAD);
+                chicken_screams.play();
+                this.stopAnimation(chickenSmallAnimation);
+
             } else {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 200);
+    }
+
+    stopAnimation(chickenSmallAnimation) {
+        clearInterval(chickenSmallAnimation);
+        setTimeout(() => {
+            this.loadImage('');
+        }, 750);
     }
 }

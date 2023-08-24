@@ -2,8 +2,7 @@ class Chicken extends MovableObject {
     y = 340; // Anfangsposition des Huhns auf der y-Achse
     width = 102; // Breite des Huhn-Bildes
     height = 100; // Höhe des Huhn-Bildes
-    chickenIsDead = false;
-    chickenScreams = false;
+    enemyIsDead = false;
 
     offset = {
         top: 5,
@@ -19,7 +18,7 @@ class Chicken extends MovableObject {
     ];
 
     IMAGES_CHICKEN_DEAD = ['img/3_enemies_chicken/chicken_normal/2_dead/dead.png'];
-    
+
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png'); // Laden des ersten Geh-Bildes
         this.loadImages(this.IMAGES_WALKING); // Laden der restlichen Bilder der Animation
@@ -30,21 +29,31 @@ class Chicken extends MovableObject {
         this.animate(); // Starten der Animation
     }
 
+
     animate() {
         setInterval(() => {
-            if (!this.chickenIsDead) {
+            if (!this.enemyIsDead) {
                 this.moveLeft();
             }
         }, 1000 / 60);
 
-        setInterval(() => {
-            if (this.chickenIsDead && !this.chickenScreams) {
-                chicken_screams.play();
+        const chickenAnimation = setInterval(() => {
+            if (this.enemyIsDead) {
                 this.loadImage(this.IMAGES_CHICKEN_DEAD);
+                chicken_screams.play();
+                this.stopAnimation(chickenAnimation);
+
             } else {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 200);
+    }
+
+    stopAnimation(chickenAnimation) {
+        clearInterval(chickenAnimation);
+        setTimeout(() => {
+            this.loadImage('');
+        }, 750);
     }
 }
 

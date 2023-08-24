@@ -59,23 +59,13 @@ class World {
         this.checkCollisionCharacterEndboss();
     }
 
-    checkCollisionCharacterEnemies() {
-        this.level.enemies.forEach((enemy, index) => {
-            if (this.character.isColliding(enemy) && this.character.isAboveGround() && !this.character.isHurt() && this.character.speedY < 0) {
-                this.character.jumpOnEnemy = true;
-                if (enemy instanceof Chicken) {
-                    enemy.chickenIsDead = true;
-                }
-                if (enemy instanceof ChickenSmall) {
-                    enemy.chickenSmallIsDead = true;
-                }
-                setTimeout(() => {
-                    this.level.enemies.splice(index, 1);
-                    enemy.chickenScreams = true;
-                    this.character.jumpOnEnemy = false;
-                }, 500);
+   
+    checkCollisionCharacterEnemies() { // Überprüft ob zwei Objekte kollidieren
+        this.level.enemies.forEach((enemy) => { // Durchlaufe die Liste der Gegner im Level
+            if (this.character.isColliding(enemy) && this.character.isAboveGround() && this.character.speedY < 0) { // Überprüfe, ob der Charakter mit dem aktuellen Gegner kollidiert
+                enemy.enemyIsDead = true;
             }
-            if (this.character.isColliding(enemy) && !this.character.jumpOnEnemy) {
+            if (this.character.isColliding(enemy) && !enemy.enemyIsDead) {
                 this.character.hit();
                 this.statusBarCharacter.setPercentage(this.character.energy);
             }
