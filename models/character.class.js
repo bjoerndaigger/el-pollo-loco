@@ -26,7 +26,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/idle/I-10.png',
     ];
 
-    IMAGES_WALKING = [ // Array mit den Bildpfaden für die Animation des Gehens
+    IMAGES_WALKING = [ 
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
         'img/2_character_pepe/2_walk/W-23.png',
@@ -35,7 +35,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/2_walk/W-26.png'
     ];
 
-    IMAGES_JUMPING = [ // Array mit den Bildpfaden für die Animation des Springens
+    IMAGES_JUMPING = [ 
         'img/2_character_pepe/3_jump/J-31.png',
         'img/2_character_pepe/3_jump/J-32.png',
         'img/2_character_pepe/3_jump/J-33.png',
@@ -47,7 +47,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/3_jump/J-39.png'
     ];
 
-    IMAGES_DEAD = [ // Array mit den Bildpfaden für die Animation des Sterbens
+    IMAGES_DEAD = [ 
         'img/2_character_pepe/5_dead/D-51.png',
         'img/2_character_pepe/5_dead/D-52.png',
         'img/2_character_pepe/5_dead/D-53.png',
@@ -57,33 +57,52 @@ class Character extends MovableObject {
         'img/2_character_pepe/5_dead/D-57.png'
     ];
 
-    IMAGES_HURT = [ // Array mit den Bildpfaden für die Animation des verletzt werdens
+    IMAGES_HURT = [ 
         'img/2_character_pepe/4_hurt/H-41.png',
         'img/2_character_pepe/4_hurt/H-42.png',
         'img/2_character_pepe/4_hurt/H-43.png',
     ];
 
     constructor() {
-        super().loadImage(this.IMAGES_IDLE[0]); // Laden des ersten Bildes der Animation
+        super().loadImage(this.IMAGES_IDLE[0]); 
         this.loadImages(this.IMAGES_IDLE);
-        this.loadImages(this.IMAGES_WALKING); // Laden der restlichen Bilder der Animation
-        this.loadImages(this.IMAGES_JUMPING); // Laden der Bilder des Springens
-        this.loadImages(this.IMAGES_DEAD); // Laden der Bilder des Sterbens
-        this.loadImages(this.IMAGES_HURT); // Laden der Bilder des verletzt werdens
-        this.applyGravity(); // Starten der Fallanimation
-        this.characterDirections();
-        this.characterAnimations();
+        this.loadImages(this.IMAGES_WALKING); 
+        this.loadImages(this.IMAGES_JUMPING); 
+        this.loadImages(this.IMAGES_DEAD); 
+        this.loadImages(this.IMAGES_HURT); 
+        this.applyGravity(); 
+        this.animate();
     }
 
-    characterDirections() {
+    animate() {
         setInterval(() => {
-            walking_sound.pause(); // Stoppen des Audios für das Gehen
-            this.characterMovesRight();
-            this.characterMovesLeft();
-            this.characterJumps();
-            this.world.camera_x = -this.x + 100; // Aktualisiere die Position der Kamera basierend auf der X-Position des Charakters
-        }, 1000 / 60); // Führe die Animation 60 Mal pro Sekunde aus (etwa 16,67 Millisekunden)
+            this.characterMovements();
+        }, 1000 / 60);
+        setInterval(() => {
+           this.characterAnimations();
+        }, 125);
+    }
 
+    characterMovements() {
+        walking_sound.pause();
+        this.characterMovesRight();
+        this.characterMovesLeft();
+        this.characterMovesUp();
+        this.world.camera_x = -this.x + 100; // Aktualisiere die Position der Kamera basierend auf der X-Position des Charakters
+    }
+
+    characterAnimations() {
+        if (this.isDead()) {
+            this.characterDead();
+        } else if (this.isHurt()) {
+            this.characterHurt();
+        } else if (this.isAboveGround()) {
+            this.characterJumps();
+        } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            this.characterWalks();
+        } else {
+            this.characterIdle();
+        }
     }
 
     characterMovesRight() {
@@ -91,66 +110,49 @@ class Character extends MovableObject {
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
             this.moveRight();
             this.otherDirection = false; // Character wird nicht gespiegelt
-            walking_sound.play(); // Abspielen des Laufaudios
+            walking_sound.play(); 
         }
     }
 
     characterMovesLeft() {
-        // Animation wird nur ausgeführt, wenn ich Arrow Left auf Tastatur drücke
         if (this.world.keyboard.LEFT && this.x > 0) {
             this.moveLeft();
             this.otherDirection = true; // Character wird gespiegelt
-            walking_sound.play(); // Abspielen des Laufaudios
+            walking_sound.play(); 
         }
     }
 
-    characterJumps() {
+    characterMovesUp() {
         // Animation wird nur ausgeführt, wenn ich Space-Taste drücke und wenn isAboveGround() false zurückgibt
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.jump();
         }
     }
 
-    characterAnimations() {
-        setInterval(() => {
-            if (this.isDead()) {
-                this.playDeadAnimation();
-            } else if (this.isHurt()) {
-                this.playHurtAnimation();
-            } else if (this.isAboveGround()) {
-                this.playJumpAnimation();
-            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                this.playWalkingAnimation();
-            } else {
-                this.playIdleAnimation();
-            }
-        }, 125);
+    characterHurt() {
+        this.playAnimation(this.IMAGES_HURT);
+        character_hit.play();
     }
 
-    playDeadAnimation() {
+    characterJumps() {
+        this.playAnimation(this.IMAGES_JUMPING);
+
+    }
+
+    characterWalks() {
+        this.playAnimation(this.IMAGES_WALKING);
+    }
+
+    characterIdle() {
+        this.playAnimation(this.IMAGES_IDLE);
+    }
+
+    characterDead() {
         this.playAnimation(this.IMAGES_DEAD);
         character_dies.play();
         setTimeout(() => {
             gameLost();
         }, 1800);
-    }
-
-    playHurtAnimation() {
-        this.playAnimation(this.IMAGES_HURT);
-        character_hit.play();
-    }
-
-    playJumpAnimation() {
-        this.playAnimation(this.IMAGES_JUMPING);
-
-    }
-
-    playWalkingAnimation() {
-        this.playAnimation(this.IMAGES_WALKING);
-    }
-
-    playIdleAnimation() {
-        this.playAnimation(this.IMAGES_IDLE);
     }
 }
 

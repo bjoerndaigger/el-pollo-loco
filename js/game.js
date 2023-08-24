@@ -1,6 +1,6 @@
-let canvas;  // Canvas-Variable
-let world;  // World-Variable
-let keyboard = new Keyboard();  // Keyboard-Objekt
+let canvas; 
+let world;  
+let keyboard = new Keyboard();  
 let game_lost = new Audio('audio/game_lost.mp3');
 let chicken_alarm = new Audio('audio/chicken_alarm.mp3')
 let collect_bottle = new Audio('audio/collect_bottle.mp3');

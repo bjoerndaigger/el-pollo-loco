@@ -14,7 +14,7 @@ class Endboss extends MovableObject {
         bottom: 40
     };
 
-    IMAGES_WALKING = [ // Bilder für die Gehanimation
+    IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
         'img/4_enemie_boss_chicken/1_walk/G2.png',
         'img/4_enemie_boss_chicken/1_walk/G3.png',
@@ -58,44 +58,62 @@ class Endboss extends MovableObject {
     ];
 
     constructor() {
-        super().loadImage(this.IMAGES_WALKING[0]); // Laden des ersten Geh-Bildes
-        this.loadImages(this.IMAGES_WALKING); // Laden der restlichen Bilder der Animation
+        super().loadImage(this.IMAGES_WALKING[0]);
+        this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ALERT);
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-        this.endbossAnimations();
+        this.animate();
     }
-    
-    endbossAnimations() {
+
+    animate() {
         setInterval(() => {
-            const positionCharacter = world.character.x;
-            const positionEndboss = this.x;
-            const distance = positionEndboss - positionCharacter;
-            
-            if (distance < 400) {
-                if (this.distanceTimer < 8) {
-                    this.playAnimation(this.IMAGES_ALERT)
-                } else {
-                    chicken_alarm.play();
-                    this.playAnimation(this.IMAGES_ATTACK);
-                }
-                this.distanceTimer++;
-                if (world.checkCollisionEndbossThrownBottle()) {
-                    this.playAnimation(this.IMAGES_HURT);
-                    world.endbossHasBeenHit = false;
-                }
-                if (this.isDead() && world.collectedCoins.length >= 5) {
-                   this.playDeadAnimation();
-                }
-            } else {
-                this.playAnimation(this.IMAGES_WALKING);
-                this.moveLeft();
-            }
+            this.endbossAnimations();
         }, 200);
     }
 
-    playDeadAnimation() {
+    endbossAnimations() {
+        const distance = this.x - world.character.x;
+
+        if (distance < 400) {
+            if (this.distanceTimer < 8) {
+                this.endbossAlert();
+            } else {
+                this.endbossAttacks();
+            }
+            this.distanceTimer++;
+            if (world.checkCollisionEndbossThrownBottle()) {
+                this.endbossHurt();
+            }
+            if (this.isDead() && world.collectedCoins.length >= 5) {
+                this.endbossDead();
+            }
+        } else {
+            this.endbossWalks();
+        }
+    }
+
+    endbossWalks() {
+        this.playAnimation(this.IMAGES_WALKING);
+        this.moveLeft();
+    }
+    
+    endbossAlert() {
+        this.playAnimation(this.IMAGES_ALERT)
+    }
+
+    endbossAttacks() {
+        chicken_alarm.play();
+        this.playAnimation(this.IMAGES_ATTACK);
+    }
+
+    endbossHurt() {
+        this.playAnimation(this.IMAGES_HURT);
+        world.endbossHasBeenHit = false;
+    }
+
+    endbossDead() {
         this.playAnimation(this.IMAGES_DEAD);
         chicken_alarm.pause();
         endboss_screams.play();

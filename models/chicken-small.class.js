@@ -1,7 +1,7 @@
 class ChickenSmall extends MovableObject {
     y = 380; // Anfangsposition des Huhns auf der y-Achse
-    width = 60; // Breite des Huhn-Bildes
-    height = 53; // Höhe des Huhn-Bildes
+    width = 60; 
+    height = 53; 
     enemyIsDead = false;
 
     offset = {
@@ -12,9 +12,9 @@ class ChickenSmall extends MovableObject {
     };
     
     IMAGES_WALKING = [
-        'img/3_enemies_chicken/chicken_small/1_walk/1_w.png', // Pfad zum ersten Bild der Gehanimation
-        'img/3_enemies_chicken/chicken_small/1_walk/2_w.png', // Pfad zum zweiten Bild der Gehanimation
-        'img/3_enemies_chicken/chicken_small/1_walk/3_w.png' // Pfad zum dritten Bild der Gehanimation
+        'img/3_enemies_chicken/chicken_small/1_walk/1_w.png', 
+        'img/3_enemies_chicken/chicken_small/1_walk/2_w.png', 
+        'img/3_enemies_chicken/chicken_small/1_walk/3_w.png' 
     ];
 
     IMAGES_SMALL_CHICKEN_DEAD = [
@@ -22,13 +22,11 @@ class ChickenSmall extends MovableObject {
     ];
     
     constructor() {
-        super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png'); // Laden des ersten Geh-Bildes
-        this.loadImages(this.IMAGES_WALKING); // Laden der restlichen Bilder der Animation
-        
-        this.x = 600 + Math.random() * 3000; // Setzen der x-Position zufällig zwischen 500 und 2900
-        this.speed = 0.15 + Math.random() * 0.5; // Setzen der Geschwindigkeit auf einen zufälligen Wert zwischen 0.15 und 0.65
-
-        this.animate(); // Starten der Animation
+        super().loadImage(this.IMAGES_WALKING[0]); 
+        this.loadImages(this.IMAGES_WALKING); 
+        this.x = 600 + Math.random() * 3000; 
+        this.speed = 0.15 + Math.random() * 0.5; 
+        this.animate(); 
     }
 
     animate() {

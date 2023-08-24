@@ -1,23 +1,23 @@
 let level1;
 function initLevel() {
-    level1 = new Level( // Erstellen einer Konstanten "level1" und Initialisierung mit einer neuen Instanz der Klasse "Level"
+    level1 = new Level(
         [
-            new Chicken(),  // Hinzufügen von drei neuen Instanzen der Klasse "Chicken"
+            new Chicken(),  
             new Chicken(),
             new Chicken(),
             new ChickenSmall(),
             new ChickenSmall(),
             new ChickenSmall()
         ],
-        new Endboss() // Hinzufügen von Instanz Endboss
+        new Endboss() 
         ,
         [
-            new Cloud('img/5_background/layers/4_clouds/1.png'),  // Hinzufügen einer neuen Instanz der Klasse "Cloud" zum Array "clouds"
+            new Cloud('img/5_background/layers/4_clouds/1.png'), 
             new Cloud('img/5_background/layers/4_clouds/2.png'),
             new Cloud('img/5_background/layers/4_clouds/1.png'),
             new Cloud('img/5_background/layers/4_clouds/2.png')
         ],
-        [   // Hinzufügen von BackgroundObject-Instanzen mit Dateipfaden und Verschiebungswerten zum Array "backgroundObjects"
+        [   
             new BackgroundObject('img/5_background/layers/air.png', -719),
             new BackgroundObject('img/5_background/layers/3_third_layer/2.png', -719),
             new BackgroundObject('img/5_background/layers/2_second_layer/2.png', -719),

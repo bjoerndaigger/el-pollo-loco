@@ -1,6 +1,6 @@
 class Bottle extends MovableObject {
     y = 350;
-    x = 300 + Math.random() * 2600; // Setzen der x-Position zufällig zwischen 300 und 2200
+    x = 300 + Math.random() * 2600;
     width = 100;
     height = 100;
 
