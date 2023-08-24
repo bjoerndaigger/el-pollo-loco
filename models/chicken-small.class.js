@@ -1,7 +1,7 @@
 class ChickenSmall extends MovableObject {
     y = 380; // Anfangsposition des Huhns auf der y-Achse
-    width = 60; 
-    height = 53; 
+    width = 60;
+    height = 53;
     enemyIsDead = false;
 
     offset = {
@@ -10,42 +10,48 @@ class ChickenSmall extends MovableObject {
         right: 0,
         bottom: 0
     };
-    
+
     IMAGES_WALKING = [
-        'img/3_enemies_chicken/chicken_small/1_walk/1_w.png', 
-        'img/3_enemies_chicken/chicken_small/1_walk/2_w.png', 
-        'img/3_enemies_chicken/chicken_small/1_walk/3_w.png' 
+        'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
+        'img/3_enemies_chicken/chicken_small/1_walk/2_w.png',
+        'img/3_enemies_chicken/chicken_small/1_walk/3_w.png'
     ];
 
     IMAGES_SMALL_CHICKEN_DEAD = [
         'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ];
-    
+
     constructor() {
-        super().loadImage(this.IMAGES_WALKING[0]); 
-        this.loadImages(this.IMAGES_WALKING); 
-        this.x = 600 + Math.random() * 3000; 
-        this.speed = 0.15 + Math.random() * 0.5; 
-        this.animate(); 
+        super().loadImage(this.IMAGES_WALKING[0]);
+        this.loadImages(this.IMAGES_WALKING);
+        this.x = 600 + Math.random() * 3000;
+        this.speed = 0.15 + Math.random() * 0.5;
+        this.animate();
     }
 
     animate() {
         setInterval(() => {
-            if (!this.enemyIsDead) {
-                this.moveLeft();
-            }
+            this.chickenSmallMoves();
         }, 1000 / 60);
+        this.chickenSmallAnimation();
+    }
 
+    chickenSmallAnimation() {
         const chickenSmallAnimation = setInterval(() => {
             if (this.enemyIsDead) {
                 this.loadImage(this.IMAGES_SMALL_CHICKEN_DEAD);
                 chicken_screams.play();
                 this.stopAnimation(chickenSmallAnimation);
-
             } else {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 200);
+    }
+    
+    chickenSmallMoves() {
+        if (!this.enemyIsDead) {
+            this.moveLeft();
+        }
     }
 
     stopAnimation(chickenSmallAnimation) {

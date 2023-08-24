@@ -76,7 +76,7 @@ class World {
 
     checkCollisionCharacterEndboss() {
         if (this.character.isColliding(this.level.endboss)) {
-            this.character.playDeadAnimation();
+            this.character.characterDead();
         }
     }
 
