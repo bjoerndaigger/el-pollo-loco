@@ -6,6 +6,14 @@ class MovableObject extends DrawableObject {
     energy = 100;
     lastHit = 0;
 
+    /**
+      * Defines the offset of collision boundaries.
+      * @type {Object}
+      * @property {number} top - Top offset
+      * @property {number} left - Left offset
+      * @property {number} right - Right offset
+      * @property {number} bottom - Bottom offset
+      */
     offset = {
         top: 0,
         left: 0,
@@ -13,23 +21,35 @@ class MovableObject extends DrawableObject {
         bottom: 0
     };
 
+    /**
+     * Applies gravity to the object's vertical movement.
+     */
     applyGravity() {
         setInterval(() => {
-            if (this.isAboveGround() || this.speedY > 0) { // Ausführung nur solange y-Achse kleiner 155px oder speedY größer 0
-                this.y -= this.speedY; // y-Achse wird um Wert von speedY reduziert
-                this.speedY -= this.acceleration; // speedY wird um Beschleunigung reduziert
+            if (this.isAboveGround() || this.speedY > 0) {  // Execute while y-axis is less than 155px or speedY is greater than 0
+                this.y -= this.speedY;  // Decrease y-axis by the value of speedY
+                this.speedY -= this.acceleration; // Decrease speedY by the value of acceleration
             }
-        }, 1000 / 25) 
+        }, 1000 / 25);
     }
 
-    isAboveGround() { 
-        if (this instanceof ThrowableObject) { // if isAboveGround() eine Instanz von ThrowableObject
-            return this.y < 305; // return true; // gibt zurück, dass Funktion dauerhaft über dem Boden ist (true) und das Fallen wird deshalb nicht ausgebremst
-        } else { // returned Wert y-Achse kleiner 155 (Wert, wo Character den Boden berührt), so dass das Fallen an der Stelle stoppt
+    /**
+     * Checks if the object is above the ground.
+     * @returns {boolean} - True if above ground, false otherwise.
+     */
+    isAboveGround() {
+        if (this instanceof ThrowableObject) { // If this is an instance of ThrowableObject, return true
+            return this.y < 305;
+        } else { // Otherwise, return true if y-axis is less than 155
             return this.y < 155;
-        } 
+        }
     }
 
+    /**
+     * Checks if the object is colliding with another object.
+     * @param {MovableObject} mo - The other movable object.
+     * @returns {boolean} - True if colliding, false otherwise.
+     */
     isColliding(mo) {
         return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
             this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
@@ -37,44 +57,70 @@ class MovableObject extends DrawableObject {
             this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
     }
 
+    /**
+     * Handles the object being hit.
+     */
     hit() {
-        this.energy -= 5; // Wenn Kollision stattfindet, sinkt Wert von Variable energy um 5
-        if (this.energy < 0) { // Verhindert, dass energy in den Minusbereich geht.
+        this.energy -= 5; // Decrease energy value by 5 when a collision occurs
+        if (this.energy < 0) { // Prevent energy from going into negative values
             this.energy = 0;
-        } else {
-            this.lastHit = new Date().getTime(); // Anzahl der Millisekunden, die seit dem 1. Januar 1970, 00:00:00 UTC vergangen sind
+        } else { // Update lastHit with current timestamp
+            this.lastHit = new Date().getTime();
         }
     }
 
+    /**
+     * Checks if the object was hurt recently.
+     * @returns {boolean} - True if hurt, false otherwise.
+     */
     isHurt() {
-        let timepassed = new Date().getTime() - this.lastHit; // Millisekunden,seit 1. Januar 1970, 00:00:00 UTC minus Millisekunden der letzten Kollision
-        timepassed = timepassed / 1000; // Differenz in Sekunden
-        return timepassed < 0.5; // return true, solange Kollision kleiner als eine halbe Sekunde ist
+        let timepassed = new Date().getTime() - this.lastHit; // Calculate time passed since last hit in seconds
+        timepassed = timepassed / 1000;
+        return timepassed < 0.5; // Return true if timepassed is less than 0.5 seconds
     }
 
-    isDead() {
-        return this.energy == 0;
+    /**
+     * Checks if the object is dead.
+     * @returns {boolean} - True if dead, false otherwise.
+     */
+    isDead() { // Return true if energy is 0
+        return this.energy === 0;
     }
 
+    /**
+     * Plays animation for the object using provided images.
+     * @param {string[]} images - Array of image paths for the animation.
+     */
     playAnimation(images) {
         let i = this.currentImage % images.length; // Modulo-Operator: i = 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, etc. 
-        let path = images[i]; // Pfad des aktuellen Bildes in der Animation
-        this.img = this.imageCache[path]; // Zuweisen des Bildes an die Variable "img" in MovableObjects
-        this.currentImage++; // Ansteigen des Indexes für das nächste Bild
+        let path = images[i]; // Calculate index for current image using modulo operator
+        this.img = this.imageCache[path]; // Assign image from imageCache to img variable in MovableObject
+        this.currentImage++; // Increment currentImage index for the next image
     }
 
+    /**
+     * Moves the object to the right.
+     */
     moveRight() {
-        this.x += this.speed; // Bewege den Charakter nach rechts
+        this.x += this.speed; // Move the character to the right by the speed value
     }
 
+    /**
+     * Moves the object to the left.
+     */
     moveLeft() {
-        this.x -= this.speed; // Bewege den Charakter nach links, wenn die Linkspfeiltaste gedrückt wird
+        this.x -= this.speed; // Move the character to the left by the speed value
     }
 
+    /**
+     * Makes the object jump.
+     */
     jump() {
-        this.speedY = 30;
+        this.speedY = 30; // Set the vertical speed to initiate a jump
     }
 }
+
+
 
 
 

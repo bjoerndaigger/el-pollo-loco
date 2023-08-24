@@ -9,6 +9,9 @@ class Cloud extends MovableObject {
         this.animate(); 
     }
 
+    /**
+     * Animate the cloud's movement.
+     */
     animate() {
         const speedMoveLeft = 10 + Math.random() + 20;
         setInterval(() => {

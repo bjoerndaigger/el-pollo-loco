@@ -15,17 +15,25 @@ class StatusBarCharacter extends DrawableObject {
         this.y = 0;
         this.width = 200;
         this.height = 53;
-        this.setPercentage(100);
+        this.setPercentage(100); // Set initial percentage
     }
 
-    setPercentage(percentage) {
-        this.percentage = percentage; // Bekommt Wert von Variable energy, die bei jeder Kollision sinkt
-        let path = this.IMAGES_STATUSBAR_CHARACTER[this.resolveImageIndex()]; // Zuweisung der URL des gewünschten Bildes (Zahl zwischen 0 und 5) an path
-        this.img = this.imageCache[path]; // laden des Pfades aus Array imageCache und zuweisen des Bildes an die Variable "img" in DrawableObjects
+     /**
+     * Sets the percentage value and updates the image accordingly.
+     * @param {number} percentage - The percentage value to set (0 to 100).
+     */
+     setPercentage(percentage) {
+        this.percentage = percentage; // Gets value from 'energy' variable, which decreases on each collision
+        let path = this.IMAGES_STATUSBAR_CHARACTER[this.resolveImageIndex()]; // Assigns URL of the desired image (number between 0 and 5) to 'path'
+        this.img = this.imageCache[path]; // Loads path from 'imageCache' array and assigns the image to the 'img' variable in DrawableObjects
     }
 
+    /**
+     * Resolves the index of the image based on the current percentage value.
+     * @returns {number} The index of the image in the array.
+     */
     resolveImageIndex() {
-        if (this.percentage == 100) {
+        if (this.percentage === 100) {
             return 5;
         } else if (this.percentage > 80) {
             return 4;

@@ -21,7 +21,9 @@ class Bottle extends MovableObject {
         this.loadRandomImage();
     }
 
-    // Function to load random bottle image
+    /**
+     * Loads a random bottle image from the IMAGES_BOTTLES array.
+     */
     loadRandomImage() {
         const randomIndex = Math.floor(Math.random() * this.IMAGES_BOTTLES.length);
         this.loadImage(this.IMAGES_BOTTLES[randomIndex]);

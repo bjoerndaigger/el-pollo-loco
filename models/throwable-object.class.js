@@ -17,8 +17,6 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ];
 
-    bottle_breaks = new Audio('audio/breaking_bottle.mp3');
-
     constructor(x, y) {
         super().loadImage(this.IMAGES_THROWING[0]);
         this.loadImages(this.IMAGES_THROWING);
@@ -30,26 +28,35 @@ class ThrowableObject extends MovableObject {
         this.throw();
     }
 
+    /**
+     * Initiates the throwing motion of the object.
+     */
     throw() {
-        this.speedY = 30; // Fallgeschwindigkeit
-        this.applyGravity(); // Objekt fällt nach unten
+        this.speedY = 30; /// Falling speed
+        this.applyGravity(); // Object falls down
         this.animate();
 
         setInterval(() => {
-           this.throwDirection();
+            this.throwDirection();
         }, 25);
     }
 
+    /**
+     * Adjusts the horizontal position of the thrown object based on character direction.
+     */
     throwDirection() {
         const characterOtherDirection = world.character.otherDirection;
         if (this.y < 325 && !characterOtherDirection) {
             this.x += 8;
         }
-        if (this.y < 325 && characterOtherDirection) { // Flasche in andere Richtung werdeb
+        if (this.y < 325 && characterOtherDirection) { // Throw bottle in other direction
             this.x -= 8;
         }
     }
 
+    /**
+    * Initiates the animation sequence of the object.
+    */
     animate() {
         this.bottleAnimation = setInterval(() => {
             if (this.y < 320) {
@@ -63,12 +70,19 @@ class ThrowableObject extends MovableObject {
         }, 100);
     }
 
+    /**
+    * Initiates the splash animation and sound effect when the object hits a target.
+    */
     bottleSplash() {
-        this.bottle_breaks.play();
+        bottle_breaks.play();
         this.playAnimation(this.IMAGES_SPLASHING_BOTTLE);
         this.stopAnimation(this.bottleAnimation);
     }
 
+    /**
+    * Stops the animation interval and clears the animation.
+    * @param {number} bottleAnimation - The interval ID of the animation.
+    */
     stopAnimation(bottleAnimation) {
         clearInterval(bottleAnimation);
         setTimeout(() => {

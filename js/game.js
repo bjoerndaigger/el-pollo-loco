@@ -5,6 +5,7 @@ let game_lost = new Audio('audio/game_lost.mp3');
 let chicken_alarm = new Audio('audio/chicken_alarm.mp3')
 let collect_bottle = new Audio('audio/collect_bottle.mp3');
 let collect_coin = new Audio('audio/collect_coin.mp3');
+let bottle_breaks = new Audio('audio/breaking_bottle.mp3');
 let chicken_screams = new Audio('audio/chicken_scream.mp3');
 let endboss_screams = new Audio('audio/chicken_scream_long.mp3');
 let walking_sound = new Audio('./audio/running.mp3');
@@ -12,19 +13,28 @@ let character_hit = new Audio('audio/character_getting_hit.mp3');
 let character_dies = new Audio('audio/character_dies.mp3');
 let game_won = new Audio('audio/game_won.mp3');
 
+/**
+ * Starts the game by initializing the level and the game world.
+ */
 function startGame() {
     document.getElementById('start-screen').classList.add('d-none');
     init();
 }
 
+/**
+ * Initializes the game by setting up the level and creating a new World object.
+ */
 function init() {
     initLevel();
-    canvas = document.getElementById('canvas');  // Das Canvas-Element abrufen
-    world = new World(canvas, keyboard);  // Ein neues World-Objekt erstellen
+    canvas = document.getElementById('canvas'); // Get the canvas element
+    world = new World(canvas, keyboard); // Create a new World object
     touchEventsStart();
     touchEventsEnd();
 }
 
+/**
+ * Toggles the fullscreen mode of the game.
+ */
 function toggleFullscreen() {
     if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
         closeFullscreen();
@@ -33,17 +43,23 @@ function toggleFullscreen() {
     }
 }
 
+/**
+ * Requests to open fullscreen mode.
+ */
 function openFullscreen() {
     let content = document.getElementById('content');
     if (content.requestFullscreen) {
         content.requestFullscreen();
     } else if (content.webkitRequestFullscreen) { /* Safari */
         content.webkitRequestFullscreen();
-    } else if (elem.msRequestFullscreen) { /* IE11 */
+    } else if (content.msRequestFullscreen) { /* IE11 */
         content.msRequestFullscreen();
     }
 }
 
+/**
+ * Exits the fullscreen mode.
+ */
 function closeFullscreen() {
     if (document.exitFullscreen) {
         document.exitFullscreen();
@@ -54,41 +70,66 @@ function closeFullscreen() {
     }
 }
 
+/**
+ * Opens the information content.
+ */
 function openInfo() {
     document.getElementById('info-content').classList.remove('d-none');
 }
 
+/**
+ * Closes the information content.
+ */
 function closeInfo() {
     document.getElementById('info-content').classList.add('d-none');
 }
 
+/**
+ * Returns to the main menu from the game over screen.
+ */
 function backToMenu() {
     document.getElementById('game-over-screen').classList.add('d-none');
     document.getElementById('you-lost-screen').classList.add('d-none');
     document.getElementById('start-screen').classList.remove('d-none');
 }
 
+/**
+ * Displays the game lost screen and plays the corresponding audio.
+ * Stops the game.
+ */
 function gameLost() {
     document.getElementById('you-lost-screen').classList.remove('d-none');
     game_lost.play();
     stopGame();
-  
 }
 
+/**
+ * Displays the game won screen and plays the corresponding audio.
+ * Stops the game.
+ */
 function gameWon() {
     document.getElementById('game-over-screen').classList.remove('d-none');
     game_won.play();
     stopGame();
 }
 
+/**
+ * Stops the game by clearing all intervals.
+ */
 function stopGame() {
     clearAllIntervals();
 }
 
+/**
+ * Clears all intervals (timeouts) that were set in the window.
+ */
 function clearAllIntervals() {
     for (let i = 1; i < 9999; i++) window.clearInterval(i);
-  }
+}
 
+/**
+ * Event listeners for keyboard keydown and keyup events.
+ */
 window.addEventListener("keydown", (e) => {
     if (e.key === "ArrowRight") {
         keyboard.RIGHT = true;
@@ -141,7 +182,9 @@ window.addEventListener("keyup", (e) => {
     }
 });
 
-
+/**
+ * Sets up touch events for the mobile game controls.
+ */
 function touchEventsStart() {
     document.getElementById('btn-left').addEventListener('touchstart', (event) => {
         event.preventDefault();
@@ -165,6 +208,9 @@ function touchEventsStart() {
 
 }
 
+/**
+ * Removes touch events for the mobile game controls.
+ */
 function touchEventsEnd() {
     document.getElementById('btn-left').addEventListener('touchend', (event) => {
         event.preventDefault();

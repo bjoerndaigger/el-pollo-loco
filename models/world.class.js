@@ -1,12 +1,12 @@
 class World {
-    character = new Character();  
+    character = new Character();
     level = level1; // Level-Variable
     canvas;  // Canvas-Variable
     ctx;  // 2D-Kontext-Variable
     keyboard;  // Keyboard-Objekt
     bottle; // Bottle Variable
-    camera_x = 0;  // Kameraposition (Hintergrundbild) auf x-Achse
-    statusBarCharacter = new StatusBarCharacter(); 
+    camera_x = 0;  // Camera position (background image) on x-axis
+    statusBarCharacter = new StatusBarCharacter();
     statusBarBottles = new StatusBarBottles();
     statusBarCoins = new StatusBarCoins();
     statusBarEndboss = new StatusBarEndboss();
@@ -17,42 +17,56 @@ class World {
 
 
     constructor(canvas, keyboard) {
-        this.ctx = canvas.getContext('2d');  // Den 2D-Kontext des Canvas-Elements abrufen
-        this.canvas = canvas;  // Das Canvas-Element speichern
-        this.keyboard = keyboard;  // Das Keyboard-Objekt speichern
-        this.draw();  // Die draw-Funktion aufrufen
-        this.setWorld();  // Die setWorld-Funktion aufrufen, um die world-Eigenschaft des Character-Objekts festzulegen
-        this.run(); // ruft verschiedene Funktionen mit Intervallen auf
+        this.ctx = canvas.getContext('2d');  // Retrieve the 2D context of the canvas element
+        this.canvas = canvas;  // Store the canvas element
+        this.keyboard = keyboard;  // Store the Keyboard object
+        this.draw();  // Call the draw function
+        this.setWorld();  // Call the setWorld function to set the world property of the Character object
+        this.run(); // Call various functions at intervals
     }
 
+    /**
+      * Set the world property of the Character object to this World instance.
+      */
     setWorld() {
-        this.character.world = this;  // Die world-Eigenschaft des Character-Objekts auf diese World-Instanz setzen
+        this.character.world = this;  // Set the world property of the Character object to this World instance
     }
 
+    /**
+     * Run functions at intervals.
+     */
     run() {
-        setInterval(() => { 
+        setInterval(() => {
             this.checkCollisions();
         }, 1000 / 60);
-        setInterval(() => { 
+        setInterval(() => {
             this.checkThrowObjects();
         }, 1000 / 6);
     }
 
+    /**
+    * Checks if the "D" key is pressed and bottles can be thrown.
+    * If conditions are met, a new bottle is created, added to the throwableObjects array,
+    * and thrown based on the character's direction.
+    */
     checkThrowObjects() {
-        if (this.keyboard.D && this.collectedBottles.length > 0) { // wenn Key D gedrückt wird und Wert in Array enthalten ist, wird neue Flasche in den Array throwableObjects gepusht und geworfen
+        if (this.keyboard.D && this.collectedBottles.length > 0) { // If key D is pressed and value is contained in array, new bottle is pushed and thrown into array throwableObjects
             const characterOtherDirection = this.character.otherDirection;
-            if (!characterOtherDirection) { // neue Flasche mit Abwurfkoordinaten des Characters
+            if (!characterOtherDirection) { // New bottle with drop coordinates of the character
                 this.bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             }
-            if (characterOtherDirection) { // neue Flasche mit Abwurfkoordinaten des Characters wenn Richtung gedreht
+            if (characterOtherDirection) { // New bottle with drop coordinates of the character if direction rotated
                 this.bottle = new ThrowableObject(this.character.x - 50, this.character.y + 100);
             }
             this.throwableObjects.push(this.bottle);
-            this.collectedBottles.pop(); // Nach Abwurf einen Wert aus Array entfernen
-            this.statusBarBottles.setBottles(this.collectedBottles.length); // Wert an StatusBarBottles übergeben
+            this.collectedBottles.pop(); // Remove a value from array after dropping it
+            this.statusBarBottles.setBottles(this.collectedBottles.length); // Pass value to StatusBarBottles
         }
     }
 
+    /**
+    * Checks for various collision scenarios involving the character and other entities.
+    */
     checkCollisions() {
         this.checkCollisionBottlesToCollect();
         this.checkCollisionCoinsToCollect();
@@ -61,10 +75,12 @@ class World {
         this.checkCollisionCharacterEndboss();
     }
 
-   
-    checkCollisionCharacterEnemies() { 
-        this.level.enemies.forEach((enemy) => { 
-            if (this.character.isColliding(enemy) && this.character.isAboveGround() && !this.character.isHurt() && this.character.speedY < 0) { 
+    /**
+    * Checks if the character collides with enemies and handles the outcomes.
+    */
+    checkCollisionCharacterEnemies() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy) && this.character.isAboveGround() && !this.character.isHurt() && this.character.speedY < 0) {
                 enemy.enemyIsDead = true;
             }
             if (this.character.isColliding(enemy) && !enemy.enemyIsDead) {
@@ -74,40 +90,51 @@ class World {
         });
     }
 
+    /**
+    * Checks if the character collides with the end boss, leading to the character's death.
+    */
     checkCollisionCharacterEndboss() {
         if (this.character.isColliding(this.level.endboss)) {
             this.character.characterDead();
         }
     }
 
-    // checks if character collides with bottles
+    /**
+    * Checks if the character collides with bottles that can be collected.
+    */
     checkCollisionBottlesToCollect() {
-        this.level.bottles.forEach((bottle, index) => { // Mit Index des Elements im Array
-            if (this.character.isColliding(bottle)) { // wird nur ausgeführt, wenn Wert noch nicht vorhanden
+        this.level.bottles.forEach((bottle, index) => { // With index of the element in the array
+            if (this.character.isColliding(bottle)) { // Will only be executed if value does not yet exist
                 if (!this.collectedBottles.includes(bottle)) {
                     collect_bottle.play();
                     this.collectedBottles.push(bottle);
-                    this.statusBarBottles.setBottles(this.collectedBottles.length); // Wert an StatusBarBottles übergeben
-                    this.level.bottles.splice(index, 1); // Entferne die kollidierte Flasche aus dem Array und entferne Bild
+                    this.statusBarBottles.setBottles(this.collectedBottles.length); // Pass value to StatusBarBottles
+                    this.level.bottles.splice(index, 1); // Remove the collided bottle from the array and remove image
                 }
             }
         })
     }
 
+    /**
+    * Checks if the character collides with coins that can be collected.
+    */
     checkCollisionCoinsToCollect() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
-                if (!this.collectedCoins.includes(coin)) { // wird nur ausgeführt, wenn Wert noch nicht vorhanden
+                if (!this.collectedCoins.includes(coin)) {
                     collect_coin.play();
                     this.collectedCoins.push(coin);
                     this.statusBarCoins.setCoins(this.collectedCoins.length);
-                    this.level.coins.splice(index, 1); // Entferne die kollidierte Flasche aus dem Array und entferne Bild
+                    this.level.coins.splice(index, 1);
                 }
             }
         })
     }
 
-    // checks if endboss collides with bottles
+    /**
+    * Checks if a thrown bottle collides with the end boss and handles the interaction.
+    * @returns {boolean} True if collision with the end boss occurs, false otherwise.
+    */
     checkCollisionEndbossThrownBottle() {
         let collisionEndboss = false;
         this.throwableObjects.forEach((bottle) => {
@@ -122,39 +149,55 @@ class World {
         }
         return collisionEndboss;
     }
-    
+
+    /**
+     * Executes the entire drawing process.
+     */
     draw() {
         this.clearCanvas();
         this.translateContext(this.camera_x);
         this.drawBackgroundObjects();
         this.resetContextTranslation();
         this.drawStatusBar();
-        this.translateContext(this.camera_x);  // Den Kontext (Hintergrund) um den Wert von camera_x erneut verschieben
+        this.translateContext(this.camera_x);
         this.drawCharacterAndObjects();
         this.resetContextTranslationAgain();
         this.requestNextAnimationFrame();
     }
 
-    // Das Canvas löschen
+    /**
+     * Clears the canvas.
+     */
     clearCanvas() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
-    // Den Kontext (Hintergrund) um den Wert von camera_x verschieben
+    /**
+     * Translates the context (background) by the value of camera_x.
+     * @param {number} x - The translation value in the x-axis direction.
+     */
     translateContext(x) {
         this.ctx.translate(x, 0);
     }
 
+    /**
+    * Draws background objects including backgroundObjects and clouds.
+    */
     drawBackgroundObjects() {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
     }
 
-    // Die Translation für fixierten StatusBar zurücksetzen
+    /**
+    * Resets translation for fixed StatusBar.
+    */
     resetContextTranslationAgain() {
         this.ctx.translate(-this.camera_x, 0);
     }
 
+    /**
+    * Draws the status bar elements like character info, bottles, coins, and end boss indicator.
+    */
     drawStatusBar() {
         this.addToMap(this.statusBarCharacter);
         this.addToMap(this.statusBarBottles);
@@ -162,6 +205,9 @@ class World {
         this.addToMap(this.statusBarEndboss);
     }
 
+    /**
+    * Draws the main character and various game objects like enemies, end boss, throwable objects, bottles, and coins.
+    */
     drawCharacterAndObjects() {
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
@@ -171,51 +217,69 @@ class World {
         this.addObjectsToMap(this.level.coins);
     }
 
-    // Die Translation zurücksetzen
+    /**
+    * Resets translation.
+    */
     resetContextTranslation() {
         this.ctx.translate(-this.camera_x, 0);
     }
 
-    // Die draw-Funktion erneut ausführen
+    /**
+     * Requests the next animation frame to execute the draw function again.
+     */
     requestNextAnimationFrame() {
-        let self = this; // Hilfsvariable 'self', da 'this' innerhalb von requestAnimationFrame() nicht funktioniert
+        let self = this; // Helper variable 'self' because 'this' doesn't work within requestAnimationFrame()
         requestAnimationFrame(function () {
             self.draw();
         });
     }
 
-
+    /**
+    * Adds an array of objects to the drawing map.
+    * @param {Array} objects - An array of objects to be added to the drawing map.
+    */
     addObjectsToMap(objects) {
-        objects.forEach(o => { // forEach funktioniert nur mit Arrays, weswegen ich Objekte als Array hineingeben muss
-            this.addToMap(o);  // Jedes Objekt zur Karte hinzufügen
+        objects.forEach(o => { // forEach works only with arrays, so objects need to be passed as an array
+            this.addToMap(o); // Add each object to the map
         });
     }
 
-    addToMap(mo) { // mo steht für Movable Object und hier kommt der Character als Argument (Parameter) an
-        if (mo.otherDirection) { // Character spiegeln beim rückwärtsgehen
+    /**
+    * Adds a movable object to the drawing map, potentially flipping the image horizontally.
+    * @param {MovableObject} mo - The movable object to be added to the map.
+    */
+    addToMap(mo) { // mo stands for Movable Object and the character is passed as an argument (parameter) here
+        if (mo.otherDirection) { // Flip character when moving backward
             this.flipImage(mo);
         }
-
         mo.draw(this.ctx);
         mo.drawFrame(this.ctx);
-
-        if (mo.otherDirection) {  // Drehung rückgängig machen
+        if (mo.otherDirection) { // Revert the flip
             this.flipImageBack(mo);
         }
     }
 
+    /**
+     * Flips the image horizontally for the given movable object.
+     * @param {MovableObject} mo - The movable object whose image needs to be flipped.
+     */
     flipImage(mo) {
-        this.ctx.save(); // Den aktuellen Zustand des Kontexts (der gezeichneten Bilder) speichern
-        this.ctx.translate(mo.width, 0); // Den Kontext um die Breite des Characters in x-Richtung verschieben
-        this.ctx.scale(-1, 1); // Die x-Achse spiegeln, um den Character umzukehren
-        mo.x = mo.x * -1; // Die x-Position des Characters umkehren
+        this.ctx.save(); // Save the current state of the context (drawn images)
+        this.ctx.translate(mo.width, 0); // Translate the context by the character's width in the x direction
+        this.ctx.scale(-1, 1); // Flip the x-axis to reverse the character
+        mo.x = mo.x * -1; // Reverse the character's x position
     }
 
+    /**
+     * Reverts the image flipping for the given movable object.
+     * @param {MovableObject} mo - The movable object whose image flipping needs to be reverted.
+     */
     flipImageBack(mo) {
-        mo.x = mo.x * -1; // Die x-Position des Characters wieder umkehren, um den ursprünglichen Wert wiederherzustellen
-        this.ctx.restore(); // Den vorherigen Zustand des Kontexts wiederherstellen
+        mo.x = mo.x * -1; // Revert the character's x position to restore the original value
+        this.ctx.restore(); // Restore the previous state of the context
     }
 }
+
 
 
 

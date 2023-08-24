@@ -1,9 +1,13 @@
 class Coin extends MovableObject {
-    y = 80 + Math.random() * 120; // setzen der y-Position
-    x = 300 + Math.random() * 2600; // Setzen der x-Position zufällig zwischen 300 und 2200
+    y = 80 + Math.random() * 120; // set random y-position
+    x = 300 + Math.random() * 2600; // set random x-position 
     width = 150;
     height = 150;
 
+    /**
+     * Offset values for collision detection.
+     * @type {{ top: number, left: number, right: number, bottom: number }}
+     */
     offset = {
         top: 50,
         left: 50,
@@ -22,9 +26,13 @@ class Coin extends MovableObject {
         this.animate();
     }
 
+    /**
+    * Animate the coin by cycling through its animation images.
+    * Uses setInterval to repeatedly change the displayed image.
+    */
     animate() {
-        setInterval(() => { 
+        setInterval(() => {
             this.playAnimation(this.IMAGES_COIN);
-        }, 250); 
+        }, 250);
     }
 }

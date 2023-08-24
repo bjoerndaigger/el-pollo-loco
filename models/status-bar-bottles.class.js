@@ -15,16 +15,24 @@ class StatusBarBottles extends DrawableObject {
         this.y = 50;
         this.width = 200;
         this.height = 53;
-        this.setBottles(0);
+        this.setBottles(0); // Set initial bottle amount
         
     }
 
+    /**
+     * Sets the number of bottles and updates the displayed image accordingly.
+     * @param {number} bottleAmount - The amount of bottles to set.
+     */
     setBottles(bottleAmount) {
-        this.bottleAmount = bottleAmount; // Bekommt Wert von Variable bottleAmount, die bei jeder Kollision steigt
-        let path = this.IMAGES_STATUSBAR_BOTTLES[this.resolveImageIndex()]; // Zuweisung der URL des gewünschten Bildes (Zahl zwischen 0 und 5) an path
-        this.img = this.imageCache[path]; // laden des Pfades aus Array imageCache und zuweisen des Bildes an die Variable "img" in DrawableObjects
+        this.bottleAmount = bottleAmount; 
+        let path = this.IMAGES_STATUSBAR_BOTTLES[this.resolveImageIndex()]; 
+        this.img = this.imageCache[path]; 
     }
 
+    /**
+     * Resolves the index of the image to be displayed based on the bottle amount.
+     * @returns {number} - The index of the image to display.
+     */
     resolveImageIndex() {
         if (this.bottleAmount > 8) {
             return 5;

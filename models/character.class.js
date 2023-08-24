@@ -6,6 +6,10 @@ class Character extends MovableObject {
     jumpOnEnemy = false;
     world;
 
+    /**
+     * Offset values for collision detection.
+     * @type {{ top: number, left: number, right: number, bottom: number }}
+     */
     offset = {
         top: 140,
         left: 30,
@@ -74,6 +78,9 @@ class Character extends MovableObject {
         this.animate();
     }
 
+    /**
+     * Initializes the animation intervals for character movements and animations.
+     */
     animate() {
         setInterval(() => {
             this.characterMovements();
@@ -83,14 +90,20 @@ class Character extends MovableObject {
         }, 125);
     }
 
+    /**
+     * Updates character movements based on keyboard input.
+     */
     characterMovements() {
         walking_sound.pause();
         this.characterMovesRight();
         this.characterMovesLeft();
         this.characterMovesUp();
-        this.world.camera_x = -this.x + 100; // Aktualisiere die Position der Kamera basierend auf der X-Position des Charakters
+        this.world.camera_x = -this.x + 100; // Update the position of the camera based on the X position of the character.
     }
 
+     /**
+     * Handles character animations based on different states.
+     */
     characterAnimations() {
         if (this.isDead()) {
             this.characterDead();
@@ -105,48 +118,70 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Moves the character to the right.
+     */
     characterMovesRight() {
-        // Animation wird nur ausgeführt, wenn ich Arrow Right auf Tastatur drücke und x-Achsenwert kleiner als Endwert der x-Achse ist
-        if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+        if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) { // Animation is executed only if I press Arrow Right on keyboard and x-axis value is smaller than end value of x-axis
             this.moveRight();
-            this.otherDirection = false; // Character wird nicht gespiegelt
+            this.otherDirection = false; // Character isn't mirrored
             walking_sound.play(); 
         }
     }
 
+     /**
+     * Moves the character to the left.
+     */
     characterMovesLeft() {
         if (this.world.keyboard.LEFT && this.x > 0) {
             this.moveLeft();
-            this.otherDirection = true; // Character wird gespiegelt
+            this.otherDirection = true; // Character is mirrored
             walking_sound.play(); 
         }
     }
 
+     /**
+     * Makes the character jump if above ground.
+     */
     characterMovesUp() {
-        // Animation wird nur ausgeführt, wenn ich Space-Taste drücke und wenn isAboveGround() false zurückgibt
-        if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+        if (this.world.keyboard.SPACE && !this.isAboveGround()) { // Animation is executed only if I press Space key and if isAboveGround() returns false
             this.jump();
         }
     }
 
+    /**
+     * Plays the hurt animation and sound for the character.
+     */
     characterHurt() {
         this.playAnimation(this.IMAGES_HURT);
         character_hit.play();
     }
 
+    /**
+     * Plays the jumping animation for the character.
+     */
     characterJumps() {
         this.playAnimation(this.IMAGES_JUMPING);
 
     }
 
+     /**
+     * Plays the walking animation for the character.
+     */
     characterWalks() {
         this.playAnimation(this.IMAGES_WALKING);
     }
 
+    /**
+     * Plays the idle animation for the character.
+     */
     characterIdle() {
         this.playAnimation(this.IMAGES_IDLE);
     }
 
+    /**
+     * Plays the death animation and sound for the character, then triggers game loss.
+     */
     characterDead() {
         this.playAnimation(this.IMAGES_DEAD);
         character_dies.play();

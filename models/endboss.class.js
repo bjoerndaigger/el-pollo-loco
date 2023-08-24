@@ -7,6 +7,10 @@ class Endboss extends MovableObject {
     energy = 60;
     distanceTimer = 0;
 
+    /**
+     * Offset values for collision detection.
+     * @type {{ top: number, left: number, right: number, bottom: number }}
+     */
     offset = {
         top: 80,
         left: 70,
@@ -67,12 +71,18 @@ class Endboss extends MovableObject {
         this.animate();
     }
 
+    /**
+    * Animate the end boss character.
+    */
     animate() {
         setInterval(() => {
             this.endbossAnimations();
         }, 200);
     }
 
+    /**
+    * Perform various animations and actions based on the character's state.
+    */
     endbossAnimations() {
         const distance = this.x - world.character.x;
 
@@ -94,25 +104,40 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+    * Perform the walking animation and movement of the end boss.
+    */
     endbossWalks() {
         this.playAnimation(this.IMAGES_WALKING);
         this.moveLeft();
     }
-    
+
+    /**
+    * Perform the alert animation of the end boss.
+    */
     endbossAlert() {
         this.playAnimation(this.IMAGES_ALERT)
     }
 
+    /**
+     * Perform the attack animation of the end boss and play a sound.
+     */
     endbossAttacks() {
         chicken_alarm.play();
         this.playAnimation(this.IMAGES_ATTACK);
     }
 
+    /**
+    * Perform the hurt animation of the end boss and update the game state.
+    */
     endbossHurt() {
         this.playAnimation(this.IMAGES_HURT);
         world.endbossHasBeenHit = false;
     }
 
+    /**
+    * Perform the death animation of the end boss, play sounds, and trigger a game victory after a delay.
+    */
     endbossDead() {
         this.playAnimation(this.IMAGES_DEAD);
         chicken_alarm.pause();

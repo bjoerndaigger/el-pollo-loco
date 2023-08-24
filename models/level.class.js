@@ -5,7 +5,7 @@ class Level {
     backgroundObjects;  
     bottles;
     coins;
-    level_end_x = 3600; // Deklaration des Endpunktes auf der x-Achse für den Character
+    level_end_x = 3600; // Declaration of the endpoint on the x-axis for the character
 
     constructor(enemies, endboss, clouds, backgroundObjects, bottles, coins) {
         this.enemies = enemies;  

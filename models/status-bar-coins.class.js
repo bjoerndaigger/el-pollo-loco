@@ -15,15 +15,23 @@ class StatusBarCoins extends DrawableObject {
         this.y = 100;
         this.width = 200;
         this.height = 53;
-        this.setCoins(0);
+        this.setCoins(0); // Set initial coin amount
     }
 
+    /**
+     * Updates the displayed coin image based on the current coin amount.
+     * @param {number} coinAmount - The new coin amount.
+     */
     setCoins(coinAmount) {
-        this.coinAmount = coinAmount; // Bekommt Wert von Variable bottleAmount, die bei jeder Kollision steigt
-        let path = this.IMAGES_STATUSBAR_COINS[this.resolveImageIndex()]; // Zuweisung der URL des gewünschten Bildes (Zahl zwischen 0 und 5) an path
-        this.img = this.imageCache[path]; // laden des Pfades aus Array imageCache und zuweisen des Bildes an die Variable "img" in DrawableObjects
+        this.coinAmount = coinAmount;
+        let path = this.IMAGES_STATUSBAR_COINS[this.resolveImageIndex()];  // Resolve the appropriate coin image path and update the displayed image
+        this.img = this.imageCache[path];
     }
 
+    /**
+     * Resolves the index of the coin image based on the current coin amount.
+     * @returns {number} The index of the coin image to be displayed.
+     */
     resolveImageIndex() {
         if (this.coinAmount > 4) {
             return 5;

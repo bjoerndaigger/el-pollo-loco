@@ -15,15 +15,23 @@ class StatusBarEndboss extends DrawableObject {
         this.y = 100;
         this.width = 200;
         this.height = 53;
-        this.setPercentage(60);
+        this.setPercentage(60); // Initialize the status bar with a default percentage value
     }
 
+    /**
+     * Set the boss's health percentage and update the displayed image accordingly.
+     * @param {number} percentage - The health percentage of the boss.
+     */
     setPercentage(percentage) {
-        this.percentage = percentage; // Bekommt Wert von Variable energy, die bei jeder Kollision sinkt
-        let path = this.IMAGES_STATUSBAR_ENDBOSS[this.resolveImageIndex()]; // Zuweisung der URL des gewünschten Bildes (Zahl zwischen 0 und 5) an path
-        this.img = this.imageCache[path]; // laden des Pfades aus Array imageCache und zuweisen des Bildes an die Variable "img" in DrawableObjects
+        this.percentage = percentage;
+        let path = this.IMAGES_STATUSBAR_ENDBOSS[this.resolveImageIndex()]; // Determine the appropriate image index based on the percentage.
+        this.img = this.imageCache[path];  // Update the displayed image using the image cache.
     }
 
+    /**
+     * Resolves the index of the image to be displayed based on the boss's health percentage.
+     * @returns {number} The index of the image to be displayed.
+     */
     resolveImageIndex() {
         if (this.percentage == 60) {
             return 5;

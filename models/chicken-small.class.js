@@ -1,9 +1,13 @@
 class ChickenSmall extends MovableObject {
-    y = 380; // Anfangsposition des Huhns auf der y-Achse
+    y = 380; // Initial y-axis position of the chicken
     width = 60;
     height = 53;
     enemyIsDead = false;
 
+    /**
+     * Offset values for collision detection.
+     * @type {{ top: number, left: number, right: number, bottom: number }}
+     */
     offset = {
         top: 0,
         left: 0,
@@ -29,6 +33,9 @@ class ChickenSmall extends MovableObject {
         this.animate();
     }
 
+    /**
+     * Initiates the main animation loop for the chicken's movement and animation.
+     */
     animate() {
         setInterval(() => {
             this.chickenSmallMoves();
@@ -36,6 +43,9 @@ class ChickenSmall extends MovableObject {
         this.chickenSmallAnimation();
     }
 
+    /**
+    * Handles the animation of the chicken's state (walking or dead).
+    */
     chickenSmallAnimation() {
         const chickenSmallAnimation = setInterval(() => {
             if (this.enemyIsDead) {
@@ -47,13 +57,20 @@ class ChickenSmall extends MovableObject {
             }
         }, 200);
     }
-    
+
+    /**
+    * Moves the small chicken to the left if not dead.
+    */
     chickenSmallMoves() {
         if (!this.enemyIsDead) {
             this.moveLeft();
         }
     }
 
+    /**
+    * Stops the given animation interval and clears the image after a delay.
+    * @param {number} chickenSmallAnimation - The animation interval to stop.
+    */
     stopAnimation(chickenSmallAnimation) {
         clearInterval(chickenSmallAnimation);
         setTimeout(() => {
