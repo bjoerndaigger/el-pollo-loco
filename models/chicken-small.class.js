@@ -5,7 +5,7 @@ class ChickenSmall extends MovableObject {
     enemyIsDead = false;
 
     offset = {
-        top: -35,
+        top: 0,
         left: 0,
         right: 0,
         bottom: 0

@@ -30,10 +30,12 @@ class World {
     }
 
     run() {
-        setInterval(() => { // Die Funktion wird in regelmäßigen Intervallen aufgerufen
+        setInterval(() => { 
             this.checkCollisions();
+        }, 1000 / 60);
+        setInterval(() => { 
             this.checkThrowObjects();
-        }, 100);
+        }, 1000 / 6);
     }
 
     checkThrowObjects() {
@@ -60,9 +62,9 @@ class World {
     }
 
    
-    checkCollisionCharacterEnemies() { // Überprüft ob zwei Objekte kollidieren
-        this.level.enemies.forEach((enemy) => { // Durchlaufe die Liste der Gegner im Level
-            if (this.character.isColliding(enemy) && this.character.isAboveGround() && this.character.speedY < 0) { // Überprüfe, ob der Charakter mit dem aktuellen Gegner kollidiert
+    checkCollisionCharacterEnemies() { 
+        this.level.enemies.forEach((enemy) => { 
+            if (this.character.isColliding(enemy) && this.character.isAboveGround() && !this.character.isHurt() && this.character.speedY < 0) { 
                 enemy.enemyIsDead = true;
             }
             if (this.character.isColliding(enemy) && !enemy.enemyIsDead) {
@@ -102,7 +104,6 @@ class World {
                     this.statusBarCoins.setCoins(this.collectedCoins.length);
                     this.level.coins.splice(index, 1); // Entferne die kollidierte Flasche aus dem Array und entferne Bild
                 }
-
             }
         })
     }
@@ -118,7 +119,6 @@ class World {
         });
         if (collisionEndboss && !this.endbossHasBeenHit) {
             this.level.endboss.hit();
-            console.log(this.level.endboss.energy);
             this.statusBarEndboss.setPercentage(this.level.endboss.energy);
             this.endbossHasBeenHit = true;
         }

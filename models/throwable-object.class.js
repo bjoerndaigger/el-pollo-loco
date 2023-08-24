@@ -30,7 +30,6 @@ class ThrowableObject extends MovableObject {
         this.throw();
     }
 
-bottleu
     throw() {
         this.speedY = 30; // Fallgeschwindigkeit
         this.applyGravity(); // Objekt fällt nach unten

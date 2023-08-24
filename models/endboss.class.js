@@ -101,7 +101,7 @@ class Endboss extends MovableObject {
         endboss_screams.play();
         setTimeout(() => {
             gameWon();
-        }, 2500);
+        }, 2000);
     }
 }
 
