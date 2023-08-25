@@ -131,7 +131,7 @@ canvas {
     left: 50%;
     transform: translateX(-50%);
     border-radius: 32px;
-    width: 120px;
+    width: 125px;
     height: 63px;
     display: flex;
     justify-content: center;
@@ -239,7 +239,7 @@ canvas {
     left: 50%;
     transform: translateX(-50%);
     border-radius: 32px;
-    width: 270px;
+    width: 280px;
     height: 63px;
     display: flex;
     justify-content: center;
