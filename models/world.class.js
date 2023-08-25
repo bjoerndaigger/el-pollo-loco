@@ -2,7 +2,7 @@ class World {
     character = new Character();
     level = level1; // Level-Variable
     canvas;  // Canvas-Variable
-    ctx;  // 2D-Kontext-Variable
+    ctx;  // 2D-Context-Variable
     keyboard;  // Keyboard-Objekt
     bottle; // Bottle Variable
     camera_x = 0;  // Camera position (background image) on x-axis
