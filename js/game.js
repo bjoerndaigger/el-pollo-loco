@@ -48,7 +48,7 @@ function toggleFullscreen() {
  * Requests to open fullscreen mode.
  */
 function openFullscreen() {
-    let content = document.getElementById('content');
+    let content = document.getElementById('canvas-container');
     if (content.requestFullscreen) {
         content.requestFullscreen();
     } else if (content.webkitRequestFullscreen) { /* Safari */
@@ -56,6 +56,7 @@ function openFullscreen() {
     } else if (content.msRequestFullscreen) { /* IE11 */
         content.msRequestFullscreen();
     }
+    document.getElementById('fullscreen-btn').src="img/11_icons/close_fullscreen.png";
 }
 
 /**
@@ -69,6 +70,7 @@ function closeFullscreen() {
     } else if (document.msExitFullscreen) { /* IE11 */
         document.msExitFullscreen();
     }
+    document.getElementById('fullscreen-btn').src="img/11_icons/fullscreen.png";
 }
 
 /**

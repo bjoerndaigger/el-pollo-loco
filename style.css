@@ -95,11 +95,13 @@ canvas {
 .start-screen-container {
     position: absolute;
     top: 0;
+    width: 720px;
+    height: 480px;
 }
 
 .start-screen-img {
-    width: 720px;
-    height: 480px;
+    width: 100%;
+    height: 100%;
     border-radius: 16px;
 }
 
@@ -157,6 +159,32 @@ canvas {
 .volume-btn {
     box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.3);
 }
+
+.canvas-container:fullscreen canvas,
+.canvas-container:fullscreen .start-screen-container,
+.canvas-container:fullscreen .info-container,
+.canvas-container:fullscreen .game-over-screen-img {
+    height: 100% !important;
+    width: 100% !important;
+}
+
+.canvas-container:fullscreen .info-container {
+    padding: 32px;
+}
+
+.canvas-container:fullscreen .info-content-headline {
+    margin: 32px;
+}
+
+.canvas-container:fullscreen .arrow-back {
+    right: 32px;
+}
+
+.canvas-container:fullscreen .game-rules, 
+.canvas-container:fullscreen .game-controls {
+    padding: 16px;
+} 
+
 
 .info-container {
     position: absolute;
