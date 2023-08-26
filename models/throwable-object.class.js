@@ -62,6 +62,7 @@ class ThrowableObject extends MovableObject {
             if (this.y < 320) {
                 this.playAnimation(this.IMAGES_THROWING);
             } else if (world.checkCollisionEndbossThrownBottle()) {
+                console.log('Hit');
                 this.bottleSplash();
             }
             else {

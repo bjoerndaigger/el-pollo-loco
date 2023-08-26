@@ -3,7 +3,7 @@ class Endboss extends MovableObject {
     x = 3600; // Startkoordinate
     width = 250;
     height = 291;
-    speed = 5;
+    speed = 8;
     energy = 60;
     distanceTimer = 0;
 
@@ -12,10 +12,10 @@ class Endboss extends MovableObject {
      * @type {{ top: number, left: number, right: number, bottom: number }}
      */
     offset = {
-        top: 80,
-        left: 70,
-        right: 70,
-        bottom: 40
+        top: 50,
+        left: 40,
+        right: 40,
+        bottom: 0
     };
 
     IMAGES_WALKING = [
@@ -125,6 +125,7 @@ class Endboss extends MovableObject {
     endbossAttacks() {
         chicken_alarm.play();
         this.playAnimation(this.IMAGES_ATTACK);
+        this.moveLeft();
     }
 
     /**

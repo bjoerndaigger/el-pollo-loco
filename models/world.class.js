@@ -41,7 +41,10 @@ class World {
         }, 1000 / 60);
         setInterval(() => {
             this.checkThrowObjects();
-        }, 1000 / 6);
+        }, 1000 / 5);
+        setInterval(() => {
+            this.checkCollisionCharacterEnemies();
+        }, 1000 / 20);
     }
 
     /**
@@ -71,7 +74,6 @@ class World {
         this.checkCollisionBottlesToCollect();
         this.checkCollisionCoinsToCollect();
         this.checkCollisionEndbossThrownBottle();
-        this.checkCollisionCharacterEnemies();
         this.checkCollisionCharacterEndboss();
     }
 

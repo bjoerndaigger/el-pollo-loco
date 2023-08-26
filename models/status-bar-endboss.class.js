@@ -15,7 +15,7 @@ class StatusBarEndboss extends DrawableObject {
         this.y = 100;
         this.width = 200;
         this.height = 53;
-        this.setPercentage(60); // Initialize the status bar with a default percentage value
+        this.setPercentage(50); // Initialize the status bar with a default percentage value
     }
 
     /**
@@ -33,15 +33,15 @@ class StatusBarEndboss extends DrawableObject {
      * @returns {number} The index of the image to be displayed.
      */
     resolveImageIndex() {
-        if (this.percentage == 60) {
+        if (this.percentage == 50) {
             return 5;
-        } else if (this.percentage > 48) {
+        } else if (this.percentage > 40) {
             return 4;
-        } else if (this.percentage > 36) {
+        } else if (this.percentage > 30) {
             return 3;
-        } else if (this.percentage > 24) {
+        } else if (this.percentage > 20) {
             return 2;
-        } else if (this.percentage > 12) {
+        } else if (this.percentage > 10) {
             return 1;
         } else {
             return 0;
