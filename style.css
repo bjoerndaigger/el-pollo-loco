@@ -156,7 +156,7 @@ canvas {
 .fullscreen-btn:hover,
 .info-btn:hover,
 .start-btn:hover,
-.volume-btn {
+.volume-btn:hover {
     box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.3);
 }
 
