@@ -13,8 +13,8 @@ class Endboss extends MovableObject {
      */
     offset = {
         top: 50,
-        left: 30,
-        right: 30,
+        left: 40,
+        right: 40,
         bottom: 0
     };
 
@@ -87,15 +87,20 @@ class Endboss extends MovableObject {
         const distance = this.x - world.character.x;
 
         if (distance < 400) {
-            this.endbossAttacks();
+            if (this.distanceTimer < 8) {
+                this.endbossAlert();
+            } else {
+                this.endbossAttacks();
+            }
+            this.distanceTimer++;
+            if (world.checkCollisionEndbossThrownBottle()) {
+                this.endbossHurt();
+            }
+            if (this.isDead() && world.collectedCoins.length >= 5) {
+                this.endbossDead();
+            }
         } else {
             this.endbossWalks();
-        }
-        if (world.checkCollisionEndbossThrownBottle()) {
-            this.endbossHurt();
-        }
-        if (this.isDead() && world.collectedCoins.length >= 5) {
-            this.endbossDead();
         }
     }
 
@@ -108,17 +113,19 @@ class Endboss extends MovableObject {
     }
 
     /**
-    * Perform the attack animation of the end boss.
+    * Perform the alert animation of the end boss.
     */
+    endbossAlert() {
+        this.playAnimation(this.IMAGES_ALERT)
+    }
+
+    /**
+     * Perform the attack animation of the end boss and play a sound.
+     */
     endbossAttacks() {
-        if (this.distanceTimer < 8) {
-            this.playAnimation(this.IMAGES_ALERT);
-        } else {
-            chicken_alarm.play();
-            this.playAnimation(this.IMAGES_ATTACK);
-            this.moveLeft();
-        }
-        this.distanceTimer++;
+        chicken_alarm.play();
+        this.playAnimation(this.IMAGES_ATTACK);
+        this.moveLeft();
     }
 
     /**
