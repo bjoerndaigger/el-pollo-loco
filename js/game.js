@@ -12,6 +12,7 @@ let walking_sound = new Audio('./audio/running.mp3');
 let character_hit = new Audio('audio/character_getting_hit.mp3');
 let character_dies = new Audio('audio/character_dies.mp3');
 let game_won = new Audio('audio/game_won.mp3');
+let isMuted = false;
 
 /**
  * Starts the game by initializing the level and the game world.
@@ -68,6 +69,25 @@ function closeFullscreen() {
     } else if (document.msExitFullscreen) { /* IE11 */
         document.msExitFullscreen();
     }
+}
+
+/**
+ * Toggles the sound on or off.
+ */
+function toggleSound() {
+    let audioElements = [game_lost, chicken_alarm, collect_bottle, collect_coin, bottle_breaks, chicken_screams, endboss_screams, walking_sound, character_hit, character_dies, game_won];
+    if (isMuted) {
+        for (let audio of audioElements) {
+            audio.muted = false;
+            document.getElementById('volume-btn').src="img/11_icons/volume_off.png";
+        }
+    } else {
+        for (let audio of audioElements) {
+            audio.muted = true;
+            document.getElementById('volume-btn').src="img/11_icons/volume-on.png";
+        }
+    }
+    isMuted = !isMuted; // Reverse the state of isMuted
 }
 
 /**
