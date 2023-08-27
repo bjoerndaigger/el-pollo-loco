@@ -42,9 +42,6 @@ class World {
         setInterval(() => {
             this.checkThrowObjects();
         }, 1000 / 5);
-        setInterval(() => {
-            this.checkCollisionCharacterEnemies();
-        }, 1000 / 20);
     }
 
     /**
@@ -75,6 +72,7 @@ class World {
         this.checkCollisionCoinsToCollect();
         this.checkCollisionEndbossThrownBottle();
         this.checkCollisionCharacterEndboss();
+        this.checkCollisionCharacterEnemies();
     }
 
     /**
@@ -201,10 +199,14 @@ class World {
     * Draws the status bar elements like character info, bottles, coins, and end boss indicator.
     */
     drawStatusBar() {
+        const distance = this.level.endboss.x - this.character.x;
+        
         this.addToMap(this.statusBarCharacter);
         this.addToMap(this.statusBarBottles);
         this.addToMap(this.statusBarCoins);
-        this.addToMap(this.statusBarEndboss);
+        if (distance < 600) {
+            this.addToMap(this.statusBarEndboss);
+        }
     }
 
     /**
