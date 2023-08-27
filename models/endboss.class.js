@@ -4,7 +4,6 @@ class Endboss extends MovableObject {
     width = 250;
     height = 291;
     speed = 8;
-    energy = 60;
     distanceTimer = 0;
 
     /**
@@ -13,7 +12,7 @@ class Endboss extends MovableObject {
      */
     offset = {
         top: 50,
-        left: 40,
+        left: 30,
         right: 40,
         bottom: 0
     };

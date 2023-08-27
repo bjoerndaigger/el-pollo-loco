@@ -84,7 +84,7 @@ class World {
                 enemy.enemyIsDead = true;
             }
             if (this.character.isColliding(enemy) && !enemy.enemyIsDead) {
-                this.character.hit();
+                this.character.characterHit();
                 this.statusBarCharacter.setPercentage(this.character.energy);
             }
         });
@@ -143,7 +143,7 @@ class World {
             }
         });
         if (collisionEndboss && !this.endbossHasBeenHit) {
-            this.level.endboss.hit();
+            this.level.endboss.endbossHit();
             this.statusBarEndboss.setPercentage(this.level.endboss.energy);
             this.endbossHasBeenHit = true;
         }

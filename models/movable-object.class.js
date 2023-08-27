@@ -58,10 +58,22 @@ class MovableObject extends DrawableObject {
     }
 
     /**
-     * Handles the object being hit.
+     * Handles the Character being hit.
      */
-    hit() {
-        this.energy -= 5; // Decrease energy value by 5 when a collision occurs
+    characterHit() {
+        this.energy -= 2; // Decrease energy value by 5 when a collision occurs
+        if (this.energy < 0) { // Prevent energy from going into negative values
+            this.energy = 0;
+        } else { // Update lastHit with current timestamp
+            this.lastHit = new Date().getTime();
+        }
+    }
+
+    /**
+     * Handles the Endboss being hit.
+     */
+    endbossHit() {
+        this.energy -= 10; // Decrease energy value by 5 when a collision occurs
         if (this.energy < 0) { // Prevent energy from going into negative values
             this.energy = 0;
         } else { // Update lastHit with current timestamp
