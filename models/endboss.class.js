@@ -12,8 +12,8 @@ class Endboss extends MovableObject {
      */
     offset = {
         top: 50,
-        left: 30,
-        right: 40,
+        left: 50,
+        right: 50,
         bottom: 0
     };
 
@@ -85,7 +85,10 @@ class Endboss extends MovableObject {
     endbossAnimations() {
         const distance = this.x - world.character.x;
 
-        if (distance < 400) {
+        if (distance > 500) {
+            this.endbossWalks();
+        }
+        if (distance < 500) {
             if (this.distanceTimer < 8) {
                 this.endbossAlert();
             } else {
@@ -95,11 +98,9 @@ class Endboss extends MovableObject {
             if (world.checkCollisionEndbossThrownBottle()) {
                 this.endbossHurt();
             }
-            if (this.isDead() && world.collectedCoins.length >= 5) {
-                this.endbossDead();
-            }
-        } else {
-            this.endbossWalks();
+        }
+        if (this.isDead() && world.collectedCoins.length >= 5) {
+            this.endbossDead();
         }
     }
 
