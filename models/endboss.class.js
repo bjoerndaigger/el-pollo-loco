@@ -142,6 +142,7 @@ class Endboss extends MovableObject {
     endbossDead() {
         this.playAnimation(this.IMAGES_DEAD);
         chicken_alarm.pause();
+        walking_sound.pause();
         endboss_screams.play();
         setTimeout(() => {
             gameWon();

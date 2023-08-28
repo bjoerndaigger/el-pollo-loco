@@ -30,7 +30,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/idle/I-10.png',
     ];
 
-    IMAGES_WALKING = [ 
+    IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
         'img/2_character_pepe/2_walk/W-23.png',
@@ -39,7 +39,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/2_walk/W-26.png'
     ];
 
-    IMAGES_JUMPING = [ 
+    IMAGES_JUMPING = [
         'img/2_character_pepe/3_jump/J-31.png',
         'img/2_character_pepe/3_jump/J-32.png',
         'img/2_character_pepe/3_jump/J-33.png',
@@ -51,7 +51,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/3_jump/J-39.png'
     ];
 
-    IMAGES_DEAD = [ 
+    IMAGES_DEAD = [
         'img/2_character_pepe/5_dead/D-51.png',
         'img/2_character_pepe/5_dead/D-52.png',
         'img/2_character_pepe/5_dead/D-53.png',
@@ -61,20 +61,20 @@ class Character extends MovableObject {
         'img/2_character_pepe/5_dead/D-57.png'
     ];
 
-    IMAGES_HURT = [ 
+    IMAGES_HURT = [
         'img/2_character_pepe/4_hurt/H-41.png',
         'img/2_character_pepe/4_hurt/H-42.png',
         'img/2_character_pepe/4_hurt/H-43.png',
     ];
 
     constructor() {
-        super().loadImage(this.IMAGES_IDLE[0]); 
+        super().loadImage(this.IMAGES_IDLE[0]);
         this.loadImages(this.IMAGES_IDLE);
-        this.loadImages(this.IMAGES_WALKING); 
-        this.loadImages(this.IMAGES_JUMPING); 
-        this.loadImages(this.IMAGES_DEAD); 
-        this.loadImages(this.IMAGES_HURT); 
-        this.applyGravity(); 
+        this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_JUMPING);
+        this.loadImages(this.IMAGES_DEAD);
+        this.loadImages(this.IMAGES_HURT);
+        this.applyGravity();
         this.animate();
     }
 
@@ -86,7 +86,7 @@ class Character extends MovableObject {
             this.characterMovements();
         }, 1000 / 60);
         setInterval(() => {
-           this.characterAnimations();
+            this.characterAnimations();
         }, 125);
     }
 
@@ -101,11 +101,11 @@ class Character extends MovableObject {
         this.world.camera_x = -this.x + 100; // Update the position of the camera based on the X position of the character.
     }
 
-     /**
-     * Handles character animations based on different states.
-     */
+    /**
+    * Handles character animations based on different states.
+    */
     characterAnimations() {
-        if (this.isDead()) {
+        if (this.isDead() || this.world.collisionWithEndboss) {
             this.characterDead();
         } else if (this.isHurt()) {
             this.characterHurt();
@@ -125,24 +125,24 @@ class Character extends MovableObject {
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) { // Animation is executed only if I press Arrow Right on keyboard and x-axis value is smaller than end value of x-axis
             this.moveRight();
             this.otherDirection = false; // Character isn't mirrored
-            walking_sound.play(); 
+            walking_sound.play();
         }
     }
 
-     /**
-     * Moves the character to the left.
-     */
+    /**
+    * Moves the character to the left.
+    */
     characterMovesLeft() {
         if (this.world.keyboard.LEFT && this.x > 0) {
             this.moveLeft();
             this.otherDirection = true; // Character is mirrored
-            walking_sound.play(); 
+            walking_sound.play();
         }
     }
 
-     /**
-     * Makes the character jump if above ground.
-     */
+    /**
+    * Makes the character jump if above ground.
+    */
     characterMovesUp() {
         if (this.world.keyboard.SPACE && !this.isAboveGround()) { // Animation is executed only if I press Space key and if isAboveGround() returns false
             this.jump();
@@ -165,9 +165,9 @@ class Character extends MovableObject {
 
     }
 
-     /**
-     * Plays the walking animation for the character.
-     */
+    /**
+    * Plays the walking animation for the character.
+    */
     characterWalks() {
         this.playAnimation(this.IMAGES_WALKING);
     }
@@ -184,6 +184,7 @@ class Character extends MovableObject {
      */
     characterDead() {
         this.playAnimation(this.IMAGES_DEAD);
+        walking_sound.pause();
         character_dies.play();
         setTimeout(() => {
             gameLost();

@@ -15,6 +15,7 @@ class World {
     collectedCoins = []; // Array for collected coins
     endbossHasBeenHit = false;
     bottleIsThrown = false;
+    collisionWithEndboss = false;
 
 
     constructor(canvas, keyboard) {
@@ -97,7 +98,7 @@ class World {
     */
     checkCollisionCharacterEndboss() {
         if (this.character.isColliding(this.level.endboss)) {
-            this.character.characterDead();
+            this.collisionWithEndboss = true;
         }
     }
 

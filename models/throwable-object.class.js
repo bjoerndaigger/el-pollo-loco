@@ -28,15 +28,15 @@ class ThrowableObject extends MovableObject {
         this.throw();
     }
 
-     /**
-     * Initiates the throwing motion of the object.
-     */
+    /**
+    * Initiates the throwing motion of the object.
+    */
     throw() {
         this.speedY = 30; /// Falling speed
         this.applyGravity(); // Object falls down
         this.animate();
         this.throwDirection();
-       
+
     }
 
     /**
@@ -44,22 +44,20 @@ class ThrowableObject extends MovableObject {
      */
     throwDirection() {
         if (!world.bottleIsThrown) {
-            if (this.speed == 0) {
+            if (!world.character.otherDirection) {
                 setInterval(() => {
                     this.x += 8;
-                }, 25);
-            } else if (!world.character.otherDirection) {
-                setInterval(() => {
-                    this.x += 8;
+                    world.bottleIsThrown = false;
                 }, 25);
             } else if (world.character.otherDirection) {
                 setInterval(() => {
                     this.x -= 8;
+                    world.bottleIsThrown = false;
                 }, 25);
             }
         }
     }
-   
+
     /**
     * Initiates the animation sequence of the object.
     */
@@ -83,7 +81,6 @@ class ThrowableObject extends MovableObject {
         bottle_breaks.play();
         this.playAnimation(this.IMAGES_SPLASHING_BOTTLE);
         this.stopAnimation(this.bottleAnimation);
-        world.bottleIsThrown = false;
     }
 
     /**
