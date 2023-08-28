@@ -43,7 +43,7 @@ class ThrowableObject extends MovableObject {
      * Adjusts the horizontal position of the thrown object based on character direction.
      */
     throwDirection() {
-        if (!world.isBottleThrown) {
+        if (!world.bottleIsThrown) {
             if (this.speed == 0) {
                 setInterval(() => {
                     this.x += 8;
@@ -83,7 +83,7 @@ class ThrowableObject extends MovableObject {
         bottle_breaks.play();
         this.playAnimation(this.IMAGES_SPLASHING_BOTTLE);
         this.stopAnimation(this.bottleAnimation);
-        world.isBottleThrown = false;
+        world.bottleIsThrown = false;
     }
 
     /**

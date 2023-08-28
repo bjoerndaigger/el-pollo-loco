@@ -58,7 +58,6 @@ class DrawableObject {
         this.percentage = percentage; // Gets value from 'energy' variable, which decreases on each collision
         let path = this.IMAGES_STATUSBAR_CHARACTER[this.resolveImageIndex()]; // Assigns URL of the desired image (number between 0 and 5) to 'path'
         this.img = this.imageCache[path]; // Loads path from 'imageCache' array and assigns the image to the 'img' variable in DrawableObjects
-        // console.log('Character Hit ' + percentage);
     }
 
     /**
