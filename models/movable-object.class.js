@@ -73,7 +73,7 @@ class MovableObject extends DrawableObject {
      * Handles the Endboss being hit.
      */
     endbossHit() {
-        this.energy -= 5; // Decrease energy value by 5 when a collision occurs
+        this.energy -= 10; // Decrease energy value by 10 when a collision occurs
         if (this.energy < 0) { // Prevent energy from going into negative values
             this.energy = 0;
         } else { // Update lastHit with current timestamp

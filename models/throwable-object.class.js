@@ -63,16 +63,17 @@ class ThrowableObject extends MovableObject {
     */
     animate() {
         this.bottleAnimation = setInterval(() => {
-            if (this.y < 320) {
-                this.playAnimation(this.IMAGES_THROWING);
-            } else if (world.checkCollisionEndbossThrownBottle()) {
+            if (world.endbossHasBeenHit) {
+                console.warn('Throw ' + world.endbossHasBeenHit);
                 this.bottleSplash();
-            }
-            else {
+            } else if (this.y < 320) {
+                this.playAnimation(this.IMAGES_THROWING);
+            } else {
                 this.bottleSplash();
             }
         }, 100);
     }
+    
 
     /**
     * Initiates the splash animation and sound effect when the object hits a target.

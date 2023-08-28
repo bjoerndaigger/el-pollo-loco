@@ -11,7 +11,7 @@ class Endboss extends MovableObject {
      * @type {{ top: number, left: number, right: number, bottom: number }}
      */
     offset = {
-        top: 50,
+        top: 110,
         left: 50,
         right: 50,
         bottom: 0
@@ -95,7 +95,7 @@ class Endboss extends MovableObject {
                 this.endbossAttacks();
             }
             this.distanceTimer++;
-            if (world.checkCollisionEndbossThrownBottle()) {
+            if (world.endbossHasBeenHit) {
                 this.endbossHurt();
             }
         }
