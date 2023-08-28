@@ -14,6 +14,7 @@ class World {
     collectedBottles = []; // Array for collected Bottles
     collectedCoins = []; // Array for collected coins
     endbossHasBeenHit = false;
+    isBottleThrown = false;
 
 
     constructor(canvas, keyboard) {
@@ -41,6 +42,7 @@ class World {
         }, 1000 / 60);
         setInterval(() => {
             this.checkThrowObjects();
+            console.log(this.isBottleThrown);
         }, 1000 / 5);
     }
 
@@ -61,6 +63,7 @@ class World {
             this.throwableObjects.push(this.bottle);
             this.collectedBottles.pop(); // Remove a value from array after dropping it
             this.statusBarBottles.setBottles(this.collectedBottles.length); // Pass value to StatusBarBottles
+            this.isBottleThrown = true;
         }
     }
 
