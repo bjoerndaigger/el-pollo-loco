@@ -341,7 +341,6 @@ canvas {
 }
 
 @media only screen and (max-height:480px) {
-
     .canvas-container,
     canvas,
     .start-screen-img,
