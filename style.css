@@ -329,6 +329,15 @@ canvas {
     .game-over-btn {
         top: 16px;
     }
+
+    .start-screen-container {
+        width: auto;
+        height: auto;
+    }
+
+    .start-btn {
+        top: 16px;
+    }
 }
 
 @media only screen and (max-height:480px) {
@@ -359,6 +368,15 @@ canvas {
     }
 
     .game-over-btn {
+        top: 16px;
+    }
+
+    .start-screen-container {
+        width: auto;
+        height: auto;
+    }
+
+    .start-btn {
         top: 16px;
     }
 }
