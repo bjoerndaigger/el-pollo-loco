@@ -45,9 +45,11 @@
 
             <!-- Buttons -->
             <div class="btns-top">
-                <img id="fullscreen-btn" class="fullscreen-btn btn" src="img/11_icons/fullscreen.png" onclick="toggleFullscreen()">
+                <img id="fullscreen-btn" class="fullscreen-btn btn" src="img/11_icons/fullscreen.png"
+                    onclick="toggleFullscreen()">
                 <img class="info-btn btn margin-left" src="img/11_icons/question_mark.png" onclick="openInfo()">
-                <img id="volume-btn" class="volume-btn btn margin-left" src="img/11_icons/volume_off.png" onclick="toggleSound()">
+                <img id="volume-btn" class="volume-btn btn margin-left" src="img/11_icons/volume_off.png"
+                    onclick="toggleSound()">
             </div>
 
             <!-- Mobile Buttons -->
@@ -106,6 +108,19 @@
                 </div>
             </div>
 
+            <!-- Legal Notice Content -->
+            <div id="legal-notice-content" class="info-container d-none">
+                <div class="arrow-back" onclick="closeLegalNotice()"><img src="img/11_icons/arrow_back.png"></div>
+                <h2 class="info-content-headline">Legal Notice</h2>
+                <p><span class="legal-notice-subheadline">Information according to § 5 TMG (German Telemedia Act)</span><br>
+                    Björn Daigger<br>
+                    Scheffelstraße 46<br>
+                    68259 Mannheim</p>
+                <p><span class="legal-notice-subheadline">Contact</span><br>
+                    Phone: +49 179 7757454<br>
+                    Email: info@bjoerndaigger.de</p>
+            </div>
+
             <!-- Game Over Content -->
             <div id="game-over-screen" class="game-over-screen-container d-none">
                 <div class="btn game-over-btn" onclick="backToMenu()">
@@ -125,6 +140,7 @@
             <!-- Canvas -->
             <canvas id="canvas" width="720" height="480"></canvas>
         </div>
+        <div id="legal-notice-link" class="legal-notice-link" onclick="openLegalNotice()">[Legal Notice]</div>
     </div>
     <div class="flip-device">Please rotate your device by 90°</div>
 </body>

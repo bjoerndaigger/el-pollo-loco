@@ -19,6 +19,7 @@ let isMuted = false;
  */
 function startGame() {
     document.getElementById('start-screen').classList.add('d-none');
+    document.getElementById('legal-notice-link').classList.add('d-none');
     init();
 }
 
@@ -104,6 +105,20 @@ function openInfo() {
  */
 function closeInfo() {
     document.getElementById('info-content').classList.add('d-none');
+}
+
+/**
+ * Opens the legal notice content.
+ */
+function openLegalNotice() {
+    document.getElementById('legal-notice-content').classList.remove('d-none');
+}
+
+/**
+ * Closes the legal notice content.
+ */
+function closeLegalNotice() {
+    document.getElementById('legal-notice-content').classList.add('d-none');
 }
 
 /**
