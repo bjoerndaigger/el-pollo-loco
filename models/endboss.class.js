@@ -102,6 +102,9 @@ class Endboss extends MovableObject {
         if (this.isDead() && world.collectedCoins.length >= 5) {
             this.endbossDead();
         }
+        if(this.x === 0) {
+            this.endbossOutOfGame();
+        }
     }
 
     /**
@@ -147,6 +150,14 @@ class Endboss extends MovableObject {
         setTimeout(() => {
             gameWon();
         }, 2000);
+    }
+
+    /**
+    * Stops game when end boss x position is 0.
+    */
+    endbossOutOfGame() {
+        walking_sound.pause();
+        gameLost();
     }
 }
 

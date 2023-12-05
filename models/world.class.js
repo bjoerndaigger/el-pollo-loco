@@ -99,6 +99,7 @@ class World {
     checkCollisionCharacterEndboss() {
         if (this.character.isColliding(this.level.endboss)) {
             this.collisionWithEndboss = true;
+            this.statusBarCharacter.setPercentage(0);
         }
     }
 
