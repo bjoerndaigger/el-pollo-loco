@@ -30,7 +30,7 @@ class MovableObject extends DrawableObject {
                 this.y -= this.speedY;  // Decrease y-axis by the value of speedY
                 this.speedY -= this.acceleration; // Decrease speedY by the value of acceleration
             }
-        }, 1000 / 25);
+        }, 40);
     }
 
     /**

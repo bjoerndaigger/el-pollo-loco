@@ -64,7 +64,6 @@ class ThrowableObject extends MovableObject {
     animate() {
         this.bottleAnimation = setInterval(() => {
             if (world.endbossHasBeenHit) {
-                console.warn('Throw ' + world.endbossHasBeenHit);
                 this.bottleSplash();
             } else if (this.y < 320) {
                 this.playAnimation(this.IMAGES_THROWING);
